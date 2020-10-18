@@ -1,0 +1,35 @@
+package com.alan.handsome.user;
+
+/**
+ * 类说明：授权返回
+ * 作者：qiujialiu
+ * 时间：2018/7/3
+ */
+
+public class TokenModel {
+    private String accessToken;
+    private String encryptedAccessToken;
+    private int expireInSeconds;
+    private int userId;
+
+    public boolean isNoLogin() {
+        return isNoLogin;
+    }
+
+    private  boolean isNoLogin;
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public String getEncryptedAccessToken() {
+        return encryptedAccessToken;
+    }
+
+    public boolean isBoundPhone() {
+        return userId != 0;
+    }
+
+    public int getExpireInSeconds() {
+        return expireInSeconds;
+    }
+}

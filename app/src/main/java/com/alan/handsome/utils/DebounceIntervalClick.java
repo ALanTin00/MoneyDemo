@@ -1,0 +1,45 @@
+package com.alan.handsome.utils;
+
+import android.view.View;
+
+import java.util.concurrent.TimeUnit;
+
+/**
+ * 防抖点击加强版本
+ *
+ * @author liufe
+ * @time 2018/6/26 13:23
+ */
+public abstract class DebounceIntervalClick implements View.OnClickListener {
+
+    /**
+     * 点击间隔,默认300毫秒
+     */
+    private final long clickInterval;
+    private long previousClickTimestamp;
+
+    public DebounceIntervalClick() {
+        clickInterval = 600L;
+    }
+
+    public DebounceIntervalClick(long clickInterval) {
+        this.clickInterval = clickInterval;
+    }
+
+    @Override
+    public void onClick(View v) {
+        final long currentClickTimestamp = TimeUnit.NANOSECONDS.toMillis(System.nanoTime());
+        if (previousClickTimestamp == 0 || currentClickTimestamp - previousClickTimestamp >= clickInterval) {
+            previousClickTimestamp = currentClickTimestamp;
+            this.onDebounceClick(v);
+        }
+
+    }
+
+    /**
+     * 正常点击
+     *
+     * @param v
+     */
+    public abstract void onDebounceClick(View v);
+}
