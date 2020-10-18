@@ -1,1 +1,1 @@
-include ':app', ':versionupdatelib', ':qndklibrary'
+include ':app', ':versionupdatelib'
