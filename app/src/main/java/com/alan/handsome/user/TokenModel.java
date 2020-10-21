@@ -7,29 +7,59 @@ package com.alan.handsome.user;
  */
 
 public class TokenModel {
-    private String accessToken;
-    private String encryptedAccessToken;
-    private int expireInSeconds;
-    private int userId;
 
-    public boolean isNoLogin() {
-        return isNoLogin;
+    private long id; //用户id
+    private String action;//"register" or "login"
+    private String mobile; //	手机号
+    private int authorized; //是否认证 0:已认证
+    private String token;
+    private String name;
+
+    public long getId() {
+        return id;
     }
 
-    private  boolean isNoLogin;
-    public String getAccessToken() {
-        return accessToken;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getEncryptedAccessToken() {
-        return encryptedAccessToken;
+    public String getAction() {
+        return action;
     }
 
-    public boolean isBoundPhone() {
-        return userId != 0;
+    public void setAction(String action) {
+        this.action = action;
     }
 
-    public int getExpireInSeconds() {
-        return expireInSeconds;
+    public String getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
+    public int getAuthorized() {
+        return authorized;
+    }
+
+    public void setAuthorized(int authorized) {
+        this.authorized = authorized;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

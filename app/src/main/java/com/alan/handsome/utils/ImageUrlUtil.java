@@ -34,7 +34,7 @@ public class ImageUrlUtil {
         if (img.startsWith("http://") || img.startsWith("https://")) {
             return img;
         }
-        return BuildConfig.URL_REPORT + img;
+        return BuildConfig.BASE_URL + img;
     }
 
     public static String getPath(final Context context, final Uri uri) {

@@ -24,7 +24,7 @@ public class RetrofitManger {
     ApiService apiService;
 
     private RetrofitManger() {
-        apiService = new Retrofit.Builder().baseUrl(BuildConfig.URL_REPORT)
+        apiService = new Retrofit.Builder().baseUrl(BuildConfig.BASE_URL)
                 .client(provideClient(providerHttpLoggingInterceptor()))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())

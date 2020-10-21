@@ -27,22 +27,12 @@ public class AccountManager {
 
     public void saveToken(TokenModel result) {
         if (result != null) {
-            accessToken = result.getAccessToken();
+            accessToken = result.getToken();
             SPUtils.getInstance().put("key_access_token", accessToken);
-            SPUtils.getInstance().put("key_refresh_token", result.getEncryptedAccessToken());
-            SPUtils.getInstance().put("key_token_over_time", System.currentTimeMillis() + (result.getExpireInSeconds() * 1000L));
-            SPUtils.getInstance().put(Constant.AUTHENTICATE_TOKEN_ISNOLOGIN, result.isNoLogin());
+            SPUtils.getInstance().put("key_refresh_token", result.getToken());
         }
     }
 
-    /**
-     * 登录是否过期
-     *
-     * @return
-     */
-    public boolean isTokenOverTime() {
-        return System.currentTimeMillis() > SPUtils.getInstance().getLong("key_token_over_time", 0L);
-    }
 
     public String getAccessToken() {
         if (!TextUtils.isEmpty(accessToken)) {
@@ -67,9 +57,6 @@ public class AccountManager {
         SPUtils.getInstance().remove("key_user_info");
         SPUtils.getInstance().remove("key_access_token");
         SPUtils.getInstance().remove("key_refresh_token");
-        SPUtils.getInstance().remove("key_token_over_time");
-        SPUtils.getInstance().remove("key_user_setting");
-        SPUtils.getInstance().remove(Constant.AUTHENTICATE_TOKEN_ISNOLOGIN);
     }
 
     public UserInformation getUserInformation() {
@@ -84,6 +71,6 @@ public class AccountManager {
         return null;
     }
     public boolean isUserLogin() {
-        return !AccountManager.getInstance().isTokenOverTime() && AccountManager.getInstance().getUserInformation() != null;
+        return  AccountManager.getInstance().getUserInformation() != null;
     }
 }

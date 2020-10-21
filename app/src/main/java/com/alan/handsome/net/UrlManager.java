@@ -1,11 +1,10 @@
 package com.alan.handsome.net;
 
-/**
- * 类说明：
- * 作者：qiujialiu
- * 时间：2018/10/24
- */
+import com.alan.handsome.BuildConfig;
 
 public class UrlManager {
+
+    public static final String URL_BASICS = BuildConfig.BASE_PATH;
+
 }
 

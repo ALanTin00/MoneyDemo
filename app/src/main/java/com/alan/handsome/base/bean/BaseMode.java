@@ -9,30 +9,36 @@ import android.text.TextUtils;
  */
 public class BaseMode<T> {
 
-    //是否授权
-    private boolean unAuthorizedRequest;
-    //是否请求成功
-    private boolean success;
+    private int status;
+    //是否请求返回的码
+    private String code;
+    //放回信息
+    private String message;
     //结果
     private T result;
-    //错误消息
-    private ErrorBean error;
 
-
-    public boolean isUnAuthorizedRequest() {
-        return unAuthorizedRequest;
+    public int getStatus() {
+        return status;
     }
 
-    public void setUnAuthorizedRequest(boolean unAuthorizedRequest) {
-        this.unAuthorizedRequest = unAuthorizedRequest;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public boolean isSuccess() {
-        return success;
+    public String getCode() {
+        return code;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public T getResult() {
@@ -41,61 +47,6 @@ public class BaseMode<T> {
 
     public void setResult(T result) {
         this.result = result;
-    }
-
-    public ErrorBean getError() {
-        return error;
-    }
-
-    public void setError(ErrorBean error) {
-        this.error = error;
-    }
-
-    public static class ErrorBean {
-        private int code;
-        private String message;
-        private String details;
-        private String validationErrors;
-
-        public int getCode() {
-            return code;
-        }
-
-        public void setCode(int code) {
-            this.code = code;
-        }
-
-        public String getMessage() {
-            return message;
-        }
-
-        public void setMessage(String message) {
-            this.message = message;
-        }
-
-        public String getDetails() {
-            return details;
-        }
-
-        public void setDetails(String details) {
-            this.details = details;
-        }
-
-        public String getValidationErrors() {
-            return validationErrors;
-        }
-
-        public void setValidationErrors(String validationErrors) {
-            this.validationErrors = validationErrors;
-        }
-
-        public String getShowMessage() {
-            if (TextUtils.isEmpty(details)) {
-                return message;
-            }else {
-                return message +" "+ details;
-            }
-        }
     }
 
 }

@@ -76,11 +76,17 @@ android {
 
         local {
             dimension "app"
-            buildConfigField("String", "URL_REPORT", "\"http://192.168.28.166:36666\"")
+            buildConfigField("String", "BASE_URL", "\"http://192.168.31.238\"")
+            buildConfigField("String", "BASE_PATH", "\"/CashMart/api/public/index.php\"")
+        }
+        _test {
+            dimension "app"
+            buildConfigField("String", "BASE_URL", "\"http://test-api.hqcashmart.com\"")
+            buildConfigField("String", "BASE_PATH", "\"/v3/public/index.php\"")
         }
         official {
             dimension "app"
-            buildConfigField("String", "URL_REPORT", "\"http://192.168.28.166:36666\"")
+            buildConfigField("String", "BASE_URL", "\"http://192.168.28.166:36666\"")
         }
     }
     packagingOptions {
