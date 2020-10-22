@@ -90,9 +90,10 @@ public class HttpHeadInterceptor implements Interceptor {
 
         if (response.code() == 401) {
             throw new ApiException(5,"未登录或登录已过期");
-        }else if (response.code() == 403) {
-            throw new ApiException(6,"该账号已在别处登录");
         }
+//        else if (response.code() == 403) {
+//            throw new ApiException(6,"该账号已在别处登录");
+//        }
         return response;
     }
 }

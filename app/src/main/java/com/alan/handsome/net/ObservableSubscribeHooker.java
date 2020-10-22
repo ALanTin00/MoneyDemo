@@ -64,6 +64,7 @@ public class ObservableSubscribeHooker<T> implements Observer<T> {
 
         if (e instanceof ApiException) {
             if (((ApiException) e).getCode() == 5 || ((ApiException) e).getCode() == 6) {
+                //todo 这里处理网络为401的时候让用户重新登录
                 actual.onError(e);
                 AccountManager.getInstance().logout();
                 GlobalActionManager.getInstance().sendTokenINvalid(e.getMessage());
