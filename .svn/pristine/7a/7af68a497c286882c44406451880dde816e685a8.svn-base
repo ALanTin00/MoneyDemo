@@ -1,0 +1,35 @@
+package com.tanlian.wallet.cars.bean;
+
+/**
+ * Created by liufe on 2018/6/28
+ * 1  2016时尚版
+ */
+public class CarModel extends CarSeries {
+    private int children_id;
+    private String children_name;
+    private int parent_id;
+
+    public int getParent_id() {
+        return parent_id;
+    }
+
+    public void setParent_id(int parent_id) {
+        this.parent_id = parent_id;
+    }
+
+    public int getChildren_id() {
+        return children_id;
+    }
+
+    public void setChildren_id(int children_id) {
+        this.children_id = children_id;
+    }
+
+    public String getChildren_name() {
+        return children_name;
+    }
+
+    public void setChildren_name(String children_name) {
+        this.children_name = children_name;
+    }
+}

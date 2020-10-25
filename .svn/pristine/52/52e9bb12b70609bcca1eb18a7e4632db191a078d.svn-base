@@ -1,0 +1,210 @@
+package com.tanlian.wallet.constant;
+
+import android.support.annotation.IntDef;
+import android.support.annotation.StringDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2018/7/3
+ */
+
+public abstract class TypeConstant {
+    public static final int LOGIN_TYPE_NORMAL = 0;
+    public static final int LOGIN_TYPE_UGA = 13;
+    public static final int LOGIN_TYPE_WECHAT = 1;
+    public static final int LOGIN_TYPE_QQ = 3;
+    public static final int LOGIN_TYPE_ALI = 2;
+    public static final int LOGIN_TYPE_WEIBO = 4;
+    public static final int LOGIN_TYPE_SMS = 11;
+
+    //发送验证码类型
+    public static final int SMS_TYPE_REGISTER = 0;//注册
+    public static final int SMS_TYPE_LOGIN = 1;//登录
+    public static final int SMS_TYPE_FIND_PASSWORD = 2;//找回密码
+    public static final int SMS_TYPE_MODIFY_PASSWORD = 3;//修改密码
+    public static final int SMS_TYPE_MODIFY_PASSWORD_VALID_OLD = 4;//修改手机验证旧手机
+    public static final int SMS_TYPE_MODIFY_PASSWORD_VALID_NEW = 5;//修改手机验证新手机
+    public static final int SMS_TYPE_BIND_WECHAT = 6;//绑定微信验证码
+    public static final int SMS_TYPE_BIND_QQ = 7;//绑定QQ
+    public static final int SMS_TYPE_BIND_WEIBO = 8;//绑定微博
+    public static final int SMS_TYPE_BIND_ALI = 9;//修改支付宝
+    public static final int SMS_TYPE_CHANGE_DEVICE_LOGIN = 10;//更换设备登录
+    public static final int SMS_TYPE_CHANGE_CARD = 11;//修改身份证号
+    public static final int SMS_TYPE_CLEAR_LOCATION_INFO = 12;//清除位置信息
+    public static final int SMS_TYPE_WITHDRAW_UGA_COIN = 204;//提币验证
+
+    //押金方式
+    public static final int DEPOSIT_TYPE_SELF = 1;// 自费
+    public static final int DEPOSIT_TYPE_PLEDGE = 2;// 抵押贷
+    public static final int DEPOSIT_TYPE_ACTIVITY = 3;// 商家活动
+
+    //押金支付状态
+    public static final int DEPOSIT_STATUS_PAY_NO_SEND = 0;//已交押金未发货
+    public static final int DEPOSIT_STATUS_PAY_SEND = 1;//已交押金已发货
+    public static final int DEPOSIT_STATUS_REFUNDING = 2;//退款中
+    public static final int DEPOSIT_STATUS_BOUGHT = 3;//已购买
+
+    //支付方式
+    public static final int PAY_TYPE_NOT = 0;//无需支付
+    public static final int PAY_TYPE_WECHAT = 1;
+    public static final int PAY_TYPE_ALI = 2;
+
+    //认证类型
+    public static final int ACCOUNT_AUTH_TYPE_DEFAULT = 0;
+    public static final int ACCOUNT_AUTH_TYPE_CODE = 1;
+    public static final int ACCOUNT_AUTH_TYPE_OLD_PASS = 2;
+    public static final int ACCOUNT_AUTH_TYPE_LICENSE = 3;
+
+    public static final int ACT_TWO_COMPUTE_TYPE_MILEAGE = 1;// 按里程结算
+    public static final int ACT_TWO_COMPUTE_TYPE_STOP_DAY = 2;//按停驶天数结算
+
+    public static final int WIFI_TYPE_2G = 1;
+    public static final int WIFI_TYPE_4G = 2;
+
+    public static final int WIFI_DEVICE_STATUS_NO = 0;//无设备
+    public static final int WIFI_DEVICE_STATUS_NOT_ACTIVATE = 1;// 有设备等待激活
+    public static final int WIFI_DEVICE_STATUS_NORMAL = 2;// 已激活并正常
+    public static final int WIFI_DEVICE_STATUS_EXCEPTION = 3;// 已激活但异常
+
+    //性别
+    public static final int SEX_TYPE_SECRET = 0;//保密
+    public static final int SEX_TYPE_MALE = 1;//男
+    public static final int SEX_TYPE_FEMALE = 2;//女
+
+    // 提现状态
+    public static final int WITHDRAW_TYPE_UNABLE = 0;//不可提现
+    public static final int WITHDRAW_TYPE_ABLE = 1;//可提现
+    public static final int WITHDRAW_TYPE_PROCESSING = 2;//提现中
+
+    // 图表类型
+    public static final int CARBON_REDUCE = 0;
+    public static final int CARBON_CREDIT = 1;
+    public static final int MONEY_REWARD = 2;
+
+    //车辆状态
+    public static final int CAR_STATUS_NO_NUMBER = 0;//没填写车牌
+    public static final int CAR_STATUS_NO_INFO = 1;//有车牌未完善信息
+    public static final int CAR_STATUS_FULL = 1000;//车辆信息已完善
+
+    //选择的活动类型
+    public static final int TYPE_ACTIVITY_NULL = 0;//未参加活动
+    public static final int TYPE_ACTIVITY_ONE = 1;//活动一
+    public static final int TYPE_ACTIVITY_TWO = 2;//活动二
+
+    public static final int ACT_ONE_STATUS_START = 1;//活动中
+    public static final int ACT_ONE_STATUS_END = 2;//活动结束待结算
+    public static final int ACT_ONE_STATUS_FINISH = 3;//活动完成已结算
+    public static final int ACT_ONE_STATUS_INVALID = 4;//无效
+
+    public static final int COUPON_TYPE_MONTH_VIP = 1;//VIP月卡
+    public static final int COUPON_TYPE_FREE_CARD = 2;//免费洗车卡
+    public static final int COUPON_TYPE_COUPON = 3;//洗车优惠券
+    public static final int COUPON_SOUREC_TECENT = 4;//腾讯视频
+    public static final int COUPON_SOUREC_QIYI = 5;//爱奇艺
+    public static final int COUPON_SOUREC_TANLIAN = 6;//车碳宝
+
+    //订单支付状态
+    public static final int ORDER_STATUS_UN_PAY = 0;//未支付
+    public static final int ORDER_STATUS_PAID = 1;//已支付
+    public static final int ORDER_STATUS_CANCEL = 2;//已取消
+    public static final int ORDER_STATUS_RETURN = 3;//已退款
+    public static final int ORDER_ALL = 500;//全部订单
+    public static final int ORDER_STATUS_WAIT_COMMENT = 200;//待评价
+    public static final int ORDER_STATUS_HAVE_COMMENT = 201;//已评价
+
+    //订单物流状态
+    public static final int LOGISTICS_UN_SEND = 0;//未发货
+    public static final int LOGISTICS_SEND = 1;//已发货
+    public static final int LOGISTICS_RECEIVE = 2;//已收货
+
+    //保险订单状态
+    public static final String INSURANCE_ORDER_STATE_UNDERWAY = "0";//进行中
+    public static final String INSURANCE_ORDER_STATE_UNPAID = "1";//待支付
+    public static final String INSURANCE_ORDER_STATE_REFUND = "4";//待报销
+    public static final String INSURANCE_ORDER_STATE_COMPLETE = "2";//已完成
+    public static final String INSURANCE_ORDER_STATE_USELESS = "3";//已过期
+    public static final String INSURANCE_ORDER_STATE_ALL = "5";//已过期
+
+
+
+    //订单支付类型
+    public static final int ORDER_PAY_WECHAT = 0;
+    public static final int ORDER_PAY_ALI = 1;
+
+    //商品类型
+    public static final int GOODS_ALL = 0;
+    public static final int GOODS_NORMAL = 1;
+    public static final int GOODS_NEW = 2;
+    public static final int GOODS_HOT = 3;
+    public static final int GOODS_DELICATE = 4;
+
+
+    public static final int SETTING_ON = 1;
+    public static final int SETTING_OFF = 2;
+
+    public static final int BANNER_TYPE_HOME = 1;
+    public static final int BANNER_TYPE_STORE = 2;
+    public static final int BANNER_TYPE_COUPON_CENTER = 3;
+
+    @IntDef({SMS_TYPE_REGISTER, SMS_TYPE_LOGIN, SMS_TYPE_FIND_PASSWORD, SMS_TYPE_MODIFY_PASSWORD
+            , SMS_TYPE_MODIFY_PASSWORD_VALID_OLD, SMS_TYPE_MODIFY_PASSWORD_VALID_NEW
+            , SMS_TYPE_BIND_WECHAT, SMS_TYPE_BIND_QQ, SMS_TYPE_BIND_ALI, SMS_TYPE_BIND_WEIBO,SMS_TYPE_CHANGE_CARD,SMS_TYPE_CLEAR_LOCATION_INFO,
+            SMS_TYPE_WITHDRAW_UGA_COIN,SMS_TYPE_CHANGE_DEVICE_LOGIN})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface SmsType {}
+
+    @IntDef({LOGIN_TYPE_NORMAL,LOGIN_TYPE_WECHAT,LOGIN_TYPE_QQ,LOGIN_TYPE_ALI,LOGIN_TYPE_WEIBO,LOGIN_TYPE_SMS,LOGIN_TYPE_UGA})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface LoginType {}
+
+    @IntDef({ACCOUNT_AUTH_TYPE_DEFAULT, ACCOUNT_AUTH_TYPE_CODE, ACCOUNT_AUTH_TYPE_OLD_PASS, ACCOUNT_AUTH_TYPE_LICENSE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface AuthType {
+    }
+
+    /**
+     * 设备类型
+     */
+    @IntDef({WIFI_TYPE_2G,WIFI_TYPE_4G})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface WiFiType{}
+
+    /**
+     * 押金提交方式
+     */
+    @IntDef({DEPOSIT_TYPE_SELF,DEPOSIT_TYPE_PLEDGE,DEPOSIT_TYPE_ACTIVITY})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface DepositType{}
+
+    /**
+     * 押金支付方式
+     */
+    @IntDef({PAY_TYPE_NOT,PAY_TYPE_WECHAT,PAY_TYPE_ALI})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface DevicePayType {}
+
+    /**
+     * 押金支付方式
+     */
+    @IntDef({ORDER_PAY_WECHAT,ORDER_PAY_ALI})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface OrderPayType {}
+
+    @StringDef({INSURANCE_ORDER_STATE_UNDERWAY,INSURANCE_ORDER_STATE_UNPAID,INSURANCE_ORDER_STATE_COMPLETE,INSURANCE_ORDER_STATE_USELESS
+    ,INSURANCE_ORDER_STATE_REFUND,INSURANCE_ORDER_STATE_ALL})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface InsuranceStateType {}
+
+    @IntDef({BANNER_TYPE_HOME,BANNER_TYPE_STORE,BANNER_TYPE_COUPON_CENTER})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface BannerType{}
+
+    public static final int ORDER_TYPE_ALL = 0;//全部订单
+    public static final int ORDER_TYPE_REFUEL = 1;//加油订单
+    public static final int ORDER_TYPE_WASH_CAR = 2;//洗车订单
+    public static final int ORDER_TYPE_MAINTAIN = 3;//保养订单
+}

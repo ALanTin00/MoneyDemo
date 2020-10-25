@@ -1,0 +1,57 @@
+package com.tanlian.wallet.user.interfaces;
+
+import com.tanlian.wallet.base.BaseContract;
+import com.tanlian.wallet.manager.tecentali.bean.LoginResultBean;
+
+/**
+ * Created by liufe on 2018/6/26
+ */
+public interface LoginContract {
+
+    interface View extends BaseContract.BaseView {
+        void loginSuccess();
+        void registerSuccess(String phone, String password);
+        void registerFail(int code, String message);
+        void loginFail(int code, String message);
+        void requestFail(int code,String message);
+
+        /**
+         * 微信，QQ登录成功
+         * @param bound 是否已绑定手机 true 已绑 false 未绑
+         */
+        void loginWechatQQSuccess(boolean bound,LoginResultBean resultBean);
+
+        /**
+         * 登录需要验证手机
+         */
+        void verifyCode(String phone, String pwd);
+    }
+
+    interface Presenter extends BaseContract.BasePresenter<View> {
+        /**
+         * 登录
+         * @param phone 手机号
+         * @param pwd 密码
+         */
+        void login(String phone, String pwd);
+
+        /**
+         * 登录
+         * @param phone 手机号
+         * @param pwd 密码
+         * @param code 验证码
+         */
+        void login(String phone, String pwd,String code);
+        void register(String phone, String password, String phoneNumber);
+
+        /**
+         * 发送验证码
+         * @param phone
+         * @param type
+         * @see com.tanlian.wallet.constant.TypeConstant.SmsType
+         */
+        void sendCode(String phone, int type);
+        void loginByWechat(LoginResultBean bean);
+        void loginByQQ(LoginResultBean bean);
+    }
+}

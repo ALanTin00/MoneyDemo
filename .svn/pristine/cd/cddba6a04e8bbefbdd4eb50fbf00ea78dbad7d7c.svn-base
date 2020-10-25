@@ -1,0 +1,6 @@
+package com.tanlian.wallet.base;
+
+import org.android.agoo.mezu.MeizuPushReceiver;
+
+public class MeizuTestReceiver extends MeizuPushReceiver {
+}

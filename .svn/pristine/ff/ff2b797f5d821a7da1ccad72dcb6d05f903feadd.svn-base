@@ -1,0 +1,18 @@
+package com.tanlian.wallet.wallet.presenter;
+
+
+import com.tanlian.wallet.base.BaseContract;
+import com.tanlian.wallet.wallet.bean.ProblemFeedBack;
+
+import retrofit2.http.Body;
+
+public class OpiniionFeedbackContract {
+     public interface View extends BaseContract.BaseView {
+        void problemFeedBackSuc(boolean suc);
+        void problemFeedBackFail(String messge);
+    }
+
+    public interface Presenter extends BaseContract.BasePresenter<View> {
+       void problemFeedBack(ProblemFeedBack problemFeedBack);
+    }
+}

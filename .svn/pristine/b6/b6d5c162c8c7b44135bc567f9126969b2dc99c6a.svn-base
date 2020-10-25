@@ -1,0 +1,33 @@
+package com.tanlian.wallet.wallet.presenter;
+
+
+import com.tanlian.wallet.base.BaseContract;
+
+public class LoginContract {
+     public interface View extends BaseContract.BaseView {
+        void loginSuccess();
+        void loginFail(int code, String message);
+        void requestFail(int code,String message);
+        /**
+         * 登录需要验证手机
+         */
+        void verifyCode(String phone, String pwd);
+    }
+
+    public interface Presenter extends BaseContract.BasePresenter<View> {
+        /**
+         * 登录
+         * @param phone 手机号
+         * @param pwd 密码
+         */
+        void login(String phone, String pwd);
+        /**
+         * 登录
+         * @param phone 手机号
+         * @param pwd 密码
+         * @param code 验证码
+         */
+        void login(String phone, String pwd,String code);
+        void sendCode(String phone, int type);
+    }
+}

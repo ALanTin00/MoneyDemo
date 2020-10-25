@@ -1,0 +1,40 @@
+package com.tanlian.wallet.constant;
+
+import android.Manifest;
+import android.content.Context;
+import android.os.Build;
+import android.os.Environment;
+import android.support.annotation.RequiresApi;
+
+import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.load.engine.cache.DiskLruCacheFactory;
+import com.bumptech.glide.module.AppGlideModule;
+import com.yanzhenjie.permission.AndPermission;
+
+import java.io.File;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2018/11/27
+ */
+public class GlideCache extends AppGlideModule {
+    @Override
+    public void applyOptions(Context context, GlideBuilder builder) {
+        File file = getCacheFile(context);
+        builder.setDiskCache(new DiskLruCacheFactory(file.getAbsolutePath(),(1000*1000*1000)));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.FROYO)
+    public static File getCacheFile(Context context) {
+        if (AndPermission.hasPermissions(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            return context.getExternalFilesDir(Environment.DIRECTORY_DCIM);
+        }else {
+            File file = new File(context.getFilesDir(), "ctb_image");
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            return file;
+        }
+    }
+}

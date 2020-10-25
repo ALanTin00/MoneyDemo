@@ -1,0 +1,186 @@
+package com.tanlian.wallet.wallet.activity;
+
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.base.BaseActivity;
+import com.tanlian.wallet.base.BaseContract;
+import com.tanlian.wallet.base.BasePresenter;
+import com.tanlian.wallet.base.YRequestCallback;
+import com.tanlian.wallet.base.bean.BaseParams;
+import com.tanlian.wallet.net.RetrofitManger;
+import com.tanlian.wallet.utils.ZxingUtils;
+import com.tanlian.wallet.utils.DensityUtil;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+public class ChargeCoinsActivity extends BaseActivity {
+    @BindView(R.id.back)
+    LinearLayout back;
+    @BindView(R.id.qrcode_iv)
+    ImageView qrcodeIv;
+    @BindView(R.id.copy_tv)
+    TextView copyTv;
+    @BindView(R.id.save_qrcode_tv)
+    TextView saveQrcodeTv;
+    @BindView(R.id.charge_coin_tv)
+    TextView chargeCoinTv;
+    @BindView(R.id.qrcode_tv)
+    TextView qrcodeTv;
+
+    private ClipboardManager cm;
+    private Bitmap bitmapCode;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_topup_coins;
+    }
+
+    @Override
+    protected void initView() {
+        String answerContent2 = this.getResources().getString(R.string.charge_coin_rule);
+        answerContent2 = answerContent2.replace("//n//", "\r\n");
+        answerContent2 = answerContent2.replace("//t//", "\t\t\t\t");
+        chargeCoinTv.setText(answerContent2);
+    }
+
+    @Override
+    protected void initData() {
+        getData();
+    }
+
+    @OnClick({R.id.back,R.id.save_qrcode_tv,R.id.copy_tv})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back:
+                finish();
+                break;
+            case R.id.save_qrcode_tv:
+                saveImage();
+                break;
+            case R.id.copy_tv:
+                ClipData mClipData = ClipData.newPlainText("Label", qrcodeTv.getText().toString());
+                cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                cm.setPrimaryClip(mClipData);
+                showErrorToast("复制成功");
+                break;
+            default:
+                return;
+        }
+
+    }
+
+    private void loadData(String s) {
+        qrcodeTv.setText(s);
+        bitmapCode = ZxingUtils.createQRImage(s, DensityUtil.dp2px(250), DensityUtil.dp2px(250));
+        qrcodeIv.setImageBitmap(bitmapCode);
+    }
+
+    private void saveImage() {
+        qrcodeIv.setDrawingCacheEnabled(true);
+        Bitmap bm;
+        if (qrcodeIv.getDrawable() != null) {
+            bm =((BitmapDrawable) qrcodeIv.getDrawable()).getBitmap();
+            qrcodeIv.setDrawingCacheEnabled(false);
+            AndPermission.with(this).runtime().permission(Permission.READ_EXTERNAL_STORAGE,Permission.WRITE_EXTERNAL_STORAGE)
+                    .onGranted(permissions -> {
+                        saveImageToGallery(this, bm);
+                    })
+                    .onDenied(permissions -> {
+                        showErrorToast("拒绝");
+                    }).start();
+        } else
+            return;
+    }
+
+    public boolean saveImageToGallery(Context context, Bitmap bmp) {
+        // 首先保存图片
+        String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "dearxy";
+        File appDir = new File(storePath);
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = System.currentTimeMillis() + ".jpg";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            //通过io流的方式来压缩保存图片
+            boolean isSuccess = bmp.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+            fos.flush();
+            fos.close();
+
+            //把文件插入到系统图库
+            MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
+
+            //保存图片后发送广播通知更新数据库
+            Uri uri = Uri.fromFile(file);
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+            if (isSuccess) {
+                showErrorToast("保存图片成功");
+                return true;
+            } else {
+                showErrorToast("保存图片失败");
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private void getData() {
+        showDialog();
+        BasePresenter.staticAdd(RetrofitManger.getInstance().create().getMyChargeAddress(), new YRequestCallback<Map<String, String>>() {
+            @Override
+            public void onSuccess(Map<String, String> var1) {
+                hideDialog();
+
+                Map<String, Object> map = BaseParams.decryptData(var1.get("encryptData"));
+                if (TextUtils.isEmpty((String) map.get("ugaAdress"))) {
+                    showErrorToast("充币地址为空，请联系客服");
+                    return;
+                }else {
+                    loadData((String) map.get("ugaAdress"));
+                }
+            }
+
+            @Override
+            public void onFailed(int var1, String message) {
+                hideDialog();
+                showErrorToast(message);
+            }
+
+            @Override
+            public void onException(Throwable var1) {
+                hideDialog();
+                showErrorToast("网络连接异常，请检查网络！");
+            }
+        },bindToLifecycle());
+    }
+
+    @Override
+    protected BaseContract.BasePresenter createPresenter() {
+        return null;
+    }
+}

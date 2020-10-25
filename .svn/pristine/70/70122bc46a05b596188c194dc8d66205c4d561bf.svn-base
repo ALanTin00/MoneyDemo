@@ -1,0 +1,12 @@
+package com.tanlian.wallet.manager.tecentali.bean;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2018/6/28
+ */
+
+public interface CallBack<T> {
+    void onSuccess(T t);
+    void onFailed(int code, String message);
+}

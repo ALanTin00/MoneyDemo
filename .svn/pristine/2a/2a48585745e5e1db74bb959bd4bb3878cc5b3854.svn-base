@@ -1,0 +1,167 @@
+package com.tanlian.wallet.wallet.fragment;
+
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.base.BaseFragment;
+import com.tanlian.wallet.utils.NumberUtil;
+import com.tanlian.wallet.wallet.activity.ChargeCoinsActivity;
+import com.tanlian.wallet.wallet.activity.WithdrawCoinsActivity;
+import com.tanlian.wallet.wallet.adapter.CoinListAdapter;
+import com.tanlian.wallet.wallet.bean.CoinDealBean;
+import com.tanlian.wallet.wallet.bean.GetCoinDetailResult;
+import com.tanlian.wallet.wallet.constant.ConDetailsConstant;
+import com.tanlian.wallet.wallet.listener.WalletListener;
+import com.tanlian.wallet.wallet.presenter.ConDetailsPresenter;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
+
+public class WalletFragment extends BaseFragment<ConDetailsPresenter> implements ConDetailsConstant.View {
+    @BindView(R.id.message_tip)
+    TextView messageTip;
+    @BindView(R.id.coin_name)
+    TextView coinName;
+    @BindView(R.id.coin_num)
+    TextView coinNum;
+    @BindView(R.id.coin_value)
+    TextView coinValue;
+    @BindView(R.id.uga_relative)
+    RelativeLayout ugaRelative;
+    @BindView(R.id.extract_uga_rela)
+    RelativeLayout extractUgaRela;
+    @BindView(R.id.push_uga_rela)
+    RelativeLayout pushUgaRela;
+    @BindView(R.id.coin_recycler)
+    RecyclerView coinRecycler;
+    @BindView(R.id.refresh_lay)
+    SmartRefreshLayout refreshLay;
+
+    //列表
+    private CoinListAdapter adapter;
+    private List<CoinDealBean> coinList;
+    private boolean isRefresh = false;
+
+    private WalletListener listener;
+
+    public void setListener(WalletListener listener) {
+        this.listener = listener;
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_wallet;
+
+    }
+
+    @Override
+    protected ConDetailsPresenter createPresenter() {
+        return new ConDetailsPresenter();
+    }
+
+    @Override
+    protected void initView(View view) {
+        refreshLay.setEnableLoadMore(false);
+        coinList = new ArrayList<>();
+        adapter = new CoinListAdapter();
+        adapter.setNewData(coinList);
+        coinRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
+        coinRecycler.setAdapter(adapter);
+        refreshData();
+
+        refreshLay.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                isRefresh = true;
+                refreshData();
+            }
+        });
+
+    }
+
+    @OnClick({R.id.extract_uga_rela, R.id.push_uga_rela, R.id.more_date})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            //提币
+            case R.id.extract_uga_rela:
+                startToActivity(WithdrawCoinsActivity.class);
+                break;
+            //充币
+            case R.id.push_uga_rela:
+                startToActivity(ChargeCoinsActivity.class);
+                break;
+            //更多数据
+            case R.id.more_date:
+                if (listener != null) {
+                    listener.selectMoreDate();
+                }
+                break;
+        }
+    }
+
+    public void refreshData() {
+        mPresenter.loadCoinDetail(0, 1);
+    }
+
+    //获取UGA的币和列表数据
+    @Override
+    public void loadCoinDetailSuccess(int page, GetCoinDetailResult result) {
+        if (isRefresh) {
+            isRefresh = false;
+            refreshLay.finishRefresh();
+        }
+
+        if (coinList.size() > 0) {
+            coinList.clear();
+        }
+        //只显示三个
+        if (result != null) {
+            if (result.getItems().size() > 3) {
+
+                for (int i = 0; i < result.getItems().size(); i++) {
+                    if (i == 3) {
+                        break;
+                    } else {
+                        coinList.add(result.getItems().get(i));
+                    }
+                }
+
+            } else {
+
+                coinList.addAll(result.getItems());
+            }
+        }
+        adapter.setNewData(coinList);
+        adapter.notifyDataSetChanged();
+        coinNum.setText(NumberUtil.longDivideToDouble(result.getAvailableUGA(), result.getUgaDecimalPlace()) + "");
+    }
+
+    @Override
+    public void loadCoinDetailFail(String msg) {
+        if (isRefresh) {
+            isRefresh = false;
+            refreshLay.finishRefresh();
+        }
+        showErrorToast(msg);
+    }
+
+}

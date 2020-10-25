@@ -1,0 +1,190 @@
+package com.tanlian.wallet.main.bean;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
+/**
+ * Created by liufe on 2018/7/5
+ */
+public class MileageBean implements Parcelable {
+
+    /**
+     * description:
+     * 一条完整的里程数据
+     * cPoints	integer($int32)
+     * 碳积分
+     * cReduction	number($double)
+     * 碳减排
+     * cPollute	number($double)
+     * 污染物
+     * cMoney	number($double)
+     * 碳金额 --获取减排奖励金额
+     * sDate	string
+     * 开始日期
+     * sMileage	integer($int32)
+     * 开始里程
+     * sImg	string
+     * 开始里程表图
+     * eDate	string
+     * 结束日期
+     * eMileage	integer($int32)
+     * 结束里程
+     * eImg	string
+     * 结束里程表图
+     */
+    private int cPoints;
+    private double cReduction;
+    private double cPollute;
+    private double cMoney;
+    private String sDate;
+    private double sMileage;
+    private String sImg;
+    private String eDate;
+    private double eMileage;
+    private String eImg;
+    private int theStatus;
+    private int isNoFirst;
+
+    public int getCPoints() {
+        return cPoints;
+    }
+
+    public void setCPoints(int cPoints) {
+        this.cPoints = cPoints;
+    }
+
+    public double getCReduction() {
+        return cReduction;
+    }
+
+    public void setCReduction(double cReduction) {
+        this.cReduction = cReduction;
+    }
+
+    public double getCPollute() {
+        return cPollute;
+    }
+
+    public void setCPollute(double cPollute) {
+        this.cPollute = cPollute;
+    }
+
+    public double getCMoney() {
+        return cMoney;
+    }
+
+    public void setCMoney(double cMoney) {
+        this.cMoney = cMoney;
+    }
+
+    public String getSDate() {
+        return sDate;
+    }
+
+    public void setSDate(String sDate) {
+        this.sDate = sDate;
+    }
+
+    public double getSMileage() {
+        return sMileage;
+    }
+
+    public void setSMileage(double sMileage) {
+        this.sMileage = sMileage;
+    }
+
+    public String getSImg() {
+        return sImg;
+    }
+
+    public void setSImg(String sImg) {
+        this.sImg = sImg;
+    }
+
+    public String getEDate() {
+        return eDate;
+    }
+
+    public void setEDate(String eDate) {
+        this.eDate = eDate;
+    }
+
+    public double getEMileage() {
+        return eMileage;
+    }
+
+    public void setEMileage(double eMileage) {
+        this.eMileage = eMileage;
+    }
+
+    public String getEImg() {
+        return eImg;
+    }
+
+    public void setEImg(String eImg) {
+        this.eImg = eImg;
+    }
+
+    public int getIsNoFirst() {
+        return isNoFirst;
+    }
+
+    public void setIsNoFirst(int isNoFirst) {
+        this.isNoFirst = isNoFirst;
+    }
+
+
+    public int getTheStatus() {
+        return theStatus;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.cPoints);
+        dest.writeDouble(this.cReduction);
+        dest.writeDouble(this.cPollute);
+        dest.writeDouble(this.cMoney);
+        dest.writeString(this.sDate);
+        dest.writeDouble(this.sMileage);
+        dest.writeString(this.sImg);
+        dest.writeString(this.eDate);
+        dest.writeDouble(this.eMileage);
+        dest.writeString(this.eImg);
+        dest.writeInt(this.theStatus);
+    }
+
+    public MileageBean() {
+    }
+
+    protected MileageBean(Parcel in) {
+        this.cPoints = in.readInt();
+        this.cReduction = in.readDouble();
+        this.cPollute = in.readDouble();
+        this.cMoney = in.readDouble();
+        this.sDate = in.readString();
+        this.sMileage = in.readDouble();
+        this.sImg = in.readString();
+        this.eDate = in.readString();
+        this.eMileage = in.readDouble();
+        this.eImg = in.readString();
+        this.theStatus = in.readInt();
+    }
+
+    public static final Creator<MileageBean> CREATOR = new Creator<MileageBean>() {
+        @Override
+        public MileageBean createFromParcel(Parcel source) {
+            return new MileageBean(source);
+        }
+
+        @Override
+        public MileageBean[] newArray(int size) {
+            return new MileageBean[size];
+        }
+    };
+}

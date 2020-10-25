@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--<stfilePathname="ACPLDialog">-->
+    <!--<ifilePathname="android:windowFrame">@null</item>-->
+    <!--<ifilePathname="android:windowNoTitle">true</item>-->
+    <!--<ifilePathname="android:windowIsFloating">true</item>-->
+    <!--<ifilePathname="android:windowContentOverlay">@null</item>-->
+    <!--</style>-->
+    <!--<stfilePathname="umeng_socialize_action_bar_itemlayout">-->
+    <!--<ifilePathname="android:layout_height">fill_parent</item>-->
+    <!--<ifilePathname="android:layout_width">fill_parent</item>-->
+    <!--<ifilePathname="android:layout_weight">1</item>-->
+    <!--<ifilePathname="android:paddingLeft">4dp</item>-->
+    <!--<ifilePathname="android:paddingTop">4dp</item>-->
+    <!--<ifilePathname="android:paddingRight">4dp</item>-->
+    <!--<ifilePathname="android:gravity">center_vertical</item>-->
+    <!--</style>-->
+
+    <!--<stfilePathname="umeng_socialize_action_bar_item_im">-->
+    <!--<ifilePathname="android:layout_width">25dp</item>-->
+    <!--<ifilePathname="android:layout_height">25dp</item>-->
+    <!--<ifilePathname="android:scaleType">fitCenter</item>-->
+    <!--<ifilePathname="android:layout_centerVertical">true</item>-->
+    <!--</style>-->
+
+    <!--<stfilePathname="umeng_socialize_action_bar_item_tv">-->
+    <!--<ifilePathname="android:layout_width">wrap_content</item>-->
+    <!--<ifilePathname="android:layout_height">fill_parent</item>-->
+    <!--<ifilePathname="android:layout_marginLeft">5dp</item>-->
+    <!--<ifilePathname="android:text">999</item>-->
+    <!--<ifilePathname="android:gravity">center</item>-->
+    <!--<ifilePathname="android:textColor">#ffffff</item>-->
+    <!--<ifilePathname="android:textSize">12sp</item>-->
+    <!--<ifilePathname="android:textStyle">bold</item>-->
+    <!--</style>-->
+
+    <!--网页授权的布局-->
+    <style name="umeng_socialize_popup_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.6</item>
+    </style>
+
+
+    <!--<stfilePathname="Theme.UMDialog" parent="android:style/Theme.Dialog">-->
+    <!--<ifilePathname="android:windowNoTitle">true</item>-->
+    <!--<ifilePathname="android:windowBackground">@android:color/transparent</item>-->
+    <!--</style>-->
+
+    <style name="Theme.UMDefault" parent="android:style/Theme.NoTitleBar" />
+
+    <!--<stfilePathname="umeng_socialize_divider">-->
+    <!--<ifilePathname="android:layout_width">fill_parent</item>-->
+    <!--<ifilePathname="android:layout_height">1dp</item>-->
+    <!--<ifilePathname="android:background">@color/umeng_socialize_divider</item>-->
+    <!--</style>-->
+
+    <!--<stfilePathname="umeng_socialize_list_item">-->
+    <!--<ifilePathname="android:layout_width">fill_parent</item>-->
+    <!--<ifilePathname="android:layout_height">55dp</item>-->
+    <!--<ifilePathname="android:background">@color/umeng_socialize_list_item_bgcolor</item>-->
+    <!--<ifilePathname="android:paddingBottom">5dp</item>-->
+    <!--<ifilePathname="android:paddingTop">5dp</item>-->
+    <!--</style>-->
+
+    <!--<stfilePathname="umeng_socialize_edit_padding">-->
+    <!--<ifilePathname="android:layout_width">fill_parent</item>-->
+    <!--<ifilePathname="android:layout_height">fill_parent</item>-->
+    <!--<ifilePathname="android:background">@color/umeng_socialize_list_item_bgcolor</item>-->
+    <!--<ifilePathname="android:layout_marginLeft">6dp</item>-->
+    <!--<ifilePathname="android:layout_marginRight">6dp</item>-->
+    <!--<ifilePathname="android:layout_marginTop">6dp</item>-->
+    <!--<ifilePathname="android:layout_marginBottom">6dp</item>-->
+    <!--</style>-->
+
+
+</resources>

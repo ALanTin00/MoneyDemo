@@ -1,0 +1,76 @@
+package com.tanlian.wallet.base.bean;
+
+/**
+ * 车圈接口基础返回
+ * @param <T>
+ */
+public class BaseCircleDynamicMode<T> {
+    private Response Result;
+    private int TotalCount;
+    private int IsFocus;
+    private T Data;
+
+    public void setResult(Response result) {
+        Result = result;
+    }
+
+    public T getData() {
+        return Data;
+    }
+
+    public int getTotalCount() {
+        return TotalCount;
+    }
+
+    public void setTotalCount(int totalCount) {
+        TotalCount = totalCount;
+    }
+
+    public void setData(T data) {
+        Data = data;
+    }
+
+    public Response getResult() {
+        return Result;
+    }
+
+    public boolean isSucceed() {
+        if (getResult().getState().equals("1"))
+            return true;
+        else
+            return false;
+    }
+
+    public int getIsFocus() {
+        return IsFocus;
+    }
+
+    public void setIsFocus(int isFocus) {
+        IsFocus = isFocus;
+    }
+
+    public String getMsg() {
+        return Result.getMsg();
+    }
+
+    class Response {
+        public String state;
+        public String msg;
+
+        public String getState() {
+            return state;
+        }
+
+        public void setState(String state) {
+            this.state = state;
+        }
+
+        public String getMsg() {
+            return msg;
+        }
+
+        public void setMsg(String msg) {
+            this.msg = msg;
+        }
+    }
+}

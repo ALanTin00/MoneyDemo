@@ -1,0 +1,172 @@
+package com.tanlian.wallet.wallet;
+
+import android.support.v4.app.Fragment;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.BarUtils;
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.base.BaseActivity;
+import com.tanlian.wallet.base.BaseContract;
+import com.tanlian.wallet.event.KickOutEvent;
+import com.tanlian.wallet.manager.AccountManager;
+import com.tanlian.wallet.manager.FragmentViewPagerAdapter;
+import com.tanlian.wallet.utils.PackageUtil;
+import com.tanlian.wallet.wallet.bean.NewVersion;
+import com.tanlian.wallet.wallet.fragment.HistoryFragment;
+import com.tanlian.wallet.wallet.fragment.SettingFragment;
+import com.tanlian.wallet.wallet.fragment.WalletFragment;
+import com.tanlian.wallet.wallet.listener.WalletListener;
+import com.tanlian.wallet.widget.NoScrollViewPager;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+public class HomeActivity extends BaseActivity implements WalletListener, UpdateManager.CheckResult {
+
+    private WalletFragment mWalletFragment;
+    private HistoryFragment mHistoryFragment;
+    private SettingFragment mSettingFragment;
+    List<Fragment> fragments;
+    @BindView(R.id.viewPager)
+    NoScrollViewPager mViewPager;
+    @BindView(R.id.ll_page_home)
+    LinearLayout layoutHome;
+    @BindView(R.id.ll_page_today)
+    LinearLayout layoutToday;
+    @BindView(R.id.ll_page_mine)
+    LinearLayout layoutMine;
+
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_home;
+    }
+
+    @Override
+    protected void initView() {
+        EventBus.getDefault().register(this);
+        mViewPager.setCanScroll(false);
+        setPage(0);
+        initFragment();
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(KickOutEvent event) {
+        AccountManager.getInstance().logout();
+        ActivityUtils.finishToActivity(HomeActivity.class, false);
+//        startToActivity(LoginActivity.class);
+    }
+
+    private void initFragment() {
+        mWalletFragment = new WalletFragment();
+        mWalletFragment.setListener(this);
+        mHistoryFragment = new HistoryFragment();
+        mSettingFragment = new SettingFragment();
+
+        fragments = new ArrayList<>();
+        fragments.add(mWalletFragment);
+        fragments.add(mHistoryFragment);
+        fragments.add(mSettingFragment);
+        mViewPager.setAdapter(new FragmentViewPagerAdapter(getSupportFragmentManager(), fragments));
+        mViewPager.setOffscreenPageLimit(2);
+
+    }
+
+    @Override
+    protected void initData() {
+        UpdateManager.getNewVersion(UpdateManager.getLocalVersionNameType(this), this, this);
+    }
+
+    @Override
+    protected BaseContract.BasePresenter createPresenter() {
+        return null;
+    }
+
+    @OnClick({R.id.ll_page_home, R.id.ll_page_today, R.id.ll_page_mine})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ll_page_home:
+                setPage(0);
+                break;
+            case R.id.ll_page_today:
+                setPage(1);
+                break;
+            case R.id.ll_page_mine:
+                setPage(2);
+                break;
+
+        }
+    }
+
+    private void setPage(int page) {
+        mViewPager.setCurrentItem(page, false);
+        layoutHome.setSelected(false);
+        layoutToday.setSelected(false);
+        layoutMine.setSelected(false);
+        if (page == 0) {
+            layoutHome.setSelected(true);
+        } else if (page == 1) {
+            layoutToday.setSelected(true);
+        } else if (page == 2) {
+            layoutMine.setSelected(true);
+        }
+    }
+
+    @Override
+    public void selectMoreDate() {
+
+        setPage(1);
+
+    }
+
+    //------------------------------------------按返回键切到后台------------------------------------------//
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
+    public void checkNewVersion(NewVersion newVersion) {
+        if (newVersion != null) {
+            if (PackageUtil.getLocalVersionCode(this) < newVersion.getvInt()) {
+                if (PackageUtil.getLocalVersionCode(this) < newVersion.getMinVInt()) {
+                    showNewVersionDetectedDialog(newVersion, true);
+                } else {
+                    if (UpdateManager.getIgnoreVersionCode() < newVersion.getvInt())
+                        showNewVersionDetectedDialog(newVersion, false);
+                    else {
+                        if (System.currentTimeMillis() - UpdateManager.getIgnoreTime() > UpdateManager.IGNORE_DAYS * 24 * 60 * 60 * 1000) {
+                            showNewVersionDetectedDialog(newVersion, false);
+                        } else
+                            return;
+                    }
+                }
+            } else
+                return;
+        }
+    }
+    private void showNewVersionDetectedDialog(NewVersion newVersion, boolean isForcedUpdate) {
+        UpdateManager.showNewVersionDialog(newVersion, this, isForcedUpdate, this);
+    }
+    @Override
+    public void getVersionFail(String message) {
+
+    }
+}

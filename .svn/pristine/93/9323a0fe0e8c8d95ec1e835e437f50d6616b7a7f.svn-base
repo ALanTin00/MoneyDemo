@@ -1,0 +1,64 @@
+package com.tanlian.wallet.wallet.bean;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2019/1/9
+ */
+
+public class CashDetailBean {
+    private String creationTime;
+    private int carbonInOutType;
+    private int carbonType;
+    private String carbonTypeDes;
+    private double money;
+    private String stateDes;
+
+    public String getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(String creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public int getCarbonInOutType() {
+        return carbonInOutType;
+    }
+
+    public void setCarbonInOutType(int carbonInOutType) {
+        this.carbonInOutType = carbonInOutType;
+    }
+
+    public int getCarbonType() {
+        return carbonType;
+    }
+
+    public void setCarbonType(int carbonType) {
+        this.carbonType = carbonType;
+    }
+
+    public String getCarbonTypeDes() {
+        return carbonTypeDes;
+    }
+
+    public void setCarbonTypeDes(String carbonTypeDes) {
+        this.carbonTypeDes = carbonTypeDes;
+    }
+
+    public double getMoney() {
+        return money;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
+    }
+
+    public String getStateDes() {
+        return stateDes;
+    }
+
+    public void setStateDes(String stateDes) {
+        this.stateDes = stateDes;
+    }
+}

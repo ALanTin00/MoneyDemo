@@ -1,0 +1,106 @@
+package com.tanlian.wallet.wallet;
+
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.base.BaseActivity;
+import com.tanlian.wallet.base.BaseContract;
+import com.tanlian.wallet.manager.AccountManager;
+import com.tanlian.wallet.user.SelfInfoServer;
+import com.tanlian.wallet.user.bean.SelfInfo;
+import com.tanlian.wallet.user.interfaces.GetSelfInfoResult;
+import com.tanlian.wallet.wallet.dialog.LogoutDialog;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+public class MyInformationActivity extends BaseActivity implements GetSelfInfoResult {
+
+    @BindView(R.id.my_head_portrait)
+    ImageView myHeadPortrait;
+    @BindView(R.id.my_name)
+    TextView myName;
+    @BindView(R.id.my_phone)
+    TextView myPhone;
+    @BindView(R.id.my_identity_card_id)
+    TextView myIdentityCardId;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_my_information;
+    }
+
+    @Override
+    protected void initView() {
+        SelfInfoServer.getUserInfo(this,this);
+    }
+
+    @Override
+    protected void initData() {
+        if (mUserInfo!=null){
+            myName.setText(mUserInfo.getName());
+            myPhone.setText(mUserInfo.getPhoneNumber());
+            RequestOptions requestOptions = new RequestOptions();
+            requestOptions.circleCrop();
+            requestOptions.error(R.mipmap.icon_logo);
+            Glide.with(this).load(mUserInfo.getRealIcon()).apply(requestOptions).into(myHeadPortrait);
+        }
+    }
+
+    @Override
+    protected BaseContract.BasePresenter createPresenter() {
+        return null;
+    }
+
+
+    @OnClick({R.id.login_out_btn,R.id.my_information_back_fl})
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.login_out_btn:
+                showLogoutDialog();
+                break;
+            case R.id.my_information_back_fl:
+                finish();
+                break;
+        }
+    }
+    private void showLogoutDialog() {
+        LogoutDialog logoutDialog = new LogoutDialog();
+        logoutDialog.setOnLogoutListener(new LogoutDialog.OnLogoutListener() {
+            @Override
+            public void logout() {
+                AccountManager.getInstance().logout();
+                startToActivity(LoginActivity.class);
+                finish();
+            }
+        });
+        logoutDialog.show(getSupportFragmentManager(),"logoutDialog");
+    }
+
+    @Override
+    public void getSuccess(SelfInfo selfInfo) {
+        String identityCard = selfInfo.getIdentityCard();
+        if (!TextUtils.isEmpty(identityCard)&&identityCard.length()>4){
+            String head = identityCard.substring(0, 3);
+            String last = identityCard.substring(identityCard.length() - 5, identityCard.length() - 1);
+            myIdentityCardId.setText(head.concat("*********").concat(last));
+        }
+
+    }
+
+    @Override
+    public void getFail(int code, String message) {
+       showErrorToast(message);
+    }
+
+    @Override
+    public void getError(Throwable throwable) {
+
+    }
+}

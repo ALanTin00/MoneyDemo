@@ -1,0 +1,65 @@
+package com.tanlian.wallet.widget;
+
+import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.util.AttributeSet;
+
+import com.tanlian.wallet.R;
+
+/**
+ * @CreateDate: 2019/11/7
+ * @Author:lipiao
+ * @Description: 带圆角可设置颜色的TextView主要用于状态显示
+ */
+
+public class StatusTextView extends android.support.v7.widget.AppCompatTextView {
+    private int borderCol;
+    private Paint borderPaint;
+
+    public StatusTextView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.TextViewBorder, 0, 0);
+        try {
+            borderCol = a.getInteger(R.styleable.TextViewBorder_borderColor, 0);//0 is default
+        } finally {
+            a.recycle();
+        }
+        borderPaint = new Paint();
+        borderPaint.setStyle(Paint.Style.FILL);
+        borderPaint.setAntiAlias(true);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    protected void onDraw(Canvas canvas) {
+        if (0 == this.getText().toString().length()) {
+            return;
+        }
+        borderPaint.setColor(borderCol);
+        int w = this.getMeasuredWidth();
+        int h = this.getMeasuredHeight();
+        RectF r = new RectF(8f, 8f, w - 8f, h - 8f);
+        canvas.drawRoundRect(r, 22, 22, borderPaint);
+        super.onDraw(canvas);
+    }
+
+    public int getBordderColor() {
+        return borderCol;
+    }
+
+    /**
+     * 设置Textview的背景颜色
+     * @param newColor
+     */
+    public void setBorderColor(int newColor) {
+        borderCol = newColor;
+        invalidate();
+        requestLayout();
+    }
+}

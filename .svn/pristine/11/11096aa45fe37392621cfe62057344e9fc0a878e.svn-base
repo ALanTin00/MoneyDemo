@@ -1,0 +1,328 @@
+package com.tanlian.wallet.wallet.bean;
+
+import com.tanlian.wallet.constant.TypeConstant;
+import com.tanlian.wallet.manager.AccountManager;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2019/4/19
+ */
+
+public class ScoreStrategyConfig  {
+    public static final int LINK_POSITION_TITLE = 1;//链接位置在标题 即问题名字后面
+    public static final int LINK_POSITION_DETAIL = 2;//链接位置在详情 即问题详情后面
+
+    public static final int LINK_TYPE_SHARE = 100;//分享
+    public static final int LINK_TYPE_EXCHANGE_COUPON = 101;//兑换优惠券
+    public static final int LINK_TYPE_EXCHANGE_CASH = 102;//兑换现金
+    public static final int LINK_TYPE_DRAW_LOTTERY = 103;//立即抽奖
+    public static final int LINK_TYPE_CHECK_BREAK_RULES = 104;//违章查询
+    public static final int LINK_TYPE_LOVE_CAR = 105;//我的爱车
+    public static final int LINK_TYPE_FEE_BACK = 106;//反馈
+    public static final int LINK_TYPE_TAKE_PHOTO = 107;//拍照
+    public static final int LINK_TYPE_BIND_CAR = 108;//绑定车牌
+    public static final int LINK_TYPE_COMPLETE_INFORMATION = 109;//完善信息
+    public static final int LINK_TYPE_EXCHANGE_STEP= 110;//步数兑换
+    public static final int LINK_TYPE_GOTO_STORE= 111;//步数兑换
+    public static final int LINK_TYPE_GOTO_ACT_TWO= 112;//参加活动2
+    public static final int LINK_TYPE_GOTO_ACT_ONE= 113;//参加活动1
+    public static final int LINK_TYPE_GOTO_INVITE_FRIEND= 114;//邀请好友
+
+
+    public static class QuestionType implements MultiItemEntity  {
+
+        public boolean isOpen() {
+            return isOpen;
+        }
+
+        public void setOpen(boolean open) {
+            isOpen = open;
+        }
+
+        public boolean isOpen = false;
+
+        public String getTitle() {
+            return title;
+        }
+
+        private String title;//问题分类名称 如：会员等级描述
+
+        public QuestionType(String title) {
+            this.title = title;
+        }
+
+
+        public QuestionType() {
+        }
+
+        @Override
+        public int getItemType() {
+            return LINK_POSITION_TITLE;
+        }
+    }
+
+    public static class Question implements MultiItemEntity{
+
+
+        public boolean isOpen() {
+            return isOpen;
+        }
+
+        public void setOpen(boolean open) {
+            isOpen = open;
+        }
+
+        public boolean isOpen = false;
+
+        private String name;//问题名称 如1.什么是初级会员
+        private String detail;//详情 如：初级会员：是指注册了车碳宝app但未参加任何活动的用户，可在app以低于市场价格的会员价格享受汽车服务。
+        private String link;//可点击链接文字 如：点击前往分享
+        private int linkType;//链接类型 用于操作跳转
+        private int linkPosition = 0;//链接位置
+        private boolean linkEnable = true;//链接当前是否可点击
+
+        private int detailStartPosition = 0;
+
+        public int getStartPosition() {
+            return detailStartPosition;
+        }
+
+        public void setStartPosition(int startPosition) {
+            this.detailStartPosition = startPosition;
+        }
+
+        public Question(String name, String detail) {
+            this.name = name;
+            this.detail = detail;
+        }
+
+        public Question() {
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getDetail() {
+            return detail;
+        }
+
+        public void setDetail(String detail) {
+            this.detail = detail;
+        }
+
+        public String getLink() {
+            return link;
+        }
+
+        public void setLink(String link) {
+            this.link = link;
+        }
+
+        public int getLinkType() {
+            return linkType;
+        }
+
+        public void setLinkType(int linkType) {
+            this.linkType = linkType;
+        }
+
+        public int getLinkPosition() {
+            return linkPosition;
+        }
+
+        public void setLinkPosition(int linkPosition) {
+            this.linkPosition = linkPosition;
+        }
+
+        public boolean isLinkEnable() {
+            return linkEnable;
+        }
+
+        public void setLinkEnable(boolean linkEnable) {
+            this.linkEnable = linkEnable;
+        }
+
+        @Override
+        public int getItemType() {
+            return LINK_POSITION_DETAIL;
+        }
+    }
+
+    public static List<MultiItemEntity> getScoreStrategyDataList() {
+        QuestionType questionType = new QuestionType("会员等级描述");
+        Question question = new Question("1.什么是初级会员","初级会员：是指注册了车碳宝app但未参加任何活动的用户，可在app以低于市场价格的会员价格享受汽车服务。");
+        Question question2 = new Question("2.什么是中级会员","中级会员：是指注册车碳宝并参加拍照停驶减排的用户，可在app以更低的会员价格享受汽车服务。");
+        Question question3 = new Question("3.什么是高级会员","高级会员：是指注册车碳宝并通过设备参与减排的用户，可在app以最低的会员价格享受汽车服务。");
+
+        QuestionType questionType2 = new QuestionType("积分从哪来");
+//        Question question4 = new Question("1.签到","每日签到送积分，连续签到获得更高积分。");
+
+//        Question question5 = new Question("1.绑定车牌","绑定车牌即可获得100碳积分");
+//        if (TextUtils.isEmpty(AccountManager.getInstance().getUserInformation().getCarNo())){//没有绑定车牌的设置跳转
+//            question5.setDetail("绑定车牌即可获得100碳积分----前往绑定");
+//            question5.setLinkPosition(LINK_POSITION_DETAIL);
+//            question5.setStartPosition(18);
+//            question5.setLink("前往绑定");
+//            question5.setLinkType(LINK_TYPE_BIND_CAR);
+//        }
+        String completeSelfInfo =  "完善个人资料赚碳积分（完善个人资料获得200积分）----立即完善";
+        Question question6 = new Question("1.完善资料",completeSelfInfo);
+        question6.setLink("立即完善");
+        question6.setLinkPosition(LINK_POSITION_DETAIL);
+        question6.setStartPosition(completeSelfInfo.length()-4);
+        question6.setLinkType(LINK_TYPE_COMPLETE_INFORMATION);
+        String completeCarInfo =    "完善车辆信息专区碳积分（完善车辆信息获得200碳积分）--立即完善";
+        Question question6a = new Question("2.完善车辆信息",completeCarInfo);
+        question6a.setLink("立即完善");
+        question6a.setLinkPosition(LINK_POSITION_DETAIL);
+        question6a.setStartPosition(completeCarInfo.length()-4);
+        question6a.setLinkType(LINK_TYPE_LOVE_CAR);
+
+
+        Question question7 = new Question("3.分享app","将app分享到朋友圈、微信群，即可获得1碳碳积分（不限次数)----立即分享");
+        question7.setLink("立即分享");
+        question7.setLinkPosition(LINK_POSITION_DETAIL);
+        question7.setStartPosition(34);
+        question7.setLinkType(LINK_TYPE_SHARE);
+
+        Question question8 = new Question("4.评价服务","门店消费后给商家评价赚积分，每评价一次，赠送50碳积分。");
+        Question question9 = new Question("5.提供建议或者反馈问题","通过app向我们提供建设性意见经采纳即可获得200-2000碳积分----前往建议");
+        question9.setStartPosition(37);
+        question9.setLinkType(LINK_TYPE_FEE_BACK);
+        question9.setLink("前往建议");
+        question9.setLinkPosition(LINK_POSITION_DETAIL);
+
+        Question question10 = new Question("6.邀请好友","每邀请一个好友注册碳积分，邀请越多奖励越多。----立即邀请");
+        question10.setStartPosition(26);
+        question10.setLinkType(LINK_TYPE_GOTO_INVITE_FRIEND);
+        question10.setLink("立即邀请");
+        question10.setLinkPosition(LINK_POSITION_DETAIL);
+
+         Question question11 = new Question("7.抽奖","抽奖有一定概率获取碳积分。");
+         /*Question question11 = new Question("8.抽奖","抽奖有一定概率获取碳积分----点击抽奖");
+        question11.setStartPosition(16);
+        question11.setLinkType(LINK_TYPE_DRAW_LOTTERY);
+        question11.setLink("点击抽奖");
+        question11.setLinkPosition(LINK_POSITION_DETAIL);*/
+        String photoStr = "中级会员用户拍照上传里程可以获得碳积分\n拍照行为每次可以获得20碳积分，每日（24小时）最多奖励2次；拍照次数做限制\n一个星期结算一次\n一周按照210公里为基础，每停驶1公里，奖励10个碳积分。这部分奖励积分会在结算后获得。";
+        Question question12 = new Question("8.拍照(仪表盘公里数)----中级会员",photoStr);
+        if (AccountManager.getInstance().getUserInformation() != null) {
+            int gameListType = AccountManager.getInstance().getUserInformation().getGameListType();
+            if (gameListType==TypeConstant.TYPE_ACTIVITY_ONE||gameListType==TypeConstant.TYPE_ACTIVITY_NULL) {
+                photoStr = "中级会员用户拍照上传里程可以获得碳积分\n拍照行为每次可以获得20碳积分，每日（24小时）最多奖励2次；拍照次数做限制\n一个星期结算一次\n一周按照210公里为基础，每停驶1公里，奖励10个碳积分。这部分奖励积分会在结算后获得----立即拍照";
+                question12.setDetail(photoStr);
+                question12.setStartPosition(photoStr.length() - 4);
+                if (gameListType == TypeConstant.TYPE_ACTIVITY_ONE) {
+                    question12.setLinkType(LINK_TYPE_TAKE_PHOTO);
+                }else {
+                    question12.setLinkType(LINK_TYPE_GOTO_ACT_ONE);
+                }
+                question12.setLink("立即拍照");
+                question12.setLinkPosition(LINK_POSITION_DETAIL);
+            }
+        }
+        Question question13 = new Question("9.绿色行驶----高级会员","每月初预设奖励5000碳积分，用于奖励绿色驾驶行为。如违反绿色驾驶规则，将按规则从预设奖励的碳积分中扣除。预设碳积分不能消费，每月结束时转为正式碳积分，可以在商城中使用。");
+        if (AccountManager.getInstance().getUserInformation() != null && AccountManager.getInstance().getUserInformation().getGameListType() != TypeConstant.TYPE_ACTIVITY_TWO) {
+            String actTwo = "每月初预设奖励5000碳积分，用于奖励绿色驾驶行为。如违反绿色驾驶规则，将按规则从预设奖励的碳积分中扣除。预设碳积分不能消费，每月结束时转为正式碳积分，可以在商城中使用。----升级会员";
+            question13.setDetail(actTwo);
+            question13.setLink("升级会员");
+            question13.setStartPosition(actTwo.length()-4);
+            question13.setLinkType(LINK_TYPE_GOTO_ACT_TWO);
+            question13.setLinkPosition(LINK_POSITION_DETAIL);
+        }
+
+
+        String exchangeStepDetail = "每日行走步数未达到6000步，不能兑换碳积分。\n每日行走步数达到6000步，超出的部分按照每100步兑换一个碳积分。\n每日兑换碳积分上限为200个。----步数兑换";
+        Question question14 = new Question("10.步数兑换",exchangeStepDetail);
+        question14.setStartPosition(exchangeStepDetail.length()-4);
+        question14.setLinkType(LINK_TYPE_EXCHANGE_STEP);
+        question14.setLink("步数兑换");
+        question14.setLinkPosition(LINK_POSITION_DETAIL);
+        String toStore = "每消费1元，赠送1个碳积分（小数部分四舍五入）。----前往商城";
+        Question question15 = new Question("11.商城消费",toStore);
+        question15.setStartPosition(toStore.length()-4);
+        question15.setLinkType(LINK_TYPE_GOTO_STORE);
+        question15.setLink("前往商城");
+        question15.setLinkPosition(LINK_POSITION_DETAIL);
+
+        QuestionType questionType3 = new QuestionType("积分有什么用");
+        Question question16 = new Question("1.抽奖",null);
+      /*  question16.setLink("立即抽奖");
+        question16.setLinkPosition(LINK_POSITION_TITLE);
+        question16.setLinkType(LINK_TYPE_DRAW_LOTTERY);*/
+        Question question17 = new Question("2.违章查询",null);
+        question17.setLink("前往查询");
+        question17.setLinkPosition(LINK_POSITION_TITLE);
+        question17.setLinkType(LINK_TYPE_CHECK_BREAK_RULES);
+        Question question18 = new Question("3.兑换优惠券",null);
+        question18.setLink("前往兑换");
+        question18.setLinkPosition(LINK_POSITION_TITLE);
+        question18.setLinkType(LINK_TYPE_EXCHANGE_COUPON);
+
+        QuestionType questionType4 = new QuestionType("碳宝从哪里来");
+        Question question19 = new Question("1.成为高级会员","成为高级会员并停驶减排，即可获得碳宝，停驶越长，碳宝越多。");
+        if (AccountManager.getInstance().getUserInformation() != null && AccountManager.getInstance().getUserInformation().getGameListType() != TypeConstant.TYPE_ACTIVITY_TWO) {
+            String actTwo = "成为高级会员并停驶减排，即可获得碳宝，停驶越长，碳宝越多----升级会员";
+            question19.setDetail(actTwo);
+            question19.setLink("升级会员");
+            question19.setStartPosition(actTwo.length()-4);
+            question19.setLinkType(LINK_TYPE_GOTO_ACT_TWO);
+            question19.setLinkPosition(LINK_POSITION_DETAIL);
+
+        }
+        QuestionType questionType5 = new QuestionType("碳宝有什么用");
+        Question question20 = new Question("1.更低的门槛兑换优惠券。 ",null);
+        question20.setLink("前往兑换");
+        question20.setLinkPosition(LINK_POSITION_TITLE);
+        question20.setLinkType(LINK_TYPE_EXCHANGE_COUPON);
+        Question question21 = new Question("2.交易所兑换现金",null);
+        question21.setLink("即将上线");
+        question21.setLinkPosition(LINK_POSITION_TITLE);
+        question21.setLinkType(LINK_TYPE_EXCHANGE_CASH);
+        question21.setLinkEnable(false);
+
+        List<MultiItemEntity> data = new ArrayList<>();
+        data.add(questionType);
+        data.add(question);
+        data.add(question2);
+        data.add(question3);
+
+        data.add(questionType2);
+//        data.add(question4);
+//        data.add(question5);
+        data.add(question6);
+        data.add(question6a);
+        data.add(question7);
+        data.add(question8);
+        data.add(question9);
+        data.add(question10);
+        data.add(question11);
+        data.add(question12);
+        data.add(question13);
+        data.add(question14);
+        data.add(question15);
+
+        data.add(questionType3);
+        data.add(question16);
+        data.add(question17);
+        data.add(question18);
+
+        data.add(questionType4);
+        data.add(question19);
+
+        data.add(questionType5);
+        data.add(question20);
+        data.add(question21);
+        return data;
+    }
+}

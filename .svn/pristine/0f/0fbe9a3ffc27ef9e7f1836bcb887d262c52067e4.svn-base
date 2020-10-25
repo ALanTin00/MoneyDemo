@@ -1,0 +1,48 @@
+package com.tanlian.wallet.wallet.bean;
+
+import java.util.List;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2019/1/9
+ */
+
+public class GetCashDetailResult {
+    private double hasTotalMoney;
+    private double totalMoney;
+    private List<CashDetailBean> items;
+    private int totalCount;
+
+    public double getHasTotalMoney() {
+        return hasTotalMoney;
+    }
+
+    public void setHasTotalMoney(double hasTotalMoney) {
+        this.hasTotalMoney = hasTotalMoney;
+    }
+
+    public double getTotalMoney() {
+        return totalMoney;
+    }
+
+    public void setTotalMoney(double totalMoney) {
+        this.totalMoney = totalMoney;
+    }
+
+    public List<CashDetailBean> getItems() {
+        return items;
+    }
+
+    public void setItems(List<CashDetailBean> items) {
+        this.items = items;
+    }
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+}

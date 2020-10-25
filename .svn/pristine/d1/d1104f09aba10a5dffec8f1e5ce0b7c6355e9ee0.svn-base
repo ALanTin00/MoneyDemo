@@ -1,0 +1,145 @@
+package com.tanlian.wallet.wallet.activity;
+
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
+
+import com.gyf.barlibrary.BarHide;
+import com.gyf.barlibrary.ImmersionBar;
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.widget.ImageUtil;
+import com.uuzuche.lib_zxing.activity.CaptureFragment;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+
+public class QRActivity extends AppCompatActivity {
+
+    public static final int CODE_BACK = 369;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.qr_acticty);
+
+        ImmersionBar mImmersionBar = ImmersionBar.with(this)
+                .hideBar(BarHide.FLAG_HIDE_BAR);
+        mImmersionBar.init();
+
+        CaptureFragment captureFragment = new CaptureFragment();
+        /**
+         * 替换我们的扫描控件
+         */
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_my_container, captureFragment).commit();
+        findViewById(R.id.cancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+        findViewById(R.id.back_icon).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        //选择相册二维码
+        findViewById(R.id.picture).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AndPermission.with(QRActivity.this).runtime().permission(Permission.READ_EXTERNAL_STORAGE, Permission.WRITE_EXTERNAL_STORAGE)
+                        .onGranted(permissions -> {
+                            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                            intent.addCategory(Intent.CATEGORY_OPENABLE);
+                            intent.setType("image/*");
+                            startActivityForResult(intent, CODE_BACK);
+                        })
+                        .onDenied(permissions -> {
+                            Toast.makeText(QRActivity.this, "您拒绝了存储权限,暂时无法该功能", Toast.LENGTH_SHORT).show();
+                        }).start();
+            }
+        });
+
+        captureFragment.setAnalyzeCallback(analyzeCallback);
+
+    }
+
+    //选择相册二维码返回结果
+    CodeUtils.AnalyzeCallback analyzeCallback = new CodeUtils.AnalyzeCallback() {
+        @Override
+        public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
+            Intent resultIntent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_SUCCESS);
+            bundle.putString(CodeUtils.RESULT_STRING, result);
+            resultIntent.putExtras(bundle);
+            setResult(WithdrawCoinsActivity.REQUEST_CODE_SCANNING, resultIntent);
+            finish();
+        }
+
+        @Override
+        public void onAnalyzeFailed() {
+            Intent resultIntent = new Intent();
+            Bundle bundle = new Bundle();
+            bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_FAILED);
+            bundle.putString(CodeUtils.RESULT_STRING, "解析二维码失败");
+            resultIntent.putExtras(bundle);
+            setResult(WithdrawCoinsActivity.REQUEST_CODE_SCANNING, resultIntent);
+            finish();
+
+        }
+    };
+
+    //相册二维码返回的结果回调
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == CODE_BACK) {
+            if (data != null) {
+                Uri uri = data.getData();
+                try {
+                    String path = ImageUtil.getImageAbsolutePath(this, uri);
+                    CodeUtils.analyzeBitmap(ImageUtil.getImageAbsolutePath(this, uri), new CodeUtils.AnalyzeCallback() {
+                        @Override
+                        public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
+
+                            Intent resultIntent = new Intent();
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_SUCCESS);
+                            bundle.putString(CodeUtils.RESULT_STRING, result);
+                            resultIntent.putExtras(bundle);
+                            setResult(WithdrawCoinsActivity.REQUEST_CODE_SCANNING, resultIntent);
+                            finish();
+
+                        }
+
+                        @Override
+                        public void onAnalyzeFailed() {
+                            Intent resultIntent = new Intent();
+                            Bundle bundle = new Bundle();
+                            bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_FAILED);
+                            bundle.putString(CodeUtils.RESULT_STRING, "");
+                            resultIntent.putExtras(bundle);
+                            setResult(WithdrawCoinsActivity.REQUEST_CODE_SCANNING, resultIntent);
+                            finish();
+
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
+    }
+}

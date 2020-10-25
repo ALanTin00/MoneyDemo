@@ -1,0 +1,143 @@
+package com.tanlian.wallet.wallet.presenter;
+
+import android.text.TextUtils;
+
+import com.blankj.utilcode.util.EncodeUtils;
+import com.jliu.qndklibrary.A;
+import com.tanlian.wallet.base.App;
+import com.tanlian.wallet.base.BaseConfig;
+import com.tanlian.wallet.base.BasePresenter;
+import com.tanlian.wallet.constant.TypeConstant;
+import com.tanlian.wallet.main.bean.LoginParams;
+import com.tanlian.wallet.main.bean.SendSmsParams;
+import com.tanlian.wallet.manager.AccountManager;
+import com.tanlian.wallet.net.RetrofitManger;
+import com.tanlian.wallet.net.UrlManager;
+import com.tanlian.wallet.user.bean.UserInformation;
+import com.tanlian.wallet.utils.AES;
+import com.tanlian.wallet.utils.MDeviceUtil;
+import com.tanlian.wallet.utils.RxSchedulers;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
+
+public class LoginPresenter extends BasePresenter<LoginContract.View> implements LoginContract.Presenter {
+    /**
+     * 手机号密码登录
+     * @param phone 手机号
+     * @param pwd 密码
+     */
+    public void login(String phone,String pwd) {
+        mView.showDialog();
+        //authenticate(phone,pwd,"1qaz@WSX3edc$RFV5tgb^YHN7ujm*IK<9ol.)P:?-['+}");
+        RetrofitManger.getInstance().create().getPassKey()
+                .compose(RxSchedulers.applySchedulers())
+                .compose(mView.bindToLife())
+                .subscribe(stringBaseMode -> {
+                    if (stringBaseMode.isSuccess() && !TextUtils.isEmpty(stringBaseMode.getResult())) {
+                        authenticate(phone,pwd,null,stringBaseMode.getResult());
+                    }else {
+                        mView.hideDialog();
+                        mView.loginFail(0,"登录失败，密码校验失败");
+                    }
+                }, throwable -> {mView.hideDialog();mView.loginFail(0,throwable.getMessage());});
+    }
+
+    @Override
+    public void login(String phone, String pwd, String code) {
+        mView.showDialog();
+        //authenticate(phone,pwd,"1qaz@WSX3edc$RFV5tgb^YHN7ujm*IK<9ol.)P:?-['+}");
+        RetrofitManger.getInstance().create().getPassKey()
+                .compose(RxSchedulers.applySchedulers())
+                .compose(mView.bindToLife())
+                .subscribe(stringBaseMode -> {
+                    if (stringBaseMode.isSuccess() && !TextUtils.isEmpty(stringBaseMode.getResult())) {
+                        authenticate(phone,pwd,code,stringBaseMode.getResult());
+                    }else {
+                        mView.loginFail(0,"登录失败，密码校验失败");
+                    }
+                }, throwable -> mView.loginFail(0,throwable.getMessage()));
+    }
+
+    @Override
+    public void sendCode(String phone, int type) {
+        RetrofitManger.getInstance().create().sendCode(new SendSmsParams(phone,type)).compose(RxSchedulers.applySchedulers())
+                .compose(mView.bindToLife()).subscribe(objectBaseMode -> {
+            if (!objectBaseMode.isSuccess()) {
+                mView.requestFail(11,objectBaseMode.getError().getShowMessage());
+            }
+        }, throwable -> mView.requestFail(11,throwable.getMessage()));
+    }
+
+    private void authenticate(String phone, String pwd,String code, String key) {
+        LoginParams params = new LoginParams();
+        params.setPhoneNumber(phone);
+        params.setPhoneEquipmentCode(MDeviceUtil.getOnlyStr(App.getApp()));
+
+        String keyReal = BaseConfig.IS_ENCRYPT_OPEN? A.DecryptData(key):key;
+        //params.setPassword(EncryptUtils.encryptAES2HexString(pwd.getBytes(),key.getBytes()));
+        if (!TextUtils.isEmpty(pwd)) { //密码登录设置密码
+            AES aes = new AES(AES.ENUM_KEYSIZE.BIT128, keyReal);
+            byte[] bytes = aes.encrypt(pwd.getBytes());
+            params.setPassword(EncodeUtils.base64Encode2String(bytes));
+            params.setPasswordLength(bytes.length);
+            params.setLoginType(TypeConstant.LOGIN_TYPE_UGA);
+        }
+        if (!TextUtils.isEmpty(code) && !TextUtils.isEmpty(pwd)) { //密码登录设置验证码类型
+            params.setCode(code);
+            params.setSmsType(TypeConstant.SMS_TYPE_CHANGE_DEVICE_LOGIN);
+        }else if (!TextUtils.isEmpty(code)&&TextUtils.isEmpty(pwd)){ //验证码登录设置验证码类型
+            params.setCode(code);
+            params.setSmsType(TypeConstant.SMS_TYPE_LOGIN);
+            params.setLoginType(TypeConstant.LOGIN_TYPE_SMS);
+        }
+        params.initEncryptData();
+        RetrofitManger.getInstance().create().authenticate(params)
+                .compose(RxSchedulers.applySchedulers())
+                .compose(mView.bindToLife()).subscribe(objectBaseMode -> {
+            if (objectBaseMode.isSuccess()) {
+                AccountManager.getInstance().saveToken(objectBaseMode.getResult());
+                getUserInfo();
+            }else {
+                mView.hideDialog();
+                if ("ChangeEquipment".equals(objectBaseMode.getError().getMessage())) {
+                    mView.verifyCode(phone,pwd);
+                }else {
+                    mView.loginFail(0, objectBaseMode.getError().getShowMessage());
+                }
+            }
+        }, throwable -> {
+            mView.hideDialog();
+            if ("ChangeEquipment".equals(throwable.getMessage())) {
+                mView.verifyCode(phone,pwd);
+            }else {
+                mView.loginFail(0, throwable.getMessage());
+            }
+
+        });
+    }
+
+    private void getUserInfo() {
+        RetrofitManger.getInstance().create().getLoginUserInfo(0).compose(RxSchedulers.applySchedulers())
+                .compose(mView.bindToLife()).subscribe(objectBaseMode -> {
+            if (objectBaseMode.isSuccess()) {
+                UserInformation userInformation = objectBaseMode.getResult();
+                userInformation.initResult();
+                AccountManager.getInstance().saveUserInfo(userInformation);
+               /* PushAgent.getInstance(App.getApp()).addAlias("test".equals(UrlManager.TYPE)?"test_"+userInformation.getId():"release_"+userInformation.getId(), "chetanbao", new UTrack.ICallBack() {
+                    @Override
+                    public void onMessage(boolean b, String s) {
+
+                    }
+                });*/
+                mView.loginSuccess();
+            }else {
+                mView.hideDialog();
+                mView.loginFail(0,objectBaseMode.getError().getShowMessage());
+            }
+
+        }, throwable -> {
+            mView.hideDialog();
+            mView.loginFail(0,throwable.getMessage());
+        });
+    }
+}

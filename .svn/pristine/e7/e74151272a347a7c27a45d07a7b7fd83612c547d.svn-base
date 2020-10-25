@@ -1,0 +1,54 @@
+package com.tanlian.wallet.manager.tecentali;
+
+/***
+ * 功能描述:微信支付参数实体
+ * 作者:qiujialiu
+ * 时间:2017/7/19
+ ***/
+
+public class WXPayParamsBean {
+    /**
+     * appid (string, optional): 应用APPID ,
+     * mch_id (string, optional): 商户号 ,
+     * nonce_str (string, optional): 随机字符串 ,
+     * prepay_id (string, optional): 预支付交易会话标识 ,
+     * sign (string, optional): 签名 ,
+     * trade_type (string, optional): trade_type
+     */
+
+    private String appid;
+    private String partnerid;
+    private String noncestr;
+    private String prepayid;
+    private String sign;
+    private String timestamp;
+    private String packageStr;
+
+    public String getAppid() {
+        return appid;
+    }
+
+    public String getPartnerid() {
+        return partnerid;
+    }
+
+    public String getNoncestr() {
+        return noncestr;
+    }
+
+    public String getPrepayid() {
+        return prepayid;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public String getPackageStr() {
+        return packageStr;
+    }
+}

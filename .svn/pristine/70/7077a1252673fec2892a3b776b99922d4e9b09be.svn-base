@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_92"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@mipmap/coin_list_bg">
+
+    <ImageView
+        android:id="@+id/tip_icon"
+        android:layout_width="@dimen/dp_18"
+        android:layout_height="@dimen/dp_18"
+        android:layout_marginLeft="@dimen/dp_23"
+        android:layout_marginTop="@dimen/dp_14"
+        android:src="@mipmap/push_uga"/>
+
+    <TextView
+        android:id="@+id/tip_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_11"
+        android:layout_toRightOf="@+id/tip_icon"
+        android:layout_alignBottom="@+id/tip_icon"
+        android:layout_marginLeft="@dimen/dp_6"
+        android:fontFamily="@font/ping_fang_bold"
+        android:textSize="@dimen/sp_15"
+        android:textColor="@color/color_33"/>
+
+    <TextView
+        android:id="@+id/coin_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_18"
+        android:layout_below="@+id/tip_icon"
+        android:layout_marginTop="@dimen/dp_12"
+        android:layout_marginLeft="@dimen/dp_23"
+        android:fontFamily="@font/ping_fang_bold"
+        android:textColor="@color/color_fb7a3a"/>
+
+    <TextView
+        android:id="@+id/unit"
+        android:fontFamily="@font/ping_fang_bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_11"
+        android:textColor="@color/color_fb7a3a"
+        android:layout_marginBottom="@dimen/dp_2"
+        android:layout_marginLeft="@dimen/dp_4"
+        android:layout_toRightOf="@+id/coin_value"
+        android:layout_alignBottom="@+id/coin_value"/>
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/dp_18"
+        android:textSize="@dimen/sp_11"
+        android:textColor="@color/color_99"
+        android:layout_marginRight="@dimen/dp_24"/>
+
+    <com.tanlian.wallet.widget.StatusTextView
+        android:id="@+id/state"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/time"
+        android:layout_marginTop="@dimen/dp_14"
+        android:layout_marginRight="@dimen/dp_24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_4"
+        android:paddingBottom="@dimen/dp_4"
+        android:paddingRight="@dimen/dp_12"
+        android:fontFamily="@font/ping_fang_bold"
+        android:paddingLeft="@dimen/dp_12"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_10"
+        app:borderColor="@color/color_ff5400"/>
+
+</RelativeLayout>

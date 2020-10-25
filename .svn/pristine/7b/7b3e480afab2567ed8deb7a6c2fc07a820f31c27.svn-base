@@ -1,0 +1,74 @@
+package com.tanlian.wallet.net;
+
+import com.tanlian.wallet.base.bean.BaseMode;
+import com.tanlian.wallet.main.bean.LoginParams;
+import com.tanlian.wallet.main.bean.SendSmsParams;
+import com.tanlian.wallet.user.bean.SelfInfo;
+import com.tanlian.wallet.user.bean.TokenModel;
+import com.tanlian.wallet.user.bean.UserInformation;
+import com.tanlian.wallet.wallet.bean.NewVersion;
+import com.tanlian.wallet.wallet.bean.ProblemFeedBack;
+import com.tanlian.wallet.wallet.bean.GetCoinDetailResult;
+
+import java.util.Map;
+
+import io.reactivex.Observable;
+import retrofit2.http.Body;
+import retrofit2.http.GET;
+import retrofit2.http.POST;
+import retrofit2.http.Query;
+
+
+/**
+ * @author liufe
+ * @time 2018/6/26 13:23
+ */
+public interface ApiService {
+
+    // 获取用户个人信息及微信绑定状态
+    @GET("/api/services/app/UserService/GetUserPrincipalInfoAndWeChatDtoNew")
+    Observable<BaseMode<SelfInfo>> getSelfInfo();
+
+    @POST("/api/TokenAuth/Authenticate")
+    Observable<BaseMode<TokenModel>> authenticate(@Body LoginParams params);
+
+    @POST("/api/services/app/ClientService/ChangeSecretKeyNew")//新接口,增加加密校验
+    Observable<BaseMode<String>> getPassKey();
+
+    @GET("/api/services/app/UserService/GetCurrentLoginInfoNew")//新接口,增加加密校验
+    Observable<BaseMode<UserInformation>> getLoginUserInfo(@Query("msgId") int lastMsgId);
+
+    @POST("/api/services/app/SmsService/SmsSend")
+    Observable<BaseMode<Object>> sendCode(@Body SendSmsParams params);
+
+    // 问题反馈
+    @POST("/api/services/app/FeedBackService/AddFeedBack")
+    Observable<BaseMode<Boolean>> problemFeedBack(@Body ProblemFeedBack problemFeedBack);
+
+    //获取UEA数量
+    @GET("/api/services/app/WalletService/GetMyUgaDetailInfo")
+    Observable<BaseMode<GetCoinDetailResult>> getUgaDetailInfo(@Query("DealsType") Integer type,
+                                                               @Query("ExcludeDealsType") String exclude,
+                                                               @Query("page") int page,
+                                                               @Query("rows") int rows);
+
+    // 获取我的碳宝地址(充币)
+    @GET("/api/services/app/WalletService/GetMyUgaAdressNew")//新接口,增加加密校验
+    Observable<BaseMode<Map<String, String>>> getMyChargeAddress();
+
+    // 用户可提币碳宝信息
+    @GET("/api/services/app/WalletService/GetUserUgaDetail")
+    Observable<BaseMode<Map<String, Long>>> availableUGA();
+
+    // 提币
+    @POST("/api/services/app/WalletService/ExtractUga")
+    Observable<BaseMode<Map<String, Object>>> withdrawUGA(@Body Map<String, Object> param);
+
+    // 获取在线版本
+    @GET("/api/services/app/ClientService/GetNewVersions")
+    Observable<BaseMode<NewVersion>> getNewVersion(@Query("client") int client);
+
+    // 获取测试版本
+    @GET("/api/services/app/ClientService/GetNewVersionsOfTest")
+    Observable<BaseMode<NewVersion>> getNewVersionForTest(@Query("client") int client);
+}

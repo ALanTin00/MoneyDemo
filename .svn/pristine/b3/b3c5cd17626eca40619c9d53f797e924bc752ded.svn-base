@@ -1,0 +1,147 @@
+package com.tanlian.wallet.widget;
+
+import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.utils.DensityUtil;
+
+import java.util.ArrayList;
+
+public class PopupMenu {
+
+    private Context context;
+
+    private ArrayList<Item> itemList;
+
+    private PopupWindow popupWindow;
+
+    private ListView listView;
+
+    public static class Item {
+        public String text;
+
+        public Item(String text) {
+            this.text = text;
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    public PopupMenu(Context context, int id) {
+
+        this.context = context;
+        itemList = new ArrayList<Item>(4);
+        View view = LayoutInflater.from(context).inflate(R.layout.popup_menu, null);
+
+        //设置 listview
+        listView = view.findViewById(R.id.popup_view_listView);
+        listView.setAdapter(new PopAdapter());
+        listView.setFocusableInTouchMode(true);
+        listView.setFocusable(true);
+        listView.setBackgroundResource(id);
+        ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) listView.getLayoutParams();
+        if (id == R.mipmap.menu_rectangle)
+            p.setMargins(0, DensityUtil.dp2px(3), 0, 0);
+        else
+            p.setMargins(0, DensityUtil.dp2px(10), 0, 0);
+        listView.requestLayout();
+
+        popupWindow = new PopupWindow(view, 100, ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow = new PopupWindow(view,
+                DensityUtil.dp2px(120),
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        // 这个是为了点击“返回Back”也能使其消失，并且并不会影响你的背景（很神奇的）
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
+    }
+
+    //设置菜单项点击监听器
+    public void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
+        listView.setOnItemClickListener(listener);
+    }
+
+    //批量添加菜单项
+    public void addItems(Item[] items) {
+        for (Item s : items)
+            itemList.add(s);
+    }
+
+    //单个添加菜单项
+    public void addItem(Item item) {
+        itemList.add(item);
+    }
+
+    //下拉式 弹出 pop菜单 parent 右下角
+    public void showAsDropDown(View parent) {
+        popupWindow.showAsDropDown(parent, DensityUtil.dp2px(-20),
+                //保证尺寸是根据屏幕像素密度来的
+                DensityUtil.dp2px(0));
+
+        // 使其聚集
+        popupWindow.setFocusable(true);
+        // 设置允许在外点击消失
+        popupWindow.setOutsideTouchable(true);
+        //刷新状态
+        popupWindow.update();
+    }
+
+    //隐藏菜单
+    public void dismiss() {
+        popupWindow.dismiss();
+    }
+
+    // 适配器
+    private final class PopAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return itemList.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return itemList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(context).inflate(R.layout.popmenu_item, null);
+                holder = new ViewHolder();
+
+                convertView.setTag(holder);
+
+                holder.groupItem = convertView.findViewById(R.id.pop_item_header);
+                holder.divider = convertView.findViewById(R.id.divider);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
+            }
+
+            holder.groupItem.setText(itemList.get(position).text);
+            if (position == itemList.size() - 1)
+                holder.divider.setVisibility(View.INVISIBLE);
+            else
+                holder.divider.setVisibility(View.VISIBLE);
+            return convertView;
+        }
+
+        private final class ViewHolder {
+            View divider;
+            TextView groupItem;
+        }
+    }
+}

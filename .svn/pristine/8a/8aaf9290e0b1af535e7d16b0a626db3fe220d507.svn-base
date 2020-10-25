@@ -1,0 +1,7 @@
+package com.tanlian.wallet.wallet.listener;
+
+public interface WalletListener {
+
+    void selectMoreDate();
+
+}

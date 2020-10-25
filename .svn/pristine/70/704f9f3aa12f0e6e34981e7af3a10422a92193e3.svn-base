@@ -1,0 +1,75 @@
+package com.tanlian.wallet.wallet.bean;
+
+import java.util.List;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2019/1/7
+ */
+
+public class GetCoinDetailResult {
+    private long availableUGA;
+    private long frozenUGA;
+    private int ugaDecimalPlace;
+    private int totalCount;
+    private double hasTotalMoney;
+    private double totalMoney;
+    private List<CoinDealBean> items;
+
+    public long getAvailableUGA() {
+        return availableUGA;
+    }
+
+    public void setAvailableUGA(long availableUGA) {
+        this.availableUGA = availableUGA;
+    }
+
+    public long getFrozenUGA() {
+        return frozenUGA;
+    }
+
+    public void setFrozenUGA(long frozenUGA) {
+        this.frozenUGA = frozenUGA;
+    }
+
+    public int getUgaDecimalPlace() {
+        return ugaDecimalPlace;
+    }
+
+    public void setUgaDecimalPlace(int ugaDecimalPlace) {
+        this.ugaDecimalPlace = ugaDecimalPlace;
+    }
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public double getHasTotalMoney() {
+        return hasTotalMoney;
+    }
+
+    public void setHasTotalMoney(double hasTotalMoney) {
+        this.hasTotalMoney = hasTotalMoney;
+    }
+
+    public double getTotalMoney() {
+        return totalMoney;
+    }
+
+    public void setTotalMoney(double totalMoney) {
+        this.totalMoney = totalMoney;
+    }
+
+    public List<CoinDealBean> getItems() {
+        return items;
+    }
+
+    public void setItems(List<CoinDealBean> items) {
+        this.items = items;
+    }
+}

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_f9f9fa"
+    android:orientation="vertical"
+    tools:context="com.tanlian.wallet.wallet.MyInformationActivity">
+
+    <FrameLayout
+        android:id="@+id/my_information_back_fl"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="@dimen/dp_50">
+
+        <ImageView
+            android:layout_width="@dimen/dp_17"
+            android:layout_height="@dimen/dp_17"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginTop="@dimen/dp_16"
+            android:src="@mipmap/uga_wallet_back_icon" />
+    </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_15"
+        android:layout_marginTop="@dimen/dp_8"
+        android:fontFamily="@font/ping_fang_bold"
+        android:text="@string/my_information"
+        android:textColor="@color/color_33"
+        android:textSize="@dimen/sp_20" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginTop="@dimen/dp_30"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:fontFamily="@font/ping_fang_bold"
+            android:text="@string/head_portait"
+            android:textColor="@color/color_33"
+            android:textSize="@dimen/sp_13" />
+
+        <ImageView
+            android:id="@+id/my_head_portrait"
+            android:layout_width="@dimen/dp_30"
+            android:layout_height="@dimen/dp_30"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/dp_15" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:text="@string/user_name"
+            android:fontFamily="@font/ping_fang_bold"
+            android:textColor="@color/color_33"
+            android:textSize="@dimen/sp_13" />
+
+        <TextView
+            android:id="@+id/my_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/dp_15"
+            android:text="曾凡听"
+            android:fontFamily="@font/ping_fang_bold"
+            android:textColor="@color/color_A1ABB9"
+            android:textSize="@dimen/sp_13" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:text="@string/phone_number"
+            android:fontFamily="@font/ping_fang_bold"
+            android:textColor="@color/color_33"
+            android:textSize="@dimen/sp_13" />
+
+        <TextView
+            android:id="@+id/my_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/dp_15"
+            android:text="13333333333"
+            android:fontFamily="@font/ping_fang_bold"
+            android:textColor="@color/color_A1ABB9"
+            android:textSize="@dimen/sp_13" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:text="@string/identity_card_id"
+            android:fontFamily="@font/ping_fang_bold"
+            android:textColor="@color/color_33"
+            android:textSize="@dimen/sp_13" />
+
+        <TextView
+            android:id="@+id/my_identity_card_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="@dimen/dp_15"
+            android:text="13333333333"
+            android:fontFamily="@font/ping_fang_bold"
+            android:textColor="@color/color_A1ABB9"
+            android:textSize="@dimen/sp_13" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/login_out_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_45"
+        android:layout_marginLeft="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_60"
+        android:layout_marginRight="@dimen/dp_32"
+        android:background="@drawable/bg_ff8884_r22"
+        android:gravity="center"
+        android:text="@string/login_out"
+        android:fontFamily="@font/ping_fang_bold"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_17" />
+</LinearLayout>

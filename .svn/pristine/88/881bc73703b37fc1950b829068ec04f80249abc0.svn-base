@@ -1,0 +1,98 @@
+package com.tanlian.wallet.wallet.adapter;
+
+import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.utils.NumberUtil;
+import com.tanlian.wallet.wallet.bean.CoinDealBean;
+import com.tanlian.wallet.widget.StatusTextView;
+
+
+public class CoinListAdapter extends BaseQuickAdapter<CoinDealBean, CoinListAdapter.CoinListHandler> {
+
+    public CoinListAdapter() {
+        super(R.layout.adapter_coin_list);
+    }
+
+    @Override
+    protected void convert(CoinListHandler helper, CoinDealBean item) {
+        helper.time.setText(item.getCreationTime());
+
+        if (item.getDealsType() == 1) {
+            //提币
+            helper.tipIcon.setImageResource(R.mipmap.extract_uga);
+            helper.tipName.setText("提币");
+        } else if (item.getDealsType() == 2) {
+            //充币
+            helper.tipIcon.setImageResource(R.mipmap.push_uga);
+            helper.tipName.setText("充币");
+        } else if (item.getDealsType() == 3) {
+            //挖矿
+            helper.tipIcon.setImageResource(R.mipmap.mining_icon);
+            helper.tipName.setText("挖矿");
+        } else if (item.getDealsType() == 4) {
+            //消费
+            helper.tipIcon.setImageResource(R.mipmap.consumption_icon);
+            helper.tipName.setText("消费");
+        }
+
+        //UGA个数
+        if (item.getUgaInOutType() == CoinDealBean.TYPE_IN) {
+            helper.cionVale.setTextColor(ContextCompat.getColor(mContext, R.color.color_4CD69A));
+            helper.cionVale.setText("" + NumberUtil.longDivideToDouble(item.getDealsNumber(), item.getUgaDecimalPlace()));
+            helper.cionUnit.setTextColor(ContextCompat.getColor(mContext, R.color.color_4CD69A));
+            helper.cionUnit.setText("个");
+        } else {
+            helper.cionVale.setTextColor(ContextCompat.getColor(mContext, R.color.color_fb7a3a));
+            helper.cionVale.setText("" + NumberUtil.longDivideToDouble(item.getDealsNumber(), item.getUgaDecimalPlace()));
+            helper.cionUnit.setTextColor(ContextCompat.getColor(mContext, R.color.color_fb7a3a));
+            helper.cionUnit.setText("个");
+        }
+
+        //审核状态
+        if (TextUtils.isEmpty(item.getDealsStateDes())) {
+            helper.state.setVisibility(View.GONE);
+        } else {
+            helper.state.setVisibility(View.VISIBLE);
+            helper.state.setText(item.getDealsStateDes());
+        }
+        if (item.getDealsState() == 1) {
+            //审核中
+            helper.state.setBorderColor(mContext.getResources().getColor(R.color.color_FECE27));
+        } else if (item.getDealsState() == 3) {
+            //已拒绝
+            helper.state.setBorderColor(mContext.getResources().getColor(R.color.color_CBCBCB));
+        } else if (item.getDealsState() == 2) {
+            //已经完成
+            helper.state.setBorderColor(mContext.getResources().getColor(R.color.color_275DFE));
+        }
+
+
+    }
+
+    class CoinListHandler extends BaseViewHolder {
+        ImageView tipIcon;
+        TextView tipName;
+        TextView cionVale;
+        TextView cionUnit;
+        TextView time;
+        StatusTextView state;
+
+        public CoinListHandler(View view) {
+            super(view);
+            tipIcon = view.findViewById(R.id.tip_icon);
+            tipName = view.findViewById(R.id.tip_name);
+            cionVale = view.findViewById(R.id.coin_value);
+            cionUnit = view.findViewById(R.id.unit);
+            time = view.findViewById(R.id.time);
+            state = view.findViewById(R.id.state);
+        }
+    }
+
+}

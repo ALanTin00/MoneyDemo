@@ -1,0 +1,25 @@
+package com.tanlian.wallet.wallet.presenter;
+
+import android.text.TextUtils;
+
+import com.tanlian.wallet.base.BasePresenter;
+import com.tanlian.wallet.net.RetrofitManger;
+import com.tanlian.wallet.utils.RxSchedulers;
+import com.tanlian.wallet.wallet.bean.ProblemFeedBack;
+
+public class OpinionFeddbackPresenter extends BasePresenter<OpiniionFeedbackContract.View> implements OpiniionFeedbackContract.Presenter {
+
+    @Override
+    public void problemFeedBack(ProblemFeedBack problemFeedBack) {
+        RetrofitManger.getInstance().create().problemFeedBack(problemFeedBack)
+                .compose(RxSchedulers.applySchedulers())
+                .compose(mView.bindToLife())
+                .subscribe(stringBaseMode -> {
+                    if(stringBaseMode.isSuccess()){
+                        mView.problemFeedBackSuc(true);
+                    }else{
+                        mView.problemFeedBackFail(stringBaseMode.getError().getMessage());
+                    }
+                }, throwable -> {mView.problemFeedBackFail(throwable.getMessage());});
+    }
+}

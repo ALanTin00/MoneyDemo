@@ -1,0 +1,49 @@
+package com.tanlian.wallet.wallet.fragment;
+
+import android.view.View;
+
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.base.BaseContract;
+import com.tanlian.wallet.base.BaseFragment;
+import com.tanlian.wallet.wallet.AboutUsActivity;
+import com.tanlian.wallet.wallet.MessageCenterActivity;
+import com.tanlian.wallet.wallet.MyInformationActivity;
+import com.tanlian.wallet.wallet.OpionFeedbackActivity;
+
+import butterknife.OnClick;
+
+public class SettingFragment extends BaseFragment {
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_setting;
+    }
+
+    @Override
+    protected BaseContract.BasePresenter createPresenter() {
+        return null;
+    }
+
+    @Override
+    protected void initView(View view) {
+
+    }
+
+    @OnClick({R.id.fragment_setting_my_account_rl,R.id.fragment_setting_notification_rl,
+            R.id.fragment_setting_feedback_rl,R.id.fragment_setting_about_us_rl})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.fragment_setting_my_account_rl:
+               startToActivity(MyInformationActivity.class);
+                break;
+            case R.id.fragment_setting_notification_rl:
+                startToActivity(MessageCenterActivity.class);
+                break;
+            case R.id.fragment_setting_feedback_rl:
+                startToActivity(OpionFeedbackActivity.class);
+                break;
+            case R.id.fragment_setting_about_us_rl:
+                startToActivity(AboutUsActivity.class);
+                break;
+        }
+    }
+}

@@ -1,0 +1,47 @@
+package com.tanlian.wallet.wallet.dialog;
+
+import android.app.Dialog;
+import android.view.View;
+import android.widget.RelativeLayout;
+
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.base.BaseDialogFragment;
+import com.tanlian.wallet.utils.DebounceIntervalClick;
+
+public class LogoutDialog extends BaseDialogFragment {
+    private OnLogoutListener onLogoutListener;
+    RelativeLayout cancleLogout;
+    RelativeLayout confirmLogout;
+
+    public void setOnLogoutListener(OnLogoutListener onLogoutListener) {
+        this.onLogoutListener = onLogoutListener;
+    }
+
+    @Override
+    protected int setContentLayout() {
+        return R.layout.dialog_logout;
+    }
+
+    @Override
+    protected void initView(Dialog dialog) {
+        confirmLogout = dialog.findViewById(R.id.dialog_logout_confirm);
+        cancleLogout = dialog.findViewById(R.id.dialog_cancle_logout);
+        cancleLogout.setOnClickListener(new DebounceIntervalClick() {
+            @Override
+            public void onDebounceClick(View v) {
+                dismiss();
+            }
+        });
+
+        confirmLogout.setOnClickListener(new DebounceIntervalClick() {
+            @Override
+            public void onDebounceClick(View v) {
+                onLogoutListener.logout();
+            }
+        });
+    }
+
+    public interface OnLogoutListener {
+        void logout();
+    }
+}

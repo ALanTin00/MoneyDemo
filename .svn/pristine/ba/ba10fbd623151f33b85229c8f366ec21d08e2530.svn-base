@@ -1,0 +1,165 @@
+package com.tanlian.wallet.wallet.bean;
+
+/**
+ * 类说明：UGA transaction detail bean
+ * 作者：qiujialiu
+ * 时间：2019/1/4
+ */
+
+public class CoinDealBean {
+    public static final int TYPE_IN = 1;
+    public static final int TYPE_OUT = 2;
+    /**
+     * userId : 0
+     * dealsType : 1
+     * dealsTypeDes : string
+     * dealsNumber : 0
+     * ugaDecimalPlace : 0
+     * ugaInOutType : 1
+     * dealsState : 1
+     * dealsStateDes : string
+     * tiId : string
+     * sendAddress : string
+     * receiveAddress : string
+     * poundage : 0
+     * uid : string
+     * creationTime : string
+     * lastModificationTime : string
+     */
+
+    private int userId;
+    private int dealsType;
+    private String dealsTypeDes;
+    private long dealsNumber;
+    private int ugaDecimalPlace;
+    private int ugaInOutType;
+    private int dealsState;
+    private String dealsStateDes;
+    private String tiId;
+    private String sendAddress;
+    private String receiveAddress;
+    private long poundage;
+    private String uid;
+    private String creationTime;
+    private String lastModificationTime;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getDealsType() {
+        return dealsType;
+    }
+
+    public void setDealsType(int dealsType) {
+        this.dealsType = dealsType;
+    }
+
+    public String getDealsTypeDes() {
+        return dealsTypeDes;
+    }
+
+    public void setDealsTypeDes(String dealsTypeDes) {
+        this.dealsTypeDes = dealsTypeDes;
+    }
+
+    public long getDealsNumber() {
+        return dealsNumber;
+    }
+
+    public void setDealsNumber(long dealsNumber) {
+        this.dealsNumber = dealsNumber;
+    }
+
+    public int getUgaDecimalPlace() {
+        return ugaDecimalPlace;
+    }
+
+    public void setUgaDecimalPlace(int ugaDecimalPlace) {
+        this.ugaDecimalPlace = ugaDecimalPlace;
+    }
+
+    public int getUgaInOutType() {
+        return ugaInOutType;
+    }
+
+    public void setUgaInOutType(int ugaInOutType) {
+        this.ugaInOutType = ugaInOutType;
+    }
+
+    public int getDealsState() {
+        return dealsState;
+    }
+
+    public void setDealsState(int dealsState) {
+        this.dealsState = dealsState;
+    }
+
+    public String getDealsStateDes() {
+        return dealsStateDes;
+    }
+
+    public void setDealsStateDes(String dealsStateDes) {
+        this.dealsStateDes = dealsStateDes;
+    }
+
+    public String getTiId() {
+        return tiId;
+    }
+
+    public void setTiId(String tiId) {
+        this.tiId = tiId;
+    }
+
+    public String getSendAddress() {
+        return sendAddress;
+    }
+
+    public void setSendAddress(String sendAddress) {
+        this.sendAddress = sendAddress;
+    }
+
+    public String getReceiveAddress() {
+        return receiveAddress;
+    }
+
+    public void setReceiveAddress(String receiveAddress) {
+        this.receiveAddress = receiveAddress;
+    }
+
+    public long getPoundage() {
+        return poundage;
+    }
+
+    public void setPoundage(long poundage) {
+        this.poundage = poundage;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(String creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public String getLastModificationTime() {
+        return lastModificationTime;
+    }
+
+    public void setLastModificationTime(String lastModificationTime) {
+        this.lastModificationTime = lastModificationTime;
+    }
+}

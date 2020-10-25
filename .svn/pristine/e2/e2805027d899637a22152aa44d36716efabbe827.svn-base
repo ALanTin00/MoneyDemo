@@ -1,0 +1,169 @@
+package com.tanlian.wallet.wallet.fragment;
+
+import android.support.annotation.NonNull;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.base.BaseFragment;
+import com.tanlian.wallet.wallet.adapter.CoinListAdapter;
+import com.tanlian.wallet.wallet.bean.GetCoinDetailResult;
+import com.tanlian.wallet.wallet.constant.ConDetailsConstant;
+import com.tanlian.wallet.wallet.presenter.ConDetailsPresenter;
+import com.tanlian.wallet.widget.TitleForDateSelectionView;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+public class HistoryFragment extends BaseFragment<ConDetailsPresenter> implements ConDetailsConstant.View {
+
+    @BindView(R.id.history_data_srl)
+    SmartRefreshLayout smartRefreshLayout;
+    @BindView(R.id.history_data_rv)
+    RecyclerView recyclerView;
+    @BindView(R.id.all_view)
+    TitleForDateSelectionView allView;
+    @BindView(R.id.extract_view)
+    TitleForDateSelectionView extractView;
+    @BindView(R.id.recharge_view)
+    TitleForDateSelectionView rechargeView;
+    @BindView(R.id.mining_view)
+    TitleForDateSelectionView miningView;
+    @BindView(R.id.consume_view)
+    TitleForDateSelectionView consumeView;
+
+    private CoinListAdapter adapter;
+    //标识刷新or加载
+    private int refreshFlag = -1;
+    private int currentPage = 1;
+    private int type = 0;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_history;
+    }
+
+    @Override
+    protected ConDetailsPresenter createPresenter() {
+        return new ConDetailsPresenter();
+    }
+
+    @Override
+    protected void initView(View view) {
+        adapter = new CoinListAdapter();
+        adapter.setHeaderAndEmpty(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity2()));
+        recyclerView.setAdapter(adapter);
+        smartRefreshLayout.setEnableLoadMoreWhenContentNotFull(false);
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                refreshFlag = 0;
+                currentPage = 1;
+                smartRefreshLayout.setNoMoreData(false);
+                mPresenter.loadCoinDetail(type, currentPage);
+
+            }
+        });
+        smartRefreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                refreshFlag = 1;
+                mPresenter.loadCoinDetail(type, currentPage);
+            }
+        });
+        //初始化第一次请求
+        mPresenter.loadCoinDetail(type, currentPage);
+    }
+
+    @OnClick({R.id.all_view, R.id.extract_view, R.id.recharge_view, R.id.mining_view, R.id.consume_view})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.all_view:
+                currentPage = 1;
+                type = 0;
+                mPresenter.loadCoinDetail(type, currentPage);
+                updateView(true, false, false, false, false);
+                break;
+            case R.id.extract_view:
+                currentPage = 1;
+                type = 1;
+                mPresenter.loadCoinDetail(type, currentPage);
+                updateView(false, true, false, false, false);
+                break;
+            case R.id.recharge_view:
+                currentPage = 1;
+                type = 2;
+                mPresenter.loadCoinDetail(type, currentPage);
+                updateView(false, false, true, false, false);
+                break;
+            case R.id.mining_view:
+                currentPage = 1;
+                type = 3;
+                mPresenter.loadCoinDetail(type, currentPage);
+                updateView(false, false, false, true, false);
+                break;
+            case R.id.consume_view:
+                currentPage = 1;
+                type = 4;
+                mPresenter.loadCoinDetail(type, currentPage);
+                updateView(false, false, false, false, true);
+                break;
+        }
+    }
+
+    public void updateView(boolean all, boolean extract, boolean recharge, boolean mining, boolean consume) {
+        allView.isSelectedT(all);
+        extractView.isSelectedT(extract);
+        rechargeView.isSelectedT(recharge);
+        miningView.isSelectedT(mining);
+        consumeView.isSelectedT(consume);
+        smartRefreshLayout.setNoMoreData(false);
+    }
+
+    /**
+     * 加载完成对layout状态进行更新
+     *
+     * @param state
+     */
+    private void updateLoadStateView(boolean state) {
+        if (refreshFlag == 0) {
+            smartRefreshLayout.finishRefresh(state);
+        } else if (refreshFlag == 1) {
+            smartRefreshLayout.finishLoadMore(state);
+        }
+    }
+
+    @Override
+    public void loadCoinDetailSuccess(int page, GetCoinDetailResult result) {
+        if (refreshFlag != -1) {
+            updateLoadStateView(true);
+        }
+        if (result.getItems() != null && result.getItems().size() > 0) {
+            if (currentPage == 1) {
+                //第一页数据直接设置
+                adapter.setNewData(result.getItems());
+            } else {
+                adapter.addData(result.getItems());
+            }
+            //请求完成直接对当前页面+1
+            currentPage = currentPage + 1;
+        }
+        if (adapter.getItemCount() == result.getTotalCount()) {
+            smartRefreshLayout.finishLoadMoreWithNoMoreData();
+        }
+
+    }
+
+    @Override
+    public void loadCoinDetailFail(String msg) {
+        if (refreshFlag != -1) {
+            updateLoadStateView(true);
+        }
+    }
+}

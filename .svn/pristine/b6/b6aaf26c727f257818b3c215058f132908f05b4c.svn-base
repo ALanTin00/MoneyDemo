@@ -1,0 +1,61 @@
+package com.tanlian.wallet.user.bean;
+
+import java.util.List;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2018/9/30
+ */
+
+public class WithdrawSuccessResult {
+    private Result Result;
+    private List<CerBean> DetailAry;
+    private String SealUrl;//印章图片地址
+
+    public WithdrawSuccessResult.Result getResult() {
+        return Result;
+    }
+
+    public void setResult(WithdrawSuccessResult.Result result) {
+        Result = result;
+    }
+
+    public List<CerBean> getCerAry() {
+        return DetailAry;
+    }
+
+    public void setCerAry(List<CerBean> cerAry) {
+        DetailAry = cerAry;
+    }
+
+    public String getSealUrl() {
+        return SealUrl;
+    }
+
+    public void setSealUrl(String sealUrl) {
+        SealUrl = sealUrl;
+    }
+
+    public class Result{
+        int Status;//0：成功
+        String Msg;
+
+        public int getStatus() {
+            return Status;
+        }
+
+        public void setStatus(int status) {
+            Status = status;
+        }
+
+        public String getMsg() {
+            return Msg;
+        }
+
+        public void setMsg(String msg) {
+            Msg = msg;
+        }
+    }
+
+}

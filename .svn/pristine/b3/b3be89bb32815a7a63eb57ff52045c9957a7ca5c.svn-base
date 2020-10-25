@@ -1,0 +1,20 @@
+package com.tanlian.wallet.user.interfaces;
+
+/**
+ * Created by Administrator on 2018/6/28.
+ */
+
+public interface LoginListener {
+    void login(String phone, String pwd);
+    void startForgetPwd();
+    void loginByWeChat();
+    void loginByQQ();
+    void login(String phone, String pwd, String code);
+    void showRegister();
+    void onBack();
+    void onSendAuthLoginCode(String phone);
+
+    void loginByAuthCode(String phone,String authCode);
+
+    void onSendChangeDeviceCode(String phone);
+}

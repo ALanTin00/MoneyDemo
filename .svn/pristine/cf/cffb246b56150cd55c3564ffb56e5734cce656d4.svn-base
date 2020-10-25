@@ -1,0 +1,11 @@
+package com.tanlian.wallet.main.bean;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2019/2/26
+ */
+
+public abstract class RegisterSourceType {
+    public static final int TYPE_ANDROID = 2;
+}

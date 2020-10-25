@@ -1,0 +1,33 @@
+package com.tanlian.wallet.user.bean;
+
+import java.util.List;
+
+public class AccountMoneyInfo {
+    List<Integer> moneyStatus;//14支付宝 11个人信息 13微信
+    double money;
+    String nickName;
+
+    public List<Integer> getMoneyStatus() {
+        return moneyStatus;
+    }
+
+    public void setMoneyStatus(List<Integer> moneyStatus) {
+        this.moneyStatus = moneyStatus;
+    }
+
+    public double getMoney() {
+        return money;
+    }
+
+    public void setMoney(double money) {
+        this.money = money;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+}

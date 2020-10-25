@@ -1,0 +1,31 @@
+package com.tanlian.wallet.user.interfaces;
+
+import com.tanlian.wallet.user.bean.SelfInfo;
+import com.tanlian.wallet.constant.TypeConstant;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2018/8/13
+ */
+public interface ShowSelfInfoListener {
+    void onFinish();
+
+    void gotoEdit();
+
+    SelfInfo updateData();
+
+    void goBindWeChat();
+
+    void goChangeCardNumber();
+
+    void goBindAlipy();
+
+    void goChangeNickName();
+
+    void goChangeAvatar();
+
+    void changeGender(int gender);
+
+    void unBind(@TypeConstant.LoginType int type);
+}

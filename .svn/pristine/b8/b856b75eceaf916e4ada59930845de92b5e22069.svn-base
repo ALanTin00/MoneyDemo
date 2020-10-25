@@ -1,0 +1,66 @@
+package com.tanlian.wallet.widget.divider;
+
+import android.graphics.Rect;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+
+import com.blankj.utilcode.util.SizeUtils;
+
+/**
+ * @author liufe 加了头部和底部
+ */
+public class GridViewSpaceItemDecoration extends RecyclerView.ItemDecoration {
+
+    private int num;
+    private int top = SizeUtils.dp2px(10);
+    private int bottom = SizeUtils.dp2px(18);
+    private int left = SizeUtils.dp2px(14);
+    private int right = SizeUtils.dp2px(14);
+    private int paddingLeft = SizeUtils.dp2px(5);
+    private int paddingRight = SizeUtils.dp2px(5);
+
+    public GridViewSpaceItemDecoration(int num) {
+        this.num = num;
+    }
+
+    public GridViewSpaceItemDecoration(int num, int top, int bottom, int left, int right, int paddingLeft, int paddingRight) {
+        this.num = num;
+        this.top = top;
+        this.bottom = bottom;
+        this.left = left;
+        this.right = right;
+        this.paddingLeft = paddingLeft;
+        this.paddingRight = paddingRight;
+    }
+
+    //todo 根据num 动态switch
+    @Override
+    public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+        int current = parent.getChildLayoutPosition(view);
+        outRect.bottom = (bottom >> 1);
+
+        if (current < num) {
+            outRect.top = top;
+        } else {
+            outRect.top = (top >> 1);
+        }
+
+        int flag = current % num;
+        switch (flag) {
+            case 0:
+                outRect.left = left + paddingLeft;
+                outRect.right = (right >> 1);
+                break;
+            case 1:
+                outRect.left = (left >> 1);
+                outRect.right = (right >> 1);
+                break;
+            case 2:
+                outRect.right = right + paddingRight;
+                outRect.left = (left >> 1);
+                break;
+
+        }
+
+    }
+}

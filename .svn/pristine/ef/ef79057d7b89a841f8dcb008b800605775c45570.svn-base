@@ -1,0 +1,181 @@
+package com.tanlian.wallet.base;
+
+import android.Manifest;
+import android.app.ActivityManager;
+import android.app.Application;
+import android.content.ComponentName;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Environment;
+import android.support.multidex.MultiDex;
+import android.util.Log;
+
+import com.blankj.utilcode.util.Utils;
+import com.tanlian.wallet.constant.Constant;
+import com.tanlian.wallet.manager.tecentali.TecentALiManager;
+import com.tanlian.wallet.net.ObservableSubscribeHooker;
+import com.tanlian.wallet.net.UrlManager;
+import com.danikula.videocache.HttpProxyCacheServer;
+import com.jliu.qndklibrary.A;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UmengNotificationClickHandler;
+import com.umeng.message.common.inter.ITagManager;
+import com.umeng.message.entity.UMessage;
+import com.umeng.message.tag.TagManager;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
+import com.uuzuche.lib_zxing.activity.ZXingLibrary;
+import com.yanzhenjie.permission.AndPermission;
+
+import org.android.agoo.huawei.HuaWeiRegister;
+import org.android.agoo.mezu.MeizuRegister;
+import org.android.agoo.oppo.OppoRegister;
+import org.android.agoo.vivo.VivoRegister;
+import org.android.agoo.xiaomi.MiPushRegistar;
+
+import java.io.File;
+import java.io.Serializable;
+import java.util.List;
+
+import io.reactivex.plugins.RxJavaPlugins;
+
+/**
+ * Created by liufe on 2018/6/26
+ * 不要在Application里面存取数据（除了app）
+ */
+public class App extends Application {
+    private HttpProxyCacheServer proxy;
+    private static App app;
+    public static final String TAG = "====App=====";
+    private ActivityManager activityManager;
+    private String packageName;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        Utils.init(this);
+        app = this;
+        activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        packageName = this.getPackageName();
+        //面向切面 处理网络异常,统一丢到onError 自己处理
+        RxJavaPlugins.setOnObservableSubscribe((observable, observer) -> new ObservableSubscribeHooker(observer));
+//        initUm();
+//        TecentALiManager.getInstance().init(this);
+        //SqlMangerUtils.getInstance().initData(this);
+        //LeakCanary.install(this);
+        //二维码框架
+        ZXingLibrary.initDisplayOpinion(this);
+    }
+
+    public static App getApp() {
+        return app;
+    }
+
+    public void initUm() {
+        UMShareAPI.init(this, "5b3ae3f3b27b0a658400005b");
+        UMConfigure.init(this, UMConfigure.DEVICE_TYPE_PHONE, Constant.UM_PUSH_Secret);
+        UMConfigure.setLogEnabled(true);
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.register(new IUmengRegisterCallback() {
+            @Override
+            public void onSuccess(String s) {
+                Log.i(TAG, "onSuccess: " + s);
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+                Log.i(TAG, "onFailure: " + s + "     " + s1);
+            }
+        });
+        //通知栏可以设置最多显示通知的条数，当有新通知到达时，会把旧的通知隐藏。
+        mPushAgent.setDisplayNotificationNumber(3);
+        mPushAgent.setNotificaitonOnForeground(true);//应用在前台时否显示通知
+        //友盟产商通道
+        MiPushRegistar.register(this, "2882303761517856770", "5471785620770");
+        HuaWeiRegister.register(this);
+        MeizuRegister.register(this, "124258", "699e9e38fd4d4d098d75661e5d170507");
+        OppoRegister.register(this, "20a520473ca444e395239a141f5fa97c", "575cba4a10e04285b817bec67a86b203");
+        VivoRegister.register(this);
+
+        mPushAgent.setNotificationClickHandler(
+                new UmengNotificationClickHandler() {
+                    @Override
+                    public void dealWithCustomAction(Context context, UMessage uMessage) {
+//                        super.dealWithCustomAction(context,uMessage);
+//                        Intent intent = new Intent(context, MPushActivity.class);
+//                        //获取栈顶的activity如果是同一个activity就不做操作
+//                        ActivityManager am = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+//                        ComponentName cn = am.getRunningTasks(1).get(0).topActivity;
+//                        intent.putExtra("mapList", (Serializable) uMessage.extra);
+//                        if (cn.getClassName() != null) {
+//                            intent.putExtra("currentActivity", cn.getShortClassName());
+//                        }
+//                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        context.startActivity(intent);
+                    }
+                }
+
+        );
+        mPushAgent.getTagManager().addTags(new TagManager.TCallBack() {
+            @Override
+            public void onMessage(boolean b, ITagManager.Result result) {
+
+            }
+        }, "test".equals(UrlManager.TYPE) ? "chetanbao_test" : "chetanbao_release");
+        PlatformConfig.setWeixin(Constant.WECHAT_APPID, A.WeiXinKey());
+        PlatformConfig.setQQZone(Constant.TECENT_APPID, A.QQKey());
+        PlatformConfig.setSinaWeibo("3137927028", "a203e893578ab5c7aa7a3e33768be0bc", "http://sns.whalecloud.com");
+        MobclickAgent.setCatchUncaughtExceptions(true);
+//        LogUtils.w("App","weixin:"+A.WeiXinKey()+"=================qq:"+A.QQKey());
+//        LogUtils.w("App","signKey:"+A.SignKey()+"=================encryptKey:"+A.EncryptKey());
+    }
+
+    private boolean appOnForeground() {
+        List<ActivityManager.RunningAppProcessInfo> appProcesses = activityManager.getRunningAppProcesses();
+        if (appProcesses == null){
+
+            return false;
+        }
+
+        for (ActivityManager.RunningAppProcessInfo appProcess : appProcesses) {
+            if (appProcess.processName.equals(packageName) && appProcess.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
+
+    public static HttpProxyCacheServer getProxy(Context context) {
+        App app = (App) context.getApplicationContext();
+        return app.proxy == null ? (app.proxy = app.newProxy()) : app.proxy;
+    }
+
+    private HttpProxyCacheServer newProxy() {
+        return new HttpProxyCacheServer.Builder(this)
+                .cacheDirectory(getCacheFile())
+                .build();
+    }
+
+    private File getCacheFile() {
+        if (AndPermission.hasPermissions(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            return getExternalFilesDir(Environment.DIRECTORY_MUSIC);
+        } else {
+            File file = new File(getFilesDir(), "ctb_music");
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            return file;
+        }
+    }
+
+}

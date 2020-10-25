@@ -1,0 +1,36 @@
+package com.tanlian.wallet.utils;
+
+
+import io.reactivex.ObservableTransformer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
+/**
+ * 通用的Rx线程转换类
+ * 参考:http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0819/3327.html
+ *
+ * @author liufe
+ */
+public class RxSchedulers {
+
+
+    final static ObservableTransformer schedulersTransformer = upstream -> (upstream).subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread());
+
+    final static ObservableTransformer schedulersBackstageTransformer = upstream -> (upstream).subscribeOn(Schedulers.io())
+            .observeOn(Schedulers.newThread());
+
+    public static <T> ObservableTransformer<T, T> applySchedulers() {
+        return (ObservableTransformer<T, T>) schedulersTransformer;
+    }
+
+    /**
+     * 后台发送数据
+     *
+     * @param <T>
+     * @return
+     */
+    public static <T> ObservableTransformer<T, T> applyBackstageSchedulers() {
+        return (ObservableTransformer<T, T>) schedulersBackstageTransformer;
+    }
+}

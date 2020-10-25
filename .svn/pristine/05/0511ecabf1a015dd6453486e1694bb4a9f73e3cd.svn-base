@@ -1,0 +1,143 @@
+package com.tanlian.wallet.manager;
+
+import android.text.TextUtils;
+
+import com.blankj.utilcode.util.SPUtils;
+import com.tanlian.wallet.base.App;
+import com.tanlian.wallet.constant.Constant;
+import com.tanlian.wallet.net.UrlManager;
+import com.tanlian.wallet.user.bean.TokenModel;
+import com.tanlian.wallet.user.bean.UserInformation;
+import com.tanlian.wallet.user.bean.UserSettingBean;
+import com.tanlian.wallet.constant.TypeConstant;
+import com.tanlian.wallet.event.GetCircleUserEvent;
+import com.tanlian.wallet.utils.GsonUtils;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
+
+import org.greenrobot.eventbus.EventBus;
+
+/**
+ * 类说明：用户账号管理
+ * 作者：qiujialiu
+ * 时间：2018/6/28
+ */
+
+public class AccountManager {
+    public static AccountManager instance;
+    private String accessToken;
+    private UserInformation userInformation;//账户主账号用户信息
+    private UserSettingBean userSettingBean;
+    public synchronized static AccountManager getInstance() {
+        if (instance == null) {
+            instance = new AccountManager();
+        }
+        return instance;
+    }
+
+    private AccountManager() {
+        userSettingBean = getUserSettingBean();
+    }
+
+    /**
+     * 获取用户参加的活动的类型
+     *
+     * @return
+     */
+    public int getActType() {
+        if (getUserInformation() != null) {
+            return getUserInformation().getGameListType();
+        }
+        return 0;
+    }
+
+
+
+    public void saveToken(TokenModel result) {
+        if (result != null) {
+            accessToken = result.getAccessToken();
+            SPUtils.getInstance().put("key_access_token", accessToken);
+            SPUtils.getInstance().put("key_refresh_token", result.getEncryptedAccessToken());
+            SPUtils.getInstance().put("key_token_over_time", System.currentTimeMillis() + (result.getExpireInSeconds() * 1000L));
+            SPUtils.getInstance().put(Constant.AUTHENTICATE_TOKEN_ISNOLOGIN, result.isNoLogin());
+        }
+    }
+
+    /**
+     * 登录是否过期
+     *
+     * @return
+     */
+    public boolean isTokenOverTime() {
+        return System.currentTimeMillis() > SPUtils.getInstance().getLong("key_token_over_time", 0L);
+    }
+
+    public String getAccessToken() {
+        if (!TextUtils.isEmpty(accessToken)) {
+            return accessToken;
+        } else {
+            accessToken = SPUtils.getInstance().getString("key_access_token");
+            return accessToken;
+        }
+    }
+
+    public void saveUserInfo(UserInformation result) {
+        if (result != null) {
+            userInformation = result;
+            SPUtils.getInstance().put("key_user_info", GsonUtils.toJson(result));
+        }
+    }
+
+    public void saveSetting(UserSettingBean result) {
+        if (result != null) {
+            userSettingBean = result;
+            SPUtils.getInstance().put("key_user_setting", GsonUtils.toJson(result));
+        }
+    }
+
+    /**
+     * 获取用户设置信息
+     *
+     * @return
+     */
+    public UserSettingBean getUserSettingBean() {
+        if (userSettingBean != null) {
+            return userSettingBean;
+        }
+        try {
+            String userStr = SPUtils.getInstance().getString("key_user_setting");
+            if (!TextUtils.isEmpty(userStr)) {
+                return GsonUtils.convertObj(userStr, UserSettingBean.class);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void logout() {
+        userInformation = null;
+        accessToken = null;
+        SPUtils.getInstance().remove("key_user_info");
+        SPUtils.getInstance().remove("key_access_token");
+        SPUtils.getInstance().remove("key_refresh_token");
+        SPUtils.getInstance().remove("key_token_over_time");
+        SPUtils.getInstance().remove("key_user_setting");
+        SPUtils.getInstance().remove(Constant.AUTHENTICATE_TOKEN_ISNOLOGIN);
+    }
+
+    public UserInformation getUserInformation() {
+        if (userInformation != null) {
+            return userInformation;
+        }
+        String userStr = SPUtils.getInstance().getString("key_user_info");
+        if (!TextUtils.isEmpty(userStr)) {
+            userInformation = GsonUtils.convertObj(userStr, UserInformation.class);
+            return userInformation;
+        }
+        return null;
+    }
+    public boolean isUserLogin() {
+        return !AccountManager.getInstance().isTokenOverTime() && AccountManager.getInstance().getUserInformation() != null;
+    }
+}

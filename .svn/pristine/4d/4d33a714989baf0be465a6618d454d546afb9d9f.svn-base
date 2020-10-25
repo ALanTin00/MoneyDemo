@@ -1,0 +1,42 @@
+package com.tanlian.wallet.user.bean;
+
+import com.tanlian.wallet.base.bean.BaseParams;
+import com.tanlian.wallet.base.bean.EncryptEntity;
+
+@EncryptEntity
+public class SelfInfoUpload extends BaseParams{
+    String name;
+    int sex;
+    String identityCard;
+
+    public SelfInfoUpload(String name, int sex, String identityCard) {
+        this.name = name;
+        this.sex = sex;
+        this.identityCard = identityCard;
+        initEncryptData();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    public String getIdentityCard() {
+        return identityCard;
+    }
+
+    public void setIdentityCard(String identityCard) {
+        this.identityCard = identityCard;
+    }
+}

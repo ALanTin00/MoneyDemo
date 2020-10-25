@@ -1,0 +1,67 @@
+package com.tanlian.wallet.user.bean;
+
+public class WithDrawSuccess {
+    String sellerName;
+    double volumn;
+    String amount;
+    String dateTime;
+    String tradeTime;
+    String code;
+    String sealUrl;
+
+    public String getPhoneNumber() {
+        return sellerName;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.sellerName = phoneNumber;
+    }
+
+    public double getTradeAmount() {
+        return volumn;
+    }
+
+    public void setTradeAmount(double tradeAmount) {
+        this.volumn = tradeAmount;
+    }
+
+    public String getTradeMoney() {
+        return amount;
+    }
+
+    public void setTradeMoney(String tradeMoney) {
+        this.amount = tradeMoney;
+    }
+
+    public String getCertificationDate() {
+        return dateTime;
+    }
+
+    public void setCertificationDate(String certificationDate) {
+        this.dateTime = certificationDate;
+    }
+
+    public String getTradeDate() {
+        return tradeTime;
+    }
+
+    public void setTradeDate(String tradeDate) {
+        this.tradeTime = tradeDate;
+    }
+
+    public String getCertificationId() {
+        return code;
+    }
+
+    public void setCertificationId(String certificationId) {
+        this.code = certificationId;
+    }
+
+    public String getImageUrl() {
+        return sealUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.sealUrl = imageUrl;
+    }
+}

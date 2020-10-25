@@ -1,0 +1,59 @@
+package com.tanlian.wallet.constant;
+
+import com.tanlian.wallet.net.UrlManager;
+
+/**
+ * Created by liufe on 2018/6/26
+ */
+public class Constant {
+    public static final String WECHAT_APPID = "wx8d97ca7992753272";
+    public static final String TECENT_APPID = "1107017092";
+    public static final String UM_PUSH_Secret = "6cb5e24d98af0272f7ee66523b02c474";
+
+    public static final String KEY_NUMBER_ALL = "key_number_all";
+    //选择车牌返回code
+    public static final int RESPONSE_CODE_SELECT_NUMBER = 0X800;
+
+    public static final String KEY_MESSAGE_TITLE = "key_message_title";
+    public static final String KEY_MESSAGE_TIME = "key_message_time";
+
+    public static final String PROVINCE_FILE_NAME = "province.json";
+    public static final String CITY_SELECT_FILE_NAME = "city_select.json";
+
+
+    // 最小滑动距离
+    public final static int VERTICAL_MIN_DISTANCE = 20;
+    // 最小滑动速率
+    public final static int MIN_VELOCITY = 0;
+    //每页显示数据点数
+    public final static int DOT_NUMBER_PER_PAGE = 7;
+
+    public static final String KEY_CURRENT_SERIES_NAME = "key_series_name";
+    public static final String KEY_CURRENT_NUMBER = "key_number";
+    public static final String KEY_CURRENT_NAME = "key_brand_name";
+
+    public static final String EXTRA_REFRESH_USER = "extra_refresh_data";
+
+    public static final String USER_PROTOCOL_URL = UrlManager.URL+"/help/index.html";
+
+    public static final String COMPANY_EMAIL = "tanlian@chetanlian.com";
+    public static final String CUSTOMER_SERVICE_PHONE_NUMBER = "400-803-0755";
+
+    public static final String GOODS_ID = "goods_id";
+    public static final String GOODS_COUNT = "goods_count";
+    public static final String ADDRESS_ID = "address_id";
+    public static final String ORDER_ID = "order_id";
+    public static final String ADDRESS_ACCESS_TYPE = "address_access_type";
+
+//    public static final LatLng SHENZHEN = new LatLng(22.656805, 114.030457);
+
+    public static final long ONE_SECOND_TIMESTAMP = 1000;
+    public static final long ONE_MINUTE_TIMESTAMP = 60000;
+
+
+    public static final String SHOW_ACT_ONE_GIF = "show_act_one_gif";
+
+    public static final String AUTHENTICATE_TOKEN_ISNOLOGIN = "authenticate_token_isnologin_";
+
+
+}

@@ -1,0 +1,35 @@
+package com.tanlian.wallet.widget;
+
+import android.content.Context;
+import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
+import android.view.MotionEvent;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2018/8/16
+ */
+
+public class TouchInterceptRecyclerView extends RecyclerView {
+    public TouchInterceptRecyclerView(Context context) {
+        super(context);
+    }
+
+    public TouchInterceptRecyclerView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public TouchInterceptRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent e) {
+        if (!getLayoutManager().canScrollVertically()) {
+            return false;
+        }
+        return super.onTouchEvent(e);
+    }
+}

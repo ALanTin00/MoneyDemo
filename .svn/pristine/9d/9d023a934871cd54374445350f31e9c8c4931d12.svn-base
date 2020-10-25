@@ -1,0 +1,37 @@
+package com.tanlian.wallet.cars.bean;
+
+/**
+ * Created by liufe on 2018/7/6
+ */
+
+public class CarHome {
+
+    public int t_id;
+    public String t_name;
+    //  0root 1parent 2children
+    public int t_type;
+    //上一级主键
+    public int t_parent;
+    public String t_chat;
+    public String t_logo;
+
+    public int getT_id() {
+        return t_id;
+    }
+
+    public void setT_id(int t_id) {
+        this.t_id = t_id;
+    }
+
+    @Override
+    public String toString() {
+        return "CarHome{" +
+                "t_id=" + t_id +
+                ", t_name='" + t_name + '\'' +
+                ", t_type=" + t_type +
+                ", t_parent=" + t_parent +
+                ", t_chat='" + t_chat + '\'' +
+                ", t_logo='" + t_logo + '\'' +
+                '}';
+    }
+}

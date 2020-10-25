@@ -1,0 +1,44 @@
+package com.tanlian.wallet.main.bean;
+
+import com.tanlian.wallet.base.bean.BaseParams;
+import com.tanlian.wallet.base.bean.EncryptEntity;
+import com.tanlian.wallet.constant.TypeConstant;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2018/7/3
+ */
+@EncryptEntity
+public class SendSmsParams extends BaseParams{
+    private String phoneNumber;
+    /**
+     * @see com.tanlian.wallet.constant.TypeConstant.SmsType
+     */
+    private int smsType;
+
+    public SendSmsParams(String phoneNumber, @TypeConstant.SmsType int smsType) {
+        this.phoneNumber = phoneNumber;
+        this.smsType = smsType;
+        initEncryptData();
+    }
+
+    public SendSmsParams() {
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public int getSmsType() {
+        return smsType;
+    }
+
+    public void setSmsType(@TypeConstant.SmsType int smsType) {
+        this.smsType = smsType;
+    }
+}

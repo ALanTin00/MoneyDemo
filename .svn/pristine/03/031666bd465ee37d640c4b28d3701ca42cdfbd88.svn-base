@@ -1,0 +1,135 @@
+package com.tanlian.wallet.cars.bean;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.text.TextUtils;
+
+/**
+ * Created by liufe on 2018/7/4
+ */
+public class WifiDeviceInfo implements Parcelable{
+
+    /**
+     * serialNumber : string 设备序列号
+     * expire : string  到期日期
+     * activationDate : string 激活日期
+     */
+
+    private String serialNumber;
+    private String expire;
+    private String activationDate;
+    private int activationDays;
+    private String wifiName;
+    private String wifiPassword;
+
+    private int type;
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
+    public String getExpire() {
+        return expire;
+    }
+
+    public void setExpire(String expire) {
+        this.expire = expire;
+    }
+
+    public String getActivationDate() {
+        if(!TextUtils.isEmpty(activationDate)) {
+            if (activationDate.indexOf(" ") > 0) {
+                return activationDate.substring(0, activationDate.indexOf(" ") + 1);
+            } else {
+                return activationDate;
+            }
+        }else {
+            return "";
+        }
+    }
+
+    public void setActivationDate(String activationDate) {
+        this.activationDate = activationDate;
+    }
+
+    public int getActivationDays() {
+        return activationDays;
+    }
+
+    public void setActivationDays(int activationDays) {
+        this.activationDays = activationDays;
+    }
+
+    public String getWifiName() {
+        return wifiName;
+    }
+
+    public void setWifiName(String wifiName) {
+        this.wifiName = wifiName;
+    }
+
+    public String getWifiPassword() {
+        return wifiPassword;
+    }
+
+    public void setWifiPassword(String wifiPassword) {
+        this.wifiPassword = wifiPassword;
+    }
+
+    public boolean is4GWifi() {
+//        int state = AccountManager.getInstance().getUserInformation().getDeviceType();
+//        if (state == 2)
+//            return true;
+//        else if (state == 1)
+//            return false;
+//        else
+//            return false;
+        return true;
+    }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.serialNumber);
+        dest.writeString(this.expire);
+        dest.writeString(this.activationDate);
+        dest.writeInt(this.activationDays);
+        dest.writeString(this.wifiName);
+        dest.writeString(this.wifiPassword);
+        dest.writeInt(this.type);
+    }
+
+    public WifiDeviceInfo() {
+    }
+
+    protected WifiDeviceInfo(Parcel in) {
+        this.serialNumber = in.readString();
+        this.expire = in.readString();
+        this.activationDate = in.readString();
+        this.activationDays = in.readInt();
+        this.wifiName = in.readString();
+        this.wifiPassword = in.readString();
+        this.type = in.readInt();
+    }
+
+    public static final Creator<WifiDeviceInfo> CREATOR = new Creator<WifiDeviceInfo>() {
+        @Override
+        public WifiDeviceInfo createFromParcel(Parcel source) {
+            return new WifiDeviceInfo(source);
+        }
+
+        @Override
+        public WifiDeviceInfo[] newArray(int size) {
+            return new WifiDeviceInfo[size];
+        }
+    };
+}

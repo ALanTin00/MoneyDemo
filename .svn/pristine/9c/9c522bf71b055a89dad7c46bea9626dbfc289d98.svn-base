@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#4eb248</color>
+    <color name="colorGreen">#4eb248</color>
+    <color name="colorGrey">#666666</color>
+    <color name="color_black">#000000</color>
+    <color name="color_grey">#999999</color>
+    <color name="color_green">#4eb248</color>
+    <color name="color_yellow">#dee908</color>
+    <color name="color_divider_green">#f0f0f0</color>
+    <color name="color_bg">#ecedef</color>
+    <color name="color_grey_black">#333333</color>
+    <color name="province_line_border">#C7C7C7</color>
+    <color name="color_unselected_grey">#999999</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
+    <color name="transparent30">#4d000000</color>
+    <color name="cyan">#53d2a5</color>
+    <color name="unknown">#f8f9fb</color>
+    <color name="color_grey2">#808080</color>
+    <color name="color_white">#ffffff</color>
+
+    <color name="color_text_blue">#67a4c1</color>
+    <color name="line">#f0f0f0</color>
+    <color name="color_black2">#4d4d4d</color>
+    <color name="color_red">#ff0000</color>
+    <color name="color_line">#e5e5e5</color>
+    <color name="background">#ecedef</color>
+    <color name="color_01">#010101</color>
+    <color name="color_33">#333333</color>
+    <color name="color_4fb349">#4fb349</color>
+
+    <color name="color_common_dialog_title_bg">#FFFFFF</color>
+    <color name="color_dialog_common_content_bg">#FFFFFF</color>
+    <color name="color_common_dialog_left_text">#4d4d4d</color>
+    <color name="color_common_dialog_right_text">#4eb248</color>
+    <color name="color_common_dialog_right_text_red">#fc534c</color>
+
+    <color name="status_bar_color">#66333333</color>
+    <color name="status_bar_color_dark">#151419</color>
+    <color name="color_66">#666666</color>
+    <color name="color_99">#999999</color>
+    <color name="color_ff5400">#ff5400</color>
+
+    <color name="progress_start">#1694fe</color>
+    <color name="progress_center">#5ef4fd</color>
+    <color name="progress_end">#5ef4fd</color>
+    <color name="color_money_in">#40BB85</color>
+    <color name="color_money_out">#FF5503</color>
+
+    <color name="color_coupon_new_filter">#3eca8d</color>
+    <color name="color_ff1f1f">#FF1F1F</color>
+    <color name="color_c8">#c8c8c8</color>
+    <color name="color_34c888">#34C888</color>
+    <color name="color_71E3B2">#71E3B2</color>
+    <color name="color_a77147">#A77147</color>
+    <color name="color_57e0cb">#57E0CB</color>
+    <color name="color_4e">#4e4e4e</color>
+    <color name="color_db">#DBDBDB</color>
+    <color name="color_e36a3a">#e36a3a</color>
+    <color name="color_f0">#88f0f0f0</color>
+    <color name="color_bg_new">#f9f9f9</color>
+    <color name="color_BB000000">#BB000000</color>
+    <color name="color_F6D068">#F6D068</color>
+    <color name="color_39BFAE">#39BFAE</color>
+    <color name="color_f7">#fff7f7f7</color>
+
+    <color name="color_33c888">#33c888</color>
+
+    <color name="color_F3A834">#F3A834</color>
+    <color name="color_E1">#E1E1E1</color>
+    <color name="color_FF6861">#FF6861</color>
+    <color name="color_f4">#f4f4f4</color>
+    <color name="color_33C888">#33C888</color>
+    <color name="color_cc">#cccccc</color>
+    <color name="color_FF1800">#FF1800</color>
+    <color name="color_00D378">#00D378</color>
+    <color name="color_eeeeee">#EEEEEE</color>
+    <color name="color_e3">#E3E3E3</color>
+    <color name="color_33c8d0">#33C8D0</color>
+    <color name="color_e8">#E8E8E8</color>
+    <color name="color_f5">#F5F5F5</color>
+    <color name="color_FF8D02">#FF8D02</color>
+    <color name="color_A5A5A5">#A5A5A5</color>
+
+    <color name="colorInitFloatBackground">#b0ffffff</color>
+    <color name="colorCollapsedFloatBackground">#e4e4e4</color>
+
+    <color name="possible_result_points">#c0ffbd21</color>
+    <color name="result_view">#b0000000</color>
+    <color name="viewfinder_laser">#ff5489f1</color>
+    <color name="viewfinder_mask">#60000000</color>
+    <color name="color_B2ADA7">#B2ADA7</color>
+    <color name="color_F6F9FC">#F6F9FC</color>
+    <color name="color_263A4C">#263A4C</color>
+    <color name="color_bf">#BFBFBF</color>
+    <color name="color_253A4B">#253A4B</color>
+    <color name="color_f9f9fa">#F9F9FA</color>
+    <color name="color_ff2d2f">#FF2D2F</color>
+    <color name="color_a1b8fd">#A1B8FD</color>
+    <color name="color_fb7a3a">#FB7A3A</color>
+    <color name="color_275DFE">#275DFE</color>
+    <color name="color_CBCBCB">#CBCBCB</color>
+    <color name="color_FECE27">#FECE27</color>
+    <color name="color_A1ABB9">#A1ABB9</color>
+    <color name="color_303545">#303545</color>
+    <color name="color_f6f9fc">#F6F9FC</color>
+    <color name="color_A4AAB1">#A4AAB1</color>
+    <color name="color_485176">#485176</color>
+    <color name="color_f1f1f4">#f1f1f4</color>
+    <color name="color_F2F2F2">#F2F2F2</color>
+    <color name="color_4CD69A">#4CD69A</color>
+    <color name="color_9CA1A9">#9CA1A9</color>
+    <color name="color_A3ADC6">#A3ADC6</color>
+    <color name="color_F8F8F9">#F8F8F9</color>
+    <color name="color_3E42FF">#3E42FF</color>
+    <color name="color_3c77fc">#3c77fc</color>
+    <color name="color_00">#00000000</color>
+    <color name="color_3850FF">#3850FF</color>
+</resources>

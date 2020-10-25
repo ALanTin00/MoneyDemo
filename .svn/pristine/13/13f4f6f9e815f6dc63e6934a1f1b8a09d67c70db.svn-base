@@ -1,0 +1,142 @@
+package com.tanlian.wallet.widget;
+
+import android.content.Context;
+import android.graphics.BlurMaskFilter;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Point;
+import android.graphics.Shader;
+import android.support.annotation.Nullable;
+import android.util.AttributeSet;
+import android.view.View;
+
+import com.tanlian.wallet.utils.DensityUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2019/1/3
+ */
+
+public class MoneyLineView extends View {
+    private List<Float> mData;
+    private Paint paintOne;
+    private Paint paintTwo;
+    private int startColor = Color.parseColor("#00B3C9");
+    private int endColor = Color.parseColor("#00D5AB");
+
+    public MoneyLineView(Context context) {
+        super(context);
+        initPaint();
+    }
+
+    public MoneyLineView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        initPaint();
+    }
+
+    public MoneyLineView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        initPaint();
+    }
+
+    public void setStartColor(int color) {
+        startColor = color;
+    }
+
+    public void setEndColor(int endColor) {
+        this.endColor = endColor;
+    }
+
+    public void setData(List<Float> mData) {
+        this.mData = mData;
+        invalidate();
+    }
+
+    private void initPaint() {
+        paintOne = new Paint();
+        paintOne.setMaskFilter(new BlurMaskFilter(DensityUtil.dp2px(5),BlurMaskFilter.Blur.SOLID));
+        paintOne.setStrokeWidth(DensityUtil.dp2px(3));
+        paintOne.setStyle(Paint.Style.STROKE);
+
+        paintTwo = new Paint();
+        paintTwo.setMaskFilter(new BlurMaskFilter(5,BlurMaskFilter.Blur.SOLID));
+//        Shader mShader = new LinearGradient(0,0,40,60,new int[] {Color.RED,Color.GREEN,Color.BLUE},null,Shader.TileMode.REPEAT);
+////新建一个线性渐变，前两个参数是渐变开始的点坐标，第三四个参数是渐变结束的点的坐标。然后那个数组是渐变的颜色。下一个参数是渐变颜色的分布，如果为空，每个颜色就是均匀分布的。最后是模式，这里设置的是循环渐变
+//
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        if (mData != null && mData.size() > 0) {
+            List<Point> list = changeToPoint(mData);
+            if (list != null) {
+                Shader mShader = new LinearGradient(list.get(0).x, list.get(0).y, list.get(3).x, list.get(3).y, new int[]{startColor, endColor}, null, Shader.TileMode.REPEAT);
+                paintOne.setShader(mShader);
+//
+//                Shader mShader2 = new LinearGradient(list.get(1).x, list.get(1).y, list.get(2).x, list.get(2).y, new int[]{centerColor, endColor}, null, Shader.TileMode.REPEAT);
+//                paintTwo.setShader(mShader2);
+//                paintOne.setColor(startColor);
+                Path path = new Path();
+                path.moveTo(list.get(0).x,list.get(0).y);
+                path.cubicTo(list.get(1).x,list.get(1).y,list.get(2).x,list.get(2).y,list.get(3).x,list.get(3).y);
+                canvas.drawPath(path,paintOne);
+            }
+        }
+    }
+
+    private List<Point> changeToPoint(List<Float> data) {
+        int width = getWidth();
+        int height = getHeight();
+        float max = 0;
+        float min = 0;
+        if (data != null && data.size() > 0) {
+            for (float f : data) {
+                if (f > max) {
+                    max = f;
+                }
+                if (f < min) {
+                    min = f;
+                }
+            }
+            List<Point> list = new ArrayList<>();
+            if (data.size() == 2) {
+                Point point1 = new Point(DensityUtil.dp2px(3),height);
+                Point point2 = new Point((int) (width*0.25), height - ((int) ((data.get(0)/(max-0))*height)));
+                Point point3 = new Point((int) (width*0.75), height - ((int) ((data.get(0)/(max-0))*height)));
+                Point point4 = new Point(width-DensityUtil.dp2px(3), (height - (int) ((data.get(1)/(max-0))*height)));
+                list.add(point1);
+                list.add(point2);
+                list.add(point3);
+                list.add(point4);
+            }else {
+                Point point1 = new Point(DensityUtil.dp2px(3), height - ((int) ((data.get(0)/(max-0))*height)));
+                int i = (int) (mData.size() * 0.25);
+                if (i == 0) {
+                    i = 1;
+                }
+                int i2 = (int) (mData.size() * 0.75);
+                if (i2 == 0) {
+                    i2 = 1;
+                }
+                Point point2 = new Point((int) (width*0.25), height - ((int) ((data.get(i)/(max-0))*height)));
+                Point point3 = new Point((int) (width*0.75), height - ((int) ((data.get(i2)/(max-0))*height)));
+                Point point4 = new Point(width - DensityUtil.dp2px(3), (height - (int) ((data.get(2)/(max-0))*height)));
+                list.add(point1);
+                list.add(point2);
+                list.add(point3);
+                list.add(point4);
+            }
+            return list;
+        }
+        return null;
+    }
+
+}

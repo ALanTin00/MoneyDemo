@@ -1,0 +1,72 @@
+package com.tanlian.wallet.user.bean;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2018/11/28
+ */
+public class UserSettingBean {
+    //所有类型1为开启2为关闭
+    private int messagePushStatus;//消息推送
+    private int wifiPlaySongStatus;//仅wifi环境播放歌曲
+    private int carLocationStatus;//开关车辆位置服务器状态
+    private VoiceBean voiceDto;
+
+    public static class VoiceBean {
+        private int awardVoiceStatus;//抽奖声音
+        private int messageVoiceStatus;//消息通知声音
+
+        public int getAwardVoiceStatus() {
+            return awardVoiceStatus;
+        }
+
+        public void setAwardVoiceStatus(int awardVoiceStatus) {
+            this.awardVoiceStatus = awardVoiceStatus;
+        }
+
+        public int getMessageVoiceStatus() {
+            return messageVoiceStatus;
+        }
+
+        public void setMessageVoiceStatus(int messageVoiceStatus) {
+            this.messageVoiceStatus = messageVoiceStatus;
+        }
+    }
+
+    public int getMessagePushStatus() {
+        return messagePushStatus;
+    }
+
+    public void setMessagePushStatus(int messagePushStatus) {
+        this.messagePushStatus = messagePushStatus;
+    }
+
+    public int getWifiPlaySongStatus() {
+        return wifiPlaySongStatus;
+    }
+
+    public void setWifiPlaySongStatus(int wifiPlaySongStatus) {
+        this.wifiPlaySongStatus = wifiPlaySongStatus;
+    }
+
+    public int getCarLocationStatus() {
+        return carLocationStatus;
+    }
+
+    public void setCarLocationStatus(int carLocationStatus) {
+        this.carLocationStatus = carLocationStatus;
+    }
+
+    public VoiceBean getVoiceDto() {
+        if (voiceDto != null) {
+            return voiceDto;
+        } else {
+            this.voiceDto = new VoiceBean();
+            return this.voiceDto;
+        }
+    }
+
+    public void setVoiceDto(VoiceBean voiceDto) {
+        this.voiceDto = voiceDto;
+    }
+}

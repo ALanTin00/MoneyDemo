@@ -1,0 +1,55 @@
+package com.tanlian.wallet.user.bean;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2018/11/15
+ */
+
+public class WithdrawRecordBean {
+    private String creationTime;
+    private int inOutAmount;
+    private int payProJect;
+    private double amount;
+    private String traderNumber;
+
+    public String getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(String creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public int getInOutAmount() {
+        return inOutAmount;
+    }
+
+    public void setInOutAmount(int inOutAmount) {
+        this.inOutAmount = inOutAmount;
+    }
+
+    public int getPayProJect() {
+        return payProJect;
+    }
+
+    public void setPayProJect(int payProJect) {
+        this.payProJect = payProJect;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public String getTraderNumber() {
+        return traderNumber;
+    }
+
+    public void setTraderNumber(String traderNumber) {
+        this.traderNumber = traderNumber;
+    }
+}

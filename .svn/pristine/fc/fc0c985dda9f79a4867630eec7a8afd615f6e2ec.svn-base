@@ -1,0 +1,81 @@
+package com.tanlian.wallet.net;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2018/10/24
+ */
+
+public class UrlManager {
+    public static Map<String,String> urlMap;
+
+    public static final String AMAP_SERVER = "https://restapi.amap.com";
+
+    //线上正式环境
+    public static final String URL = "https://www.chetanlian.com";//主要业务接口服务器
+    public static final String URL_COMMENT_PIC = "http://fileservice.chetanlian.com:8600"; // 文件服务器
+    public static final String URL_VOUCHERS = "http://vouchers.chetanlian.com:8720"; //优惠券相关接口服务器
+    public static final String URL_CARBON = "http://www.chetanlian.cn:8666"; //碳资产转让相关服务器
+    public static final String URL_INSURANCE = "http://insurance.chetanlian.com:8710"; //保险相关接口服务器
+    public static final String URL_CIRCLE_ACCOUNT = "http://autoclub.chetanlian.com:8727";
+    public static final String URL_CIRCLE_DYNAMIC = "http://autoclub.chetanlian.com:8725";
+    public static final String URL_CIRCLE_PICS = "http://autoclub.chetanlian.com:8600";
+    public static final String MESSAGE_HOST = "119.23.168.219";
+    public static final int MESSAGE_PORT = 8726;//消息TCP服务主机端口
+
+   //线上测试环境
+//    public static final String MESSAGE_HOST = "192.168.1.66";//消息TCP服务主机
+//    public static final int MESSAGE_PORT = 8726;//消息TCP服务主机端口
+//    public static final String URL_CIRCLE_ACCOUNT = "http://192.168.1.66:8727";//车友圈账号服务器
+//    public static final String URL_CIRCLE_DYNAMIC = "http://192.168.1.116:8725";//车友圈博文服务器
+//    //public static final String URL = "http://192.168.28.166:8888";//主要业务接口服务器
+//    public static final String URL = "http://test.chetanlian.com";//主要业务接口服务器
+//    public static final String URL_CARBON = "http://192.168.1.66:8666";//碳资产转让相关服务器
+//    public static final String URL_INSURANCE = "http://192.168.1.114:8710";//保险相关接口服务器
+//    //public static final String URL_VOUCHERS = "http://testcoupon.chetanlian.com:82";//优惠券相关接口服务器
+//    public static final String URL_VOUCHERS = "http://47.112.131.157:8720";//优惠券相关接口服务器
+//    public static final String URL_COMMENT_PIC = "http://47.112.131.157:8605"; // 文件服务器
+//    public static final String URL_CIRCLE_PICS = "http://47.112.131.157:8605"; // 图片服务器
+
+    //预上线环境
+//    public static final String URL = "http://www.uat.chetanlian.com";//主要业务接口服务器
+//    public static final String URL_VOUCHERS = "vouchers.uat.chetanlian.com"; //优惠券相关接口服务器
+//    public static final String URL_COMMENT_PIC = "120.24.44.233:8600"; // 文件服务器
+//    //以下服务器相关功能已经下线，2019.7.25
+//    public static final String URL_CARBON = "http://www.chetanlian.cn:8666"; //碳资产转让相关服务器
+//    public static final String URL_INSURANCE = "http://insurance.chetanlian.com:8710"; //保险相关接口服务器
+//    public static final String URL_CIRCLE_ACCOUNT = "http://autoclub.chetanlian.com:8727";
+//    public static final String URL_CIRCLE_DYNAMIC = "http://autoclub.chetanlian.com:8725";
+//    public static final String URL_CIRCLE_PICS = "http://autoclub.chetanlian.com:8600";
+//    public static final String MESSAGE_HOST = "119.23.168.219";
+//    public static final int MESSAGE_PORT = 8726;//消息TCP服务主机端口
+
+    public static final String TYPE = URL.startsWith("https://www.chetanlian.com")?"release":"test";
+
+    public static final String KEY_NORMAL = "normal";
+    public static final String KEY_CARBON = "carbon";
+    public static final String KEY_INSURANCE = "insurance";
+    public static final String KEY_VOUCHERS = "vouchers";
+    public static final String KEY_COMMENT_PIC = "comment_pic";
+    public static final String KEY_CIRCLE_ACCOUNT = "circle_account";
+    public static final String KEY_CIRCLE_DYNAMIC = "circle_dynamic";
+    public static final String KEY_CIRCLE_PICS = "circle_pics";
+    public static final String KEY_AMAP = "amap";
+
+    static {
+        urlMap = new HashMap<>();
+        urlMap.put("normal",URL);
+        urlMap.put("carbon", URL_CARBON);
+        urlMap.put("insurance",URL_INSURANCE);
+        urlMap.put("vouchers",URL_VOUCHERS);
+        urlMap.put("comment_pic",URL_COMMENT_PIC);
+        urlMap.put("circle_account",URL_CIRCLE_ACCOUNT);
+        urlMap.put("circle_dynamic",URL_CIRCLE_DYNAMIC);
+        urlMap.put("circle_pics",URL_CIRCLE_PICS);
+        urlMap.put("amap",AMAP_SERVER);
+    }
+}
+

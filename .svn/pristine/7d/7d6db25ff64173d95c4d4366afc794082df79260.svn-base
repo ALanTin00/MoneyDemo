@@ -1,0 +1,77 @@
+package com.tanlian.wallet.utils;
+
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.Build;
+import android.text.TextUtils;
+
+import com.blankj.utilcode.util.DeviceUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import androidkun.com.versionupdatelibrary.utils.MD5Util;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2018/8/10
+ */
+
+public class MDeviceUtil {
+    public static String getOnlyStr(Context context) {
+        if (!TextUtils.isEmpty(DeviceUtils.getMacAddress())) {
+            return MD5Util.MD5(DeviceUtils.getMacAddress());
+        }else if (!TextUtils.isEmpty(DeviceUtils.getAndroidID()) && "unknown".equals(DeviceUtils.getAndroidID())) {
+            return MD5Util.MD5(DeviceUtils.getAndroidID());
+        }else {
+            return MD5Util.MD5(Build.BRAND+Build.BOARD+Build.DEVICE+Build.FINGERPRINT);
+        }
+    }
+
+    /**
+     * 检查手机上是否安装了指定的软件
+     * @param context
+     * @param packageName：应用包名
+     * @return
+     */
+    public static boolean isAvilible(Context context, String packageName){
+        //获取packagemanager
+        final PackageManager packageManager = context.getPackageManager();
+        //获取所有已安装程序的包信息
+        List<PackageInfo> packageInfos = packageManager.getInstalledPackages(0);
+        //用于存储所有已安装程序的包名
+        List<String> packageNames = new ArrayList<String>();
+        //从pinfo中将包名字逐一取出，压入pName list中
+        if(packageInfos != null){
+            for(int i = 0; i < packageInfos.size(); i++){
+                String packName = packageInfos.get(i).packageName;
+                packageNames.add(packName);
+            }
+        }
+        //判断packageNames中是否有目标程序的包名，有TRUE，没有FALSE
+        return packageNames.contains(packageName);
+    }
+
+    /**
+     * 判断是否有网络连接
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isNetworkConnected(Context context) {
+        if (context != null) {
+            // 获取手机所有连接管理对象(包括对wi-fi,net等连接的管理)
+            ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            // 获取NetworkInfo对象
+            NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+            //判断NetworkInfo对象是否为空
+            if (networkInfo != null)
+                return networkInfo.isAvailable();
+        }
+        return false;
+    }
+}

@@ -1,0 +1,242 @@
+<resources>
+    <string name="app_name">UGA钱包</string>
+    <string name="car_info_state_des">车辆信息</string>
+    <string name="license_info_state_des">行驶证信息</string>
+    <string name="wifi_info_state_des">车载设备</string>
+    <string name="driver_license">驾驶证信息</string>
+    <string name="peccancy_inquiry">违章信息查询</string>
+    <string name="title_my_love_car">我的爱车</string>
+    <string name="state_perfected">已绑定</string>
+    <string name="state_perfecting">去完善</string>
+    <string name="state_no_device">无设备</string>
+    <string name="wifi_state_1">无设备</string>
+    <string name="wifi_state_2">去激活</string>
+    <string name="wifi_state_3">已激活</string>
+    <string name="wifi_state_4">设备异常</string>
+    <string name="title_car_number">车牌号码</string>
+    <string name="title_car_number_blank">车牌号码&#160;&#160;&#8201;</string>
+    <string name="title_car_number_blank2">车牌号码&#160;&#160;&#8201;&#160;&#160;</string>
+    <string name="title_device_order">序列号</string>
+    <string name="title_car_trademark">品牌</string>
+    <string name="title_car_series">车系</string>
+    <string name="title_car_model">车型</string>
+    <string name="title_right_edit">修改</string>
+    <string name="title_right_save">保存</string>
+    <string name="tips_select">点击选择</string>
+    <string name="title_select_province">选择省份</string>
+    <string name="title_select_area">选择城市</string>
+    <string name="title_select_trademark">汽车品牌</string>
+    <string name="title_select_Series">汽车系列</string>
+    <string name="title_select_Model">汽车型号</string>
+    <string name="title_license_info_photo">行驶证拍照</string>
+    <string name="title_driver_license_info_photo">驾驶证拍照</string>
+    <string name="take_photo_again">重新拍照</string>
+    <string name="take_photo">点击拍照</string>
+    <string name="wifi_flow_more">WiFi无限流量</string>
+    <string name="wifi_flow_start_time">激活时间</string>
+    <string name="wifi_flow_active">已激活</string>
+    <string name="wifi_flow_pass">WiFi密码</string>
+    <string name="bind">绑定</string>
+    <string name="unbind">解绑</string>
+    <string name="setting_wifi">前往修改/设置</string>
+    <string name="title_message">消息中心</string>
+
+    <string name="protocol_content">啦啦啦啦啦啦啦</string>
+    <string name="title_edit_pass">修改登录密码</string>
+    <string name="title_change_phone">更改手机号码</string>
+    <string name="title_account_safe">账号安全</string>
+    <string name="select_old_pass">旧密码</string>
+    <string name="select_phone">手机验证码</string>
+    <string name="title_old_pass">旧密码&#160;&#160;&#8201;&#160;&#160;&#8201;&#160;&#160;&#8201;</string>
+    <string name="title_new_pass">新密码&#160;&#160;&#8201;&#160;&#160;&#8201;&#160;&#160;&#8201;</string>
+    <string name="title_confirm_pass">确认新密码</string>
+    <string name="submit">确认修改</string>
+    <string name="title_phone_number">手机号码&#160;&#160;&#8201;&#160;</string>
+    <string name="title_phone_code">验证码</string>
+    <string name="title_phone_code2">验证码&#160;&#160;&#8201;&#160;&#160;&#8201;&#160;&#160;&#8201;</string>
+
+    <string name="customer_question1">密码修改与设置</string>
+    <string name="customer_question2">如何修改车碳宝绑定手机号</string>
+    <string name="customer_question3">如何注册车碳宝</string>
+    <string name="customer_question4">如何解绑设备</string>
+
+    <string name="customer_answer1">1、若您忘记了登录密码，无法登录账户，可以打开手机车碳宝，在登录界面点击【忘记密码】。
+        //n////n//2、若您想修改密码，可以登录手机车碳宝，点击【我的】-【账号安全】-【修改登录密码】，然后根据页面提示操作即可。
+        //n////n//温馨提示：
+		//n////t//1、密码长度为6-18位；
+		//n////t//2、支持数字、大小写字母和符号；
+		//n////t//3、不允许有空格。</string>
+    <string name="customer_answer2">1、手机登录车碳宝，点击【我的】-【账号安全】-【更改手机号码】，按照页面提示输入新手机号码即可。
+	//n////n//2、【立即更换手机】（注：用户点击后页面跳转至更换手机号界面）</string>
+    <string name="customer_answer3">打开车碳宝手机客户端，点击【注册】，按照页面提示填写信息，完成注册。</string>
+    <string name="customer_answer4">1、用户绑定设备后，手机登录车碳宝，点击【我的页面】-【我的爱车】-【车载设备】-【解绑】即可完成设备解绑，解绑后历史积分保留。
+	//n////n//温馨提示：
+	//n////t//1、按停驶天数来参加，客户自行拔下设备期间不进行核算；
+    //n////t//2、按照用户激活设备开始核算里程，如果客户在月末自动拔下设备，并未按时安装，那么当月奖励取消。</string>
+    <string name="exchange_rule">兑换说明:
+	    //n//1.碳宝兑换是不可逆的;
+	    //n//2.碳宝使用范围：碳宝+积分兑换商品
+        //n//目前商城的主要区域：“碳宝+积分”板块。产品购买时，可使用积分和碳宝，每个产品有限制积分兑换。
+        //n//3.碳宝使用期限：不清零，不设期限。自兑换之日起随时使用，没有时间限制，也不会进行清零，请大家放心兑换！
+        //n//4.碳资产获取方式：购买设备参加活动均可获得碳资产。</string>
+    <string name="withdraw_coin_rule">温馨提示：
+        //n//1.单笔超过1000UGA的提币需要提交人工审核；
+        //n//2.单人每天提币总数超过1000UGA的提币需要人工审核；
+        //n//3.为保障资金安全，当您账户安全策略比昂、密码修改，我们会对提币进行人工审核，请耐心等待工作人员电话或者邮件联系。
+        //n//4.请务必确认电脑及浏览器安全，防止信息被篡改或泄露!</string>
+
+    <string name="charge_coin_rule">温馨提示：
+        //n//1.请勿向上述地址充值任何非UGA资产，否则将不可找回。
+        //n//2.您充值至上述地址后，需要整个网络节点的确认，15次网络确认后到账，30次网络确认后可提币。
+        //n//3.最小充值金额为0.01UGA，小于最小金额的充值将不会上帐且无法退回。
+        //n//4.目前不支持使用智能合约或区块奖励(coinbase)的转账充值，智能合约或区块奖励的转账不会上账，请您谅解。
+        //n//5.您的充值地址不会经常改变，可以反复充值；如有更改，我们会尽量通过网站公告或邮件通知您。
+        //n//6.请务必确认电脑及浏览器安全，防止信息被篡改或泄露。</string>
+    <string name="title_change_phone2">更改手机号</string>
+    <string name="select_old_phone">旧手机验证</string>
+    <string name="select_car">车辆信息验证</string>
+    <string name="activity_two_title">设备参与停驶减排</string>
+
+    <string name="phone_step_1_valid_old_phone">验证旧手机</string>
+    <string name="phone_step_1_old_phone">旧手机号码</string>
+    <string name="phone_step_1_old_phone_code">手机验证码</string>
+    <string name="phone_step_1_valid_login_pass">登录密码</string>
+    <string name="next_step">下一步</string>
+
+    <string name="phone_step_2_valid_old_phone">验证旧手机></string>
+    <string name="phone_step_2_valid_new_phone">验证新手机</string>
+    <string name="phone_step_2_new_phone">新手机号码</string>
+    <string name="phone_step_2_new_phone_code">手机验证码</string>
+    <string name="submit_confirm_change_phone">确认更改手机</string>
+
+    <string name="phone_step_1_valid_car_info">验证车辆信息</string>
+    <string name="phone_step_2_valid_car_info">验证车辆信息></string>
+    <string name="phone_step_1_car_number">车牌号码</string>
+    <string name="phone_step_1_car_take_license">行驶证拍照</string>
+    <string name="phone_step_1_car_take_license_again">重新拍照</string>
+
+    <string name="title_take_photo">拍照上传里程表</string>
+    <string name="title_input_mileage">输入里程数</string>
+    <string name="title_input_unit">&#160;&#160;&#8201;&#160;&#160;&#8201;&#160;&#160;&#8201;公里</string>
+    <string name="title_input_mileage_hint">输入里程表数值</string>
+    <string name="title_click_take_photo">点击拍摄里程表照片\n注意事项：\n1.请实时上传当月爱车仪表盘照片。\n2.上传照片内容不正确视为无效。
+</string>
+    <string name="click_again_take_photo">重新拍摄</string>
+    <string name="click_confirm_take_photo">确认上传</string>
+
+    <string name="title_start_mileage">里程数表值</string>
+    <string name="title_mileage_dialog_title_1">获得奖励</string>
+    <string name="title_mileage_dialog_title_2">获得碳积分</string>
+    <string name="title_mileage_dialog_title_3">减排碳</string>
+    <string name="title_mileage_dialog_title_4">减排污染物</string>
+    <string name="car_number_digits">1234567890qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM</string>
+    <string name="password_digits">1234567890qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM`~!@#$%^\&amp;*()-_=+{}[]|/?.>,&lt;'";:</string>
+    <string name="car_distance">你的位置距离爱车有1000m</string>
+
+    <string name="order_complete">订单完成，\n马上为您安排商品发货。</string>
+
+    <string name="search">搜索关键字</string>
+
+    <string name="car_database_version">2</string>
+
+    <!-- 引导页版本号 -->
+    <string name="current_guide_version">2</string>
+
+    <string name="stop_to_reduce_emissions">停驶减排</string>
+
+    <string name="string_origin_location" />
+    <string name="string_origin_direction" />
+    <string name="string_origin_spe" />
+    <string name="string_production_of_money">生成碳宝中...</string>
+    <string name="string_net_word_error">网络连接异常，请检查网络！</string>
+    <string name="loaction_city">定位城市</string>
+    <string name="hot_citys">热门城市</string>
+    <string name="carwash">洗车</string>
+    <string name="machine_oil">机油</string>
+    <string name="goods_list">商品列表</string>
+    <string name="coupon_center_score_coin">碳积分：%1$s个     碳宝：%2$s个</string>
+    <string name="valid_time_to">有效期至 %s</string>
+    <string name="coupon_valid_time">有效期时限：%s</string>
+    <string name="exchange_coupon_score">碳积分（%s个碳积分）</string>
+    <string name="exchange_coupon_coin">碳宝（%s个碳宝）</string>
+    <string name="use_coupon_reduce">使用优惠券立减%s元</string>
+    <string name="update_high_level_reduce">升级高级会员可低至%s元</string>
+    <string name="market_price">市场价格： ¥</string>
+    <string name="level1_price">初级会员： ¥</string>
+    <string name="level2_price">中级会员： ¥</string>
+    <string name="level3_price">高级会员： ¥</string>
+    <string name="level1">初级会员</string>
+    <string name="level2">中级会员</string>
+    <string name="level3">高级会员</string>
+    <string name="upgrade_membership">升级会员</string>
+    <string name="car_state">车辆状态</string>
+    <string name="drive_report">行车报告</string>
+    <string name="car_check">车辆检测</string>
+    <string name="my_mill">我的设备</string>
+    <string name="act_rule">活动攻略</string>
+
+
+    <string name="header_scrolling_behavior">com.tanlian.wallet.widget.HeaderScrollingBehavior</string>
+    <string name="header_float_behavior">com.tanlian.wallet.widget.HeaderFloatBehavior</string>
+
+    <string name="confirm_order">订单确认</string>
+    <string name="oi_station_pingija">油站评价</string>
+    <string name="cancle">取消</string>
+    <string name="confirm">确认</string>
+    <string name="please_select_youhao">请选择油号</string>
+    <string name="please_select_qianghao">请输入油枪号</string>
+    <string name="add_oil_most">最高可输入8000元</string>
+    <string name="add_oil_order_serial_number">订单编号</string>
+    <string name="add_oil_order_time">订单时间</string>
+    <string name="add_oil_detail">订单详情页</string>
+    <string name="add_oil_order_tips">如需发票，请到油站前台咨询。</string>
+    <string name="pingjia_now">立即评价</string>
+    <string name="go_user_center">前往个人中心</string>
+    <string name="publish_pingjia">发表评价</string>
+    <string name="order_list">订单列表</string>
+    <string name="common_question">常见问题</string>
+    <string name="service_center">服务中心</string>
+    <string name="customer_service_hotline">客服热线</string>
+    <string name="machine_num">设备序列号</string>
+    <string name="qr_code_tip">请将设备编码放入框内，即可自动扫描</string>
+
+    <string name="msg_camera_framework_bug">很遗憾，Android 相机出现问题。您是否已经授予了本APP相机权限，若仍然有问题，您可能需要重启设备。</string>
+    <string name="hint_scan">将二维码/条码放入框内，即可自动扫描</string>
+    <string name="have_not_date">暂无数据</string>
+
+
+    <string name="welcome_back">欢迎回来！</string>
+    <string name="login_uga_wallet">登录UGA钱包</string>
+    <string name="phone_number">手机号</string>
+    <string name="pass_word">密码</string>
+    <string name="login">登录</string>
+    <string name="login_success">登录成功</string>
+    <string name="please_input_phone_num">请输入手机号</string>
+    <string name="please_input_pwd">请输入登录密码</string>
+    <string name="pelease_input_correct_phone">请输入正确的手机号码</string>
+    <string name="my_wallet">我的钱包</string>
+    <string name="extract_uga">提取UGA</string>
+    <string name="push_uga">充值UGA</string>
+    <string name="recent_record">最近记录</string>
+    <string name="more">更多</string>
+    <string name="setting">设置</string>
+    <string name="common_use">常用</string>
+    <string name="my_account">我的账号</string>
+    <string name="notification_center">通知中心</string>
+    <string name="opinion_feedback">意见反馈</string>
+    <string name="about_us">关于我们</string>
+    <string name="others">其他</string>
+    <string name="my_information">我的资料</string>
+    <string name="head_portait">头像</string>
+    <string name="user_name">姓名</string>
+    <string name="identity_card_id">身份证号</string>
+    <string name="login_out">退出登录</string>
+    <string name="transfer_accounts">转账</string>
+    <string name="system">系统</string>
+    <string name="your_name">您的称呼</string>
+    <string name="concact_way">联系方式</string>
+    <string name="question_type">问题种类</string>
+    <string name="question_content">问题描述</string>
+    <string name="submit_feedback">提交反馈</string>
+    <string name="password_rule_wrong">密码仅支持6位及以上的数字、字母和字符</string>
+</resources>

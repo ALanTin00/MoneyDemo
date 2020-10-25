@@ -1,0 +1,10 @@
+package com.tanlian.wallet.event;
+
+/**
+ * 类说明：通知服务检查用户是否有注册车友圈
+ * 作者：qiujialiu
+ * 时间：2018/12/26
+ */
+
+public class GetCircleUserEvent {
+}

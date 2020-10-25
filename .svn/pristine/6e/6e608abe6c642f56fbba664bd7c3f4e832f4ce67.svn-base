@@ -1,0 +1,378 @@
+package com.tanlian.wallet.user.bean;
+
+import android.text.TextUtils;
+
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.base.App;
+import com.tanlian.wallet.base.bean.BaseEncryptResult;
+import com.tanlian.wallet.net.UrlManager;
+import com.tanlian.wallet.utils.NumberUtil;
+
+/**
+ * 类说明：登录用户信息
+ * 作者：qiujialiu
+ * 时间：2018/7/3
+ */
+
+public class UserInformation extends BaseEncryptResult {
+    public static final int LEVEL_ORIGINAL = 1;
+    public static final int LEVEL_MIDDLE = 2;
+    public static final int LEVEL_HIGH = 3;
+    /**
+     *phoneNumber 手机号码
+     *carNo	车牌
+     *rank	等级
+     *cPoints 碳积分
+     *cReduction	number($double)
+     *碳减排
+     *
+     *
+     *cPollute	number($double)
+     *
+     *污染物
+     *
+     *
+     *cMoney	number($double)
+     *碳金额 --获取减排奖励金额
+     *
+     *icon	string
+     *头像
+     *
+     *carStatus	integer($int32)
+     *车辆状态
+     *
+     *Enum:
+     *Array [ 3 ]
+     *msgNumber	integer($int32)
+     *未读消息数量
+     *（从最后一个消息ID开始的消息数量; 未读消息数量 = 此数值 + 本地未读消息数）
+     *
+     *btnStatus	boolean
+     *按钮状态
+     *
+     *gameListType	integer($int32)
+     *活动类型方案
+     *
+     *Enum:
+     *Array [ 2 ]
+     *nextPicDay	integer($int32)
+     *下次牌照天数
+     *
+     *wifiStatus	integer($int32)
+     *wifi状态
+     *
+     *Enum:
+     *Array [ 4 ]
+     *wifiExpire	string
+     *readOnly: true
+     *
+     * equipmentProtocolType 设备类型 1:2G 2:4G
+     *
+     * availableUGA	integer($int64)
+     * 可用碳宝数
+     *
+     * frozenUGA	integer($int64)
+     * 冻结碳宝数
+     *
+     * ugaDecimalPlace	integer($int32)
+     * 碳宝小数位数
+     * * IsFirstLogin	boolean
+     * 是否首次登陆
+     */
+
+    private String phoneNumber;
+    private String carNo;
+    private int rank;
+    private int cPoints;
+    private double cReduction;
+    private double cPollute;
+    private double cMoney;
+    private String icon;
+    private int carStatus;
+    private int msgNumber;
+    private boolean btnStatus;
+    private int gameListType;
+    private int nextPicDay;
+    private int wifiStatus;
+    private String wifiExpire;
+    private String carLogUrl;//车辆logo
+    private int equipmentProtocolType;
+    private int id;
+    private boolean isIdentityFinish;
+
+    private String name;
+
+    private long availableUGA;
+    private long frozenUGA;
+    private int ugaDecimalPlace;
+
+    private int userLevel;//用户等级 1初级会员 2中级会员 3 高级会员
+    private String UserLevelDesc;//等级描述
+
+    public String getUserLevelEndTime() {
+        return userLevelEndTime;
+    }
+
+    /** 会员到期时间**/
+    private String userLevelEndTime;
+
+    private boolean IsFirstLogin;
+
+    public boolean isFirstLogin() {
+        return IsFirstLogin;
+    }
+
+    public void setFirstLogin(boolean firstLogin) {
+        IsFirstLogin = firstLogin;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getCarNo() {
+        return carNo;
+    }
+
+    public void setCarNo(String carNo) {
+        this.carNo = carNo;
+    }
+
+    public int getRank() {
+        return rank;
+    }
+
+    public void setRank(int rank) {
+        this.rank = rank;
+    }
+
+    public int getCPoints() {
+        return cPoints;
+    }
+
+    public void setCPoints(int cPoints) {
+        this.cPoints = cPoints;
+    }
+
+    public double getCReduction() {
+        return cReduction;
+    }
+
+    public void setCReduction(double cReduction) {
+        this.cReduction = cReduction;
+    }
+
+    public double getCPollute() {
+        return cPollute;
+    }
+
+    public void setCPollute(double cPollute) {
+        this.cPollute = cPollute;
+    }
+
+    public double getCMoney() {
+        return cMoney;
+    }
+
+    public void setCMoney(double cMoney) {
+        this.cMoney = cMoney;
+    }
+
+    public String getCarLogo() {
+        return carLogUrl;
+    }
+
+    public int getUserLevel() {
+        return userLevel;
+    }
+
+    public String getLevelName() {
+        if (userLevel == LEVEL_HIGH) {
+            return App.getApp().getString(R.string.level3);
+        }else if (userLevel == LEVEL_MIDDLE) {
+            return App.getApp().getString(R.string.level2);
+        }
+        return App.getApp().getString(R.string.level1);
+    }
+
+    public void setUserLevel(int userLevel) {
+        this.userLevel = userLevel;
+    }
+
+    public String getUserLevelDesc() {
+        return UserLevelDesc;
+    }
+
+    public void setUserLevelDesc(String userLevelDesc) {
+        UserLevelDesc = userLevelDesc;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+    public String getRealIcon() {
+        if (TextUtils.isEmpty(icon))return icon;
+        String s = this.icon.substring(0, 4);
+
+        if(s.equals("file")) {
+            return this.icon;
+        }
+        if (icon.startsWith("http://")||icon.startsWith("https://")){
+            return icon;
+        }
+        else
+            return UrlManager.URL + this.icon;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public int getCarStatus() {
+        return carStatus;
+    }
+
+    public void setCarStatus(int carStatus) {
+        this.carStatus = carStatus;
+    }
+
+    public int getMsgNumber() {
+        return msgNumber;
+    }
+
+    public void setMsgNumber(int msgNumber) {
+        this.msgNumber = msgNumber;
+    }
+
+    public boolean isBtnStatus() {
+        return btnStatus;
+    }
+
+    public void setBtnStatus(boolean btnStatus) {
+        this.btnStatus = btnStatus;
+    }
+
+    public int getGameListType() {
+        return gameListType;
+    }
+
+    public void setGameListType(int gameListType) {
+        this.gameListType = gameListType;
+    }
+
+    public int getNextPicDay() {
+        return nextPicDay;
+    }
+
+    public void setNextPicDay(int nextPicDay) {
+        this.nextPicDay = nextPicDay;
+    }
+
+    public int getWifiStatus() {
+        return wifiStatus;
+    }
+
+    public void setWifiStatus(int wifiStatus) {
+        this.wifiStatus = wifiStatus;
+    }
+
+    public String getWifiExpire() {
+        return wifiExpire;
+    }
+
+    public void setWifiExpire(String wifiExpire) {
+        this.wifiExpire = wifiExpire;
+    }
+
+    public void setEquipmentProtocolType(int equipmentProtocolType) {
+        this.equipmentProtocolType = equipmentProtocolType;
+    }
+
+    public long getAvailableUGA() {
+        return availableUGA;
+    }
+
+    public void setAvailableUGA(long availableUGA) {
+        this.availableUGA = availableUGA;
+    }
+
+    public long getFrozenUGA() {
+        return frozenUGA;
+    }
+
+    public void setFrozenUGA(long frozenUGA) {
+        this.frozenUGA = frozenUGA;
+    }
+
+    public int getUgaDecimalPlace() {
+        return ugaDecimalPlace;
+    }
+
+    public void setUgaDecimalPlace(int ugaDecimalPlace) {
+        this.ugaDecimalPlace = ugaDecimalPlace;
+    }
+
+    public String getReduceCarbonShow(){
+        if (cReduction > 1000 * 1000) {
+            return NumberUtil.double2String((cReduction/ 1000D / 1000D))+"t";
+        } else if (cReduction > 1000) {
+            return NumberUtil.double2String((cReduction/ 1000D ))+"kg";
+        } else {
+            return NumberUtil.double2String(cReduction)+"g";
+        }
+    }
+
+    public String getReducePollutantShow(){
+        if (cPollute > 1000 * 1000) {
+            return NumberUtil.double2String((cPollute/ 1000D / 1000D))+"t";
+        } else if (cPollute > 1000) {
+            return NumberUtil.double2String((cPollute/ 1000D ))+"kg";
+        } else {
+            return NumberUtil.double2String(cPollute)+"g";
+        }
+    }
+
+    public int getDeviceType() {
+        return equipmentProtocolType;
+    }
+
+    public void setDeviceType(int type) {
+        equipmentProtocolType = type;
+    }
+
+    public boolean isIdentityFinish() {
+        return isIdentityFinish;
+    }
+
+    public void setIdentityFinish(boolean identityFinish) {
+        isIdentityFinish = identityFinish;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * 是否是同一个活动(用于区分服务页是否需要刷新UI)
+     * @param userInformation
+     * @return
+     */
+    public boolean isSame(UserInformation userInformation) {
+        if (userInformation != null) {
+            return id == userInformation.id && (gameListType == userInformation.gameListType);
+        }
+        return false;
+    }
+}

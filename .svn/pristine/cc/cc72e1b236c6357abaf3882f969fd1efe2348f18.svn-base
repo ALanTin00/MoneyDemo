@@ -1,0 +1,23 @@
+package com.tanlian.wallet.user.interfaces;
+
+import com.tanlian.wallet.base.BaseContract;
+import com.tanlian.wallet.manager.tecentali.bean.LoginResultBean;
+
+/**
+ * Created by liufe on 2018/6/27
+ */
+public interface PhoneContract {
+    interface View extends BaseContract.BaseView {
+        void requestFail(int code, String message);
+        void modifyPwdSuccess();
+        void bindSuccess();
+        void sendCodeSuccess(int type);
+    }
+
+    interface Presenter extends BaseContract.BasePresenter<View> {
+        void sendModifyPwdCode(String phone);
+        void sendBindPhoneCode(String phone,int type);
+        void modifyPassword(String phone, String code, String newPassword);
+        void bindPhone(String phone, String code, String pwd,int smsType,LoginResultBean bean);
+    }
+}

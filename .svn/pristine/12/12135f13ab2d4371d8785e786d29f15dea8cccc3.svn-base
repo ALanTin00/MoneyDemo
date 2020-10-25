@@ -1,0 +1,209 @@
+package com.tanlian.wallet.base;
+
+import com.tanlian.wallet.base.bean.BaseCircleDynamicMode;
+import com.tanlian.wallet.base.bean.BaseMode;
+import com.tanlian.wallet.base.bean.BaseResultInsurance;
+import com.tanlian.wallet.user.bean.UserInformation;
+import com.tanlian.wallet.manager.AccountManager;
+import com.tanlian.wallet.net.RetrofitManger;
+import com.tanlian.wallet.utils.RxSchedulers;
+import com.trello.rxlifecycle2.LifecycleTransformer;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
+/**
+ * desc:
+ * author: Will .
+ * date: 2017/9/2 .
+ */
+
+public class BasePresenter<T extends BaseContract.BaseView> implements BaseContract.BasePresenter<T> {
+
+    protected T mView;
+
+    @Override
+    public void attachView(T view) {
+        this.mView = view;
+
+    }
+
+    @Override
+    public void detachView() {
+        if (mView != null) {
+            mView = null;
+        }
+    }
+
+    public void loadUserInfo() {
+        if (AccountManager.getInstance().isUserLogin()) {
+//            RetrofitManger.getInstance().create().getLoginUserInfo(0).compose(RxSchedulers.applySchedulers())
+//                    .compose(mView.bindToLife()).subscribe(objectBaseMode -> {
+//                if (objectBaseMode.isSuccess()) {
+//                    UserInformation userInformation = objectBaseMode.getResult();
+//                    userInformation.initResult();
+//                    AccountManager.getInstance().saveUserInfo(userInformation);
+//                    mView.loadUserSuccess(userInformation);
+//                }
+//            }, throwable -> mView.hideDialog());
+        }
+    }
+
+    public  <T> void add(Observable<BaseMode<T>> observable, YRequestCallback callback) {
+        observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .compose(mView.bindToLife()).subscribe(t -> {
+            if (t.isSuccess()) {
+                if (callback != null) {
+                    callback.onSuccess(t.getResult());
+                }
+            }else {
+                if (callback != null) {
+                    callback.onFailed(t.getError().getCode(),t.getError().getShowMessage());
+                }
+            }
+        }, throwable -> {
+            if (callback != null) {
+                callback.onException(throwable);
+            }
+        });
+    }
+
+    public static <T> void staticAdd(Observable<BaseMode<T>> observable, YRequestCallback callback,LifecycleTransformer<BaseMode<T>> lifecycleTransformer) {
+        if (lifecycleTransformer != null) {
+            observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .compose(lifecycleTransformer).subscribe(t -> {
+                if (t.isSuccess()) {
+                    if (callback != null) {
+                        callback.onSuccess(t.getResult());
+                    }
+                }else {
+                    if (callback != null) {
+                        callback.onFailed(t.getError().getCode(),t.getError().getShowMessage());
+                    }
+                }
+            }, throwable -> {
+                if (callback != null) {
+                    callback.onException(throwable);
+                }
+            });
+        }else {
+            observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(t -> {
+                        if (t.isSuccess()) {
+                            if (callback != null) {
+                                callback.onSuccess(t.getResult());
+                            }
+                        }else {
+                            if (callback != null) {
+                                callback.onFailed(0,t.getError().getShowMessage());
+                            }
+                        }
+                    }, throwable -> {
+                        if (callback != null) {
+                            callback.onException(throwable);
+                        }
+                    });
+        }
+    }
+
+    public static <T> void staticAddInsurance(Observable<BaseResultInsurance<T>> observable, YRequestCallback callback,
+                                              LifecycleTransformer<BaseResultInsurance<T>> lifecycleTransformer) {
+        if (lifecycleTransformer != null) {
+            observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .compose(lifecycleTransformer).subscribe(t -> {
+                if (t.isSuccess()) {
+                    if (callback != null) {
+                        callback.onSuccess(t.getData());
+                    }
+                }else {
+                    if (callback != null) {
+                        callback.onFailed(1,t.getMsg());
+                    }
+                }
+            }, throwable -> {
+                if (callback != null) {
+                    callback.onException(throwable);
+                }
+            });
+        }else {
+            observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(t -> {
+                        if (t.isSuccess()) {
+                            if (callback != null) {
+                                callback.onSuccess(t.getData());
+                            }
+                        }else {
+                            if (callback != null) {
+                                callback.onFailed(0,t.getMsg());
+                            }
+                        }
+                    }, throwable -> {
+                        if (callback != null) {
+                            callback.onException(throwable);
+                        }
+                    });
+        }
+    }
+
+    public static <T> void staticCircleDynamic(Observable<BaseCircleDynamicMode<T>> observable, YRequestCallback callback,
+                                              LifecycleTransformer<BaseCircleDynamicMode<T>> lifecycleTransformer) {
+        if (lifecycleTransformer != null) {
+            observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .compose(lifecycleTransformer).subscribe(t -> {
+                if (t.isSucceed()) {
+                    if (callback != null) {
+                        callback.onSuccess(t.getData());
+                    }
+                }else {
+                    if (callback != null) {
+                        callback.onFailed(1,t.getMsg());
+                    }
+                }
+            }, throwable -> {
+                if (callback != null) {
+                    callback.onException(throwable);
+                }
+            });
+        }else {
+            observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(t -> {
+                        if (t.isSucceed()) {
+                            if (callback != null) {
+                                callback.onSuccess(t.getData());
+                            }
+                        }else {
+                            if (callback != null) {
+                                callback.onFailed(0,t.getMsg());
+                            }
+                        }
+                    }, throwable -> {
+                        if (callback != null) {
+                            callback.onException(throwable);
+                        }
+                    });
+        }
+    }
+
+    public static <T> void staticAdd2(Observable<T> observable, YRequestCallback<T> callback,LifecycleTransformer<T> lifecycleTransformer) {
+        if (lifecycleTransformer != null) {
+            observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .compose(lifecycleTransformer).subscribe(t -> {
+                callback.onSuccess(t);
+            }, throwable -> {
+                if (callback != null) {
+                    callback.onException(throwable);
+                }
+            });
+        }else {
+            observable.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(t -> {
+                        callback.onSuccess(t);
+                    }, throwable -> {
+                        if (callback != null) {
+                            callback.onException(throwable);
+                        }
+                    });
+        }
+    }
+}

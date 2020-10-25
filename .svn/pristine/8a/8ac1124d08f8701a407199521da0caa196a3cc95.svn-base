@@ -1,0 +1,530 @@
+package com.tanlian.wallet.wallet.activity;
+
+import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.TextureView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.base.BaseActivity;
+import com.tanlian.wallet.base.BaseConfig;
+import com.tanlian.wallet.base.BaseContract;
+import com.tanlian.wallet.base.BasePresenter;
+import com.tanlian.wallet.base.YRequestCallback;
+import com.tanlian.wallet.base.bean.BaseParams;
+import com.tanlian.wallet.constant.TypeConstant;
+import com.tanlian.wallet.main.bean.SendSmsParams;
+import com.tanlian.wallet.manager.AccountManager;
+import com.tanlian.wallet.net.RetrofitManger;
+import com.uuzuche.lib_zxing.activity.CaptureActivity;
+import com.tanlian.wallet.utils.ACache;
+import com.tanlian.wallet.utils.CircleUtil;
+import com.tanlian.wallet.widget.CodeCountDownTextView;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.Permission;
+
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.HashMap;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+public class WithdrawCoinsActivity extends BaseActivity {
+    @BindView(R.id.back)
+    LinearLayout back;
+    @BindView(R.id.withdraw_addr_et)
+    EditText withdrawAddrEt;
+    @BindView(R.id.scan_qr_iv)
+    ImageView scanQrIv;
+    @BindView(R.id.withdraw_amount_et)
+    EditText withdrawAmountEt;
+    @BindView(R.id.total_available_coins_tv)
+    TextView totalAvailableCoinsTv;
+    @BindView(R.id.withdraw_all_rl)
+    RelativeLayout withdrawAllRl;
+    @BindView(R.id.fee_tv)
+    TextView fee;
+    @BindView(R.id.withdraw_coin_tv)
+    TextView withdrawRuleTv;
+    @BindView(R.id.actual_withdraw_tv)
+    TextView actualWithdrawTv;
+    @BindView(R.id.withdraw_tv)
+    TextView withdrawTv;
+
+    public static final int REQUEST_CODE_SCANNING = 0xF0F0;
+    private Dialog sendVerifyDialog;
+    private View view;
+    private TextView cancelTv;
+    private TextView phoneNumberTv;
+    private EditText verifyCodeEt;
+    private TextView sendVerifyCodeTv;
+    private CodeCountDownTextView codeCountDownTextView;
+    private TextView confirmTv;
+    private int digit;
+    private NumberFormat nf;
+
+    private long extractMinUga;
+    private long availableUga;
+    private long poundage;
+    private long ugAdigits;
+    private long frozenUga;
+    private int errorCodeCount = 0;
+    private int errorReSendCount = 0;
+
+    private ACache aCache;
+    private long lastErrorResendTime = 0;
+
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_withdraw_coins;
+    }
+
+    @Override
+    protected void initView() {
+        aCache = ACache.get(getApplication());
+        String time = aCache.getAsString("error_code_resend");
+        lastErrorResendTime = (TextUtils.isEmpty(time)) ? 0 : Long.parseLong(time);
+        String answerContent2 = this.getResources().getString(R.string.withdraw_coin_rule);
+        answerContent2 = answerContent2.replace("//n//", "\r\n");
+        answerContent2 = answerContent2.replace("//t//", "\t\t\t\t");
+        withdrawRuleTv.setText(answerContent2);
+        withdrawAmountEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+
+                if (s != null && !TextUtils.isEmpty(s.toString())) {
+                    if (Double.parseDouble(s.toString()) > numberFormat(availableUga)) {
+                        showErrorToast("您输入的提币数量大于当前可用数量");
+                        if (s.toString().length() == 1) {
+                            withdrawAmountEt.setText("");
+                            setActual(null);
+                        } else {
+                            String ns = s.toString().substring(0, s.length() - 1);
+                            if (ns.charAt(ns.length() - 1) == '.')
+                                ns = ns.substring(0, ns.length() - 1);
+                            withdrawAmountEt.setText(ns);
+                            withdrawAmountEt.setSelection(ns.length());
+                            setActual(ns);
+                        }
+                        return;
+                    }
+                    if (s.toString().contains(".")) {
+                        if (s.length() - 1 - s.toString().indexOf(".") > digit) {
+                            s = s.toString().subSequence(0,
+                                    s.toString().indexOf(".") + digit + 1);
+                            withdrawAmountEt.setText(s);
+                            withdrawAmountEt.setSelection(s.length()); //光标移到最后
+                        }
+                    }
+
+                    //如果"."在起始位置,则起始位置自动补0
+                    if (s.toString().trim().equals(".")) {
+                        s = "0" + s;
+                        withdrawAmountEt.setText(s);
+                        withdrawAmountEt.setSelection(digit);
+                    }
+
+                    //如果起始位置为0,且第二位跟的不是".",则无法后续输入
+                    if (s.toString().startsWith("0")
+                            && s.toString().trim().length() > 1) {
+                        if (!s.toString().substring(1, 2).equals(".")) {
+                            withdrawAmountEt.setText(s.subSequence(0, 1));
+                            withdrawAmountEt.setSelection(1);
+                            setActual(s.subSequence(0, 1).toString());
+                            return;
+                        }
+                    }
+                    setActual(s.toString());
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkFeedBackParams();
+//                if (s == null)
+//                    setActual(null);
+//                else
+//                    setActual(s.toString());
+            }
+        });
+
+        withdrawAddrEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                checkFeedBackParams();
+            }
+        });
+
+    }
+
+    private void setActual(String s) {
+        if (TextUtils.isEmpty(s)) {
+            actualWithdrawTv.setText(0 + "UGA");
+            return;
+        }
+        double currentWithDrawCoins = Double.parseDouble(s);
+        actualWithdrawTv.setText(stringFormat((currentWithDrawCoins - numberFormat(poundage)) < 0 ?
+                0 : (currentWithDrawCoins - numberFormat(poundage))) + "UGA");
+    }
+
+    private void checkFeedBackParams() {
+        boolean paramsRight = true;
+
+        String coinUrl = withdrawAddrEt.getText().toString().trim();
+        if (TextUtils.isEmpty(coinUrl)) {
+            paramsRight = false;
+        }
+        String coinNum = withdrawAmountEt.getText().toString().trim();
+        if (TextUtils.isEmpty(coinNum)) {
+            paramsRight = false;
+        }
+        withdrawTv.setEnabled(paramsRight);
+    }
+
+    @Override
+    protected void initData() {
+        getUserAvailableUGA();
+    }
+
+    @OnClick({R.id.back, R.id.scan_qr_iv, R.id.withdraw_all_rl, R.id.withdraw_tv, R.id.all_in})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.back:
+                finish();
+                break;
+            case R.id.scan_qr_iv:
+                scanQrCode();
+                break;
+            case R.id.withdraw_all_rl:
+
+                break;
+            case R.id.withdraw_tv:
+                if (TextUtils.isEmpty(withdrawAddrEt.getText().toString())) {
+                    showErrorToast("请输入提币地址");
+                    return;
+                }
+                if (withdrawAddrEt.getText().toString().length() != 42) {
+                    showErrorToast("您输入的提币地址不正确");
+                    return;
+                }
+                if (TextUtils.isEmpty(withdrawAmountEt.getText().toString())) {
+                    showErrorToast("请输入提币数量");
+                    return;
+                }
+                double currentWithDrawCoins = Double.parseDouble(withdrawAmountEt.getText().toString());
+                if (currentWithDrawCoins > numberFormat(availableUga)) {
+                    showErrorToast("您输入的提币数量大于当前可用数量");
+                    return;
+                }
+                if (currentWithDrawCoins < extractMinUga) {
+                    showErrorToast("您输入的提币数量小于最小提币数量");
+                    return;
+                }
+
+                showPopUpWindow();
+                break;
+            case R.id.all_in:
+                if (numberFormat(availableUga) < extractMinUga) {
+                    showErrorToast("当前可用余额小于" + extractMinUga + ",无法进行提币操作");
+                    return;
+                }
+                withdrawAmountEt.setText(String.valueOf(numberFormat(availableUga)));
+                actualWithdrawTv.setText(String.valueOf(numberFormat(availableUga - poundage)) + "UGA");
+                break;
+            default:
+                return;
+        }
+    }
+
+    private void sendVerifyCode() {
+        if (lastErrorResendTime != 0) {
+            int day = CircleUtil.getBetweenDay(lastErrorResendTime, System.currentTimeMillis());
+            if (day == 0) {
+                showErrorToast("当日获取短信验证码次数已达上限，请明日再试");
+                return;
+            }
+        }
+        if (errorReSendCount >= 5) {
+            showErrorToast("当日获取短信验证码次数已达上限，请明日再试");
+            aCache.put("error_code_resend", String.valueOf(System.currentTimeMillis()));
+            return;
+        }
+        if (errorCodeCount >= 3)
+            errorReSendCount++;
+        BasePresenter.staticAdd(RetrofitManger.getInstance().create().sendCode(
+                new SendSmsParams(AccountManager.getInstance().getUserInformation().getPhoneNumber(), TypeConstant.SMS_TYPE_WITHDRAW_UGA_COIN)),
+                new YRequestCallback() {
+                    @Override
+                    public void onSuccess(Object var1) {
+                        errorCodeCount = 0;
+                        showErrorToast("验证码已发送至" + phoneNumberTv.getText());
+                        if (codeCountDownTextView != null && sendVerifyCodeTv != null) {
+                            sendVerifyCodeTv.setVisibility(View.GONE);
+                            codeCountDownTextView.setVisibility(View.VISIBLE);
+                            codeCountDownTextView.startCountDown();
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(int var1, String message) {
+                        showErrorToast(message);
+                    }
+
+                    @Override
+                    public void onException(Throwable var1) {
+                        showErrorToast(var1.getMessage());
+                    }
+                }, bindToLifecycle());
+    }
+
+    private void showPopUpWindow() {
+        sendVerifyDialog = new Dialog(this, R.style.ActionSheetDialogStyle);
+        //填充对话框的布局
+        View inflate = LayoutInflater.from(this).inflate(R.layout.view_popupwindow_withdrawcoin_verify, null);
+        sendVerifyDialog.setContentView(inflate);
+        sendVerifyDialog
+                .setCanceledOnTouchOutside(false);
+        //初始化控件
+        cancelTv = inflate.findViewById(R.id.cancel_tv);
+        phoneNumberTv = inflate.findViewById(R.id.phone_number_tv);
+        verifyCodeEt = inflate.findViewById(R.id.verify_code_et);
+        sendVerifyCodeTv = inflate.findViewById(R.id.send_verify_code_tv);
+        sendVerifyCodeTv.setVisibility(View.VISIBLE);
+        confirmTv = inflate.findViewById(R.id.confirm_tv);
+        codeCountDownTextView = inflate.findViewById(R.id.tv_code_down);
+        codeCountDownTextView.setVisibility(View.GONE);
+        codeCountDownTextView.setDisableRegex("ss秒后重新发送");
+        //将布局设置给Dialog dialog.setContentView(inflate);
+        // 获取当前Activity所在的窗体
+        Window dialogWindow = sendVerifyDialog.getWindow();
+        if (dialogWindow == null) {
+            return;
+        }
+        //设置Dialog从窗体底部弹出
+        dialogWindow.setGravity(Gravity.BOTTOM);
+        dialogWindow.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+        NumberFormat nf = new DecimalFormat("#0");
+        String phoneNumber = AccountManager.getInstance().getUserInformation().getPhoneNumber();
+        if (!TextUtils.isEmpty(phoneNumber)) {
+            phoneNumberTv.setText(phoneNumber.substring(0, 3) + "****" + phoneNumber.substring(7, 11));
+        } else {
+            phoneNumberTv.setText("请先完善手机号码");
+        }
+
+        cancelTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendVerifyDialog.dismiss();
+            }
+        });
+
+        sendVerifyCodeTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendVerifyCode();
+            }
+        });
+
+        confirmTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                withdrawCoins();
+            }
+        });
+        codeCountDownTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sendVerifyCode();
+            }
+        });
+        sendVerifyDialog.show();//显示对话框
+    }
+
+    private void loadData() {
+        digit = (int) ugAdigits;
+        String s = "#0.";
+        for (int i = 0; i < ugAdigits; i++)
+            s += "0";
+        nf = new DecimalFormat(s);
+        withdrawAmountEt.setHint("最小" + stringFormat(extractMinUga));
+        totalAvailableCoinsTv.setText("当前可用" + stringFormat(numberFormat(availableUga)) + "UGA");
+        fee.setText(stringFormat(numberFormat(poundage)));
+        actualWithdrawTv.setText(stringFormat(numberFormat(0)) + "UGA");
+    }
+
+    private void scanQrCode() {
+        checkPermission();
+    }
+
+    private void checkPermission() {
+        AndPermission.with(this).runtime().permission(Permission.CAMERA)
+                .onGranted(permissions -> scanning())
+                .onDenied(permissions -> showErrorToast("您拒绝了照相机权限,暂时无法该功能"))
+                .start();
+    }
+
+    private void scanning() {
+        Intent intent = new Intent(this, QRActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_SCANNING);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_CODE_SCANNING:
+
+                if (data != null) {
+                    Bundle bundle = data.getExtras();
+                    if (bundle != null) {
+                        if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_SUCCESS) {
+                            String scanInfo = bundle.getString(CodeUtils.RESULT_STRING);
+                            withdrawAddrEt.setText(scanInfo);
+                        } else if (bundle.getInt(CodeUtils.RESULT_TYPE) == CodeUtils.RESULT_FAILED) {
+                            showErrorToast("解析二维码失败");
+                        }
+                    }
+                }
+
+                break;
+            default:
+
+                break;
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    protected BaseContract.BasePresenter createPresenter() {
+        return null;
+    }
+
+    private double numberFormat(long number) {
+        if (number < 0)
+            number = 0;
+        return number / Math.pow(10, ugAdigits);
+    }
+
+    private String stringFormat(double number) {
+        String actual = nf.format(number);
+        int index = actual.length();
+        for (int i = actual.length() - 1; i >= 0; i--) {
+            if (actual.charAt(i) == '0')
+                index = i;
+            else if (actual.charAt(i) == '.')
+                return actual.substring(0, i);
+            else
+                break;
+        }
+        if (actual.length() - 1 - index >= ugAdigits - 1)
+            index = actual.length() - 1 - ((int) ugAdigits - 3);
+        return actual.substring(0, index);
+    }
+
+    private void getUserAvailableUGA() {
+        BasePresenter.staticAdd(RetrofitManger.getInstance().create().availableUGA(), new YRequestCallback<Map<String, Long>>() {
+            @Override
+            public void onSuccess(Map<String, Long> var1) {
+                extractMinUga = var1.get("extractMinUga");
+                availableUga = var1.get("availableUga");
+                poundage = var1.get("poundage");
+                ugAdigits = var1.get("ugAdigits");
+                frozenUga = var1.get("frozenUga");
+                loadData();
+            }
+
+            @Override
+            public void onFailed(int var1, String message) {
+
+            }
+
+            @Override
+            public void onException(Throwable var1) {
+
+            }
+        }, bindToLifecycle());
+    }
+
+    private void withdrawCoins() {
+        if (TextUtils.isEmpty(verifyCodeEt.getText().toString())) {
+            showErrorToast("请输入验证码");
+            return;
+        }
+        if (errorCodeCount >= 3) {
+            showErrorToast("验证码输入错误，请重新获取");
+            return;
+        }
+        showDialog();
+        Map<String, Object> request = new HashMap<>();
+        request.put("receiveAddress", withdrawAddrEt.getText().toString());
+        long l = new Double(Double.parseDouble(withdrawAmountEt.getText().toString()) * Math.pow(10, ugAdigits)).longValue();
+        request.put("ugaNumber", l);
+        request.put("code", verifyCodeEt.getText().toString());
+        if (BaseConfig.IS_ENCRYPT_OPEN) {
+            String encrypt = BaseParams.encryptMap(request);
+            request.clear();
+            request.put("encryptData", encrypt);
+        }
+        BasePresenter.staticAdd(RetrofitManger.getInstance().create().withdrawUGA(request),
+                new YRequestCallback<Map<String, Object>>() {
+                    @Override
+                    public void onSuccess(Map<String, Object> var1) {
+                        hideDialog();
+                        if (sendVerifyDialog != null)
+                            sendVerifyDialog.dismiss();
+                        errorCodeCount = 0;
+                        showErrorToast((String) var1.get("message"));
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailed(int var1, String message) {
+                        hideDialog();
+                        if (var1 == 0)
+                            errorCodeCount++;
+                        showErrorToast(message);
+                    }
+
+                    @Override
+                    public void onException(Throwable var1) {
+                        hideDialog();
+                        showErrorToast("网络连接异常，请检查网络！");
+                    }
+                }, bindToLifecycle());
+    }
+}

@@ -1,0 +1,71 @@
+package com.tanlian.wallet.widget;
+
+import android.content.Context;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
+import android.util.AttributeSet;
+
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.utils.DensityUtil;
+
+/***
+ * 功能描述:
+ * 作者:qiujialiu
+ * 时间:2017/8/23
+ ***/
+
+public class MessageCountTextView extends AppCompatTextView {
+    public MessageCountTextView(Context context) {
+        super(context);
+        init();
+    }
+
+    public MessageCountTextView(Context context, @Nullable AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
+    public MessageCountTextView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init();
+    }
+
+    public void init() {
+        setBackground(ContextCompat.getDrawable(getContext(), R.drawable.shape_tv_bg_cart_count));
+        setVisibility(GONE);
+    }
+
+    @Override
+    public void setText(CharSequence text, BufferType type) {
+        if (!TextUtils.isEmpty(text)) {
+            setVisibility(VISIBLE);
+            if (text.length() == 1) {
+                this.setHeight(DensityUtil.dp2px(20));
+                this.setWidth(DensityUtil.dp2px(20));
+                super.setText(text, type);
+            } else if (text.length() == 2) {
+                this.setHeight(DensityUtil.dp2px(20));
+                this.setWidth(DensityUtil.dp2px(25));
+                super.setText(text, type);
+            } else {
+                this.setHeight(DensityUtil.dp2px(20));
+                this.setWidth(DensityUtil.dp2px(20));
+                super.setText("…", type);
+            }
+        } else {
+            setVisibility(GONE);
+            super.setText("",type);
+        }
+
+    }
+
+    public void setCount(int count) {
+        if (count <= 0) {
+            setText("");
+        } else {
+            setText(String.valueOf(count));
+        }
+    }
+}

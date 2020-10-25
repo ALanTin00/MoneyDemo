@@ -1,0 +1,72 @@
+package com.tanlian.wallet.manager.tecentali.bean;
+
+import com.tanlian.wallet.constant.TypeConstant;
+
+import java.io.Serializable;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2018/6/28
+ */
+
+public class LoginResultBean implements Serializable{
+    private String openId;
+    private String avatar;
+    private String sex;
+    private String nickName;
+    private String uid;
+
+    /**
+     * @see com.tanlian.wallet.constant.TypeConstant.LoginType
+     */
+    private int loginType;
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public int getLoginType() {
+        return loginType;
+    }
+
+    public void setLoginType(@TypeConstant.LoginType int loginType) {
+        this.loginType = loginType;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+}

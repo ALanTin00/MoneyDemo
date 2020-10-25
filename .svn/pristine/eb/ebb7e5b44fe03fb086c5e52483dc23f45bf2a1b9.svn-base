@@ -1,0 +1,83 @@
+package com.tanlian.wallet.widget.dialog;
+
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.tanlian.wallet.R;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2018/8/18
+ */
+
+public class AlertDialogManager {
+    public static YunBaseDialog createDialog(Context context, String title, String message, String messageSecond, String buttonText,String cancelText, int imgSrc, OnConfirmListener listener) {
+        View view = LayoutInflater.from(context).inflate(R.layout.view_dialog_alert, null);
+        ImageView imageViewClose = view.findViewById(R.id.iv_close);
+        TextView textViewTitle = view.findViewById(R.id.tv_title);
+        TextView textViewContent = view.findViewById(R.id.tv_content);
+        ImageView imageView = view.findViewById(R.id.iv_image);
+        TextView textViewCancel = view.findViewById(R.id.tv_cancel);
+        TextView textViewConfirm = view.findViewById(R.id.tv_confirm);
+        YunBaseDialog baseDialog = BaseDialogManager.getInstance().getBuilder(context).setView(view).create();
+        if (!TextUtils.isEmpty(title)) {
+            textViewTitle.setText(title);
+        }
+        if (message != null && message.length() >= 50) {
+            textViewContent.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
+        }else {
+            textViewContent.setTextSize(TypedValue.COMPLEX_UNIT_SP,15);
+        }
+        if (!TextUtils.isEmpty(messageSecond)) {
+            SpannableString spannableString = new SpannableString(message + messageSecond);
+            spannableString.setSpan(new AbsoluteSizeSpan(10,true),message.length()-1,spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            spannableString.setSpan(new ForegroundColorSpan(Color.parseColor("#999999")),message.length()-1,spannableString.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            textViewContent.setText(spannableString);
+        }else {
+            textViewContent.setText(message);
+        }
+        if (!TextUtils.isEmpty(buttonText)) {
+            textViewConfirm.setText(buttonText);
+        }
+        if (TextUtils.isEmpty(cancelText)) {
+            textViewCancel.setVisibility(View.GONE);
+        }else {
+            textViewCancel.setVisibility(View.VISIBLE);
+            textViewCancel.setText(cancelText);
+            textViewCancel.setOnClickListener(v -> baseDialog.dismiss());
+        }
+        if (imgSrc != 0) {
+            imageView.setVisibility(View.VISIBLE);
+            imageView.setImageResource(imgSrc);
+        }else {
+            imageView.setVisibility(View.INVISIBLE);
+        }
+        textViewConfirm.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onConfirm(baseDialog);
+            }
+        });
+        imageViewClose.setOnClickListener(v -> baseDialog.dismiss());
+        return baseDialog;
+    }
+
+    public static YunBaseDialog createDialog(Context context, String title, String message, String messageSecond, String buttonText, int imgSrc, OnConfirmListener listener) {
+       return createDialog(context,title,message,messageSecond,buttonText,null,imgSrc,listener);
+    }
+
+    public interface OnConfirmListener{
+        void onConfirm(DialogInterface dialog);
+    }
+}

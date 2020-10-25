@@ -1,0 +1,61 @@
+package com.tanlian.wallet.cars.bean;
+
+import android.text.TextUtils;
+
+import com.tanlian.wallet.base.bean.BaseParams;
+import com.tanlian.wallet.base.bean.SignEntity;
+
+/**
+ * Created by liufe on 2018/7/5
+ */
+@SignEntity
+public class UpdateCarParams extends BaseParams{
+
+    /**
+     * carNo : string
+     * brand : string
+     * line : string
+     * spec : string
+     */
+
+    private String carNo;
+    private String brand;
+    private String line;
+    private String spec;
+
+    public String getCarNo() {
+        return carNo;
+    }
+
+    public void setCarNo(String carNo) {
+        this.carNo = carNo;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getLine() {
+        return line;
+    }
+
+    public void setLine(String line) {
+        this.line = line;
+    }
+
+    public String getSpec() {
+        return spec;
+    }
+
+    public void setSpec(String spec) {
+        this.spec = spec;
+    }
+
+    public boolean isFull() {
+        return !TextUtils.isEmpty(carNo) && !TextUtils.isEmpty(brand) && !TextUtils.isEmpty(line);
+    }
+}

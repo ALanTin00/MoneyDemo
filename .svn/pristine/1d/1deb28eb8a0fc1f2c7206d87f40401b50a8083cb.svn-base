@@ -1,0 +1,160 @@
+package com.tanlian.wallet.wallet;
+
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.blankj.utilcode.util.LogUtils;
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.base.BaseActivity;
+import com.tanlian.wallet.utils.UtilCodeEx;
+import com.tanlian.wallet.wallet.bean.ProblemFeedBack;
+import com.tanlian.wallet.wallet.dialog.SelectQuestinTypeDialog;
+import com.tanlian.wallet.wallet.presenter.OpiniionFeedbackContract;
+import com.tanlian.wallet.wallet.presenter.OpinionFeddbackPresenter;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+public class OpionFeedbackActivity extends BaseActivity<OpinionFeddbackPresenter> implements OpiniionFeedbackContract.View {
+
+
+    @BindView(R.id.activity_opinion_feedback_input_name_et)
+    EditText activityOpinionFeedbackInputNameEt;
+    @BindView(R.id.activity_opinion_feedback_input_phone_et)
+    EditText activityOpinionFeedbackInputPhoneEt;
+    @BindView(R.id.activity_opinion_feedback_question_type_tv)
+    TextView activityOpinionFeedbackQuestionTypeTv;
+    @BindView(R.id.activity_opinion_feedback_question_content_tv)
+    EditText activityOpinionFeedbackQuestionContentTv;
+    @BindView(R.id.feedback_btn)
+    TextView feedbackBtn;
+    private int questionType = -1;
+    private TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+           checkFeedBackParams();
+        }
+    };
+
+    private void checkFeedBackParams() {
+        boolean paramsRight = true;
+        String name = activityOpinionFeedbackInputNameEt.getText().toString();
+        if (TextUtils.isEmpty(name)){
+            paramsRight = false;
+        }
+        String phone = activityOpinionFeedbackInputPhoneEt.getText().toString();
+        if (TextUtils.isEmpty(phone)){
+            paramsRight = false;
+        }
+        if (questionType==-1){
+            paramsRight = false;
+        }
+        String content = activityOpinionFeedbackQuestionContentTv.getText().toString();
+        if (TextUtils.isEmpty(content)){
+            paramsRight = false;
+        }
+        feedbackBtn.setEnabled(paramsRight);
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_opion_feedback;
+    }
+
+    @Override
+    protected void initView() {
+        activityOpinionFeedbackInputNameEt.addTextChangedListener(textWatcher);
+        activityOpinionFeedbackInputPhoneEt.addTextChangedListener(textWatcher);
+        activityOpinionFeedbackQuestionContentTv.addTextChangedListener(textWatcher);
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected OpinionFeddbackPresenter createPresenter() {
+        return new OpinionFeddbackPresenter();
+    }
+
+    @OnClick({R.id.feedback_btn,R.id.question_type_fl,R.id.opinion_feedback_back})
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.feedback_btn:
+                LogUtils.e("反馈问题");
+                if (mPresenter!=null){
+                    String phone = activityOpinionFeedbackInputPhoneEt.getText().toString();
+                    if (!UtilCodeEx.isMobileExact(phone)){
+                        showErrorToast(getString(R.string.pelease_input_correct_phone));
+                        return;
+                    }
+                    ProblemFeedBack problemFeedBack = new ProblemFeedBack();
+                    problemFeedBack.contactType = phone;
+                    problemFeedBack.extensionField = activityOpinionFeedbackInputNameEt.getText().toString();
+                    problemFeedBack.otherProblem = activityOpinionFeedbackQuestionContentTv.getText().toString();
+                    if (questionType == 0){
+                        problemFeedBack.typeOfProblems = "充币问题";
+                    }else if (questionType == 1){
+                        problemFeedBack.typeOfProblems = "提币问题";
+                    }else if (questionType == 2){
+                        problemFeedBack.typeOfProblems = "其他问题";
+                    }
+                    mPresenter.problemFeedBack(problemFeedBack);
+                }
+                break;
+            case R.id.question_type_fl:
+               showQuestionTypeSelectDialog();
+                break;
+            case R.id.opinion_feedback_back:
+                finish();
+                break;
+        }
+    }
+
+    private void showQuestionTypeSelectDialog() {
+        SelectQuestinTypeDialog selectQuestinTypeDialog = new SelectQuestinTypeDialog();
+        selectQuestinTypeDialog.setListener(new SelectQuestinTypeDialog.OnSelectQuestionTypeListener() {
+            @Override
+            public void onSelectQuestionType(int questtionType) {
+                questionType = questtionType;
+                if (questionType == 0){
+                    activityOpinionFeedbackQuestionTypeTv.setText("充币问题");
+                }else if (questionType == 1){
+                    activityOpinionFeedbackQuestionTypeTv.setText("提币问题");
+                }else if (questionType == 2){
+                    activityOpinionFeedbackQuestionTypeTv.setText("其他问题");
+                }
+                checkFeedBackParams();
+            }
+        });
+        selectQuestinTypeDialog.show(getSupportFragmentManager(), "question_type");
+    }
+
+    @Override
+    public void problemFeedBackSuc(boolean suc) {
+         showErrorToast("提交成功");
+         finish();
+    }
+
+    @Override
+    public void problemFeedBackFail(String messge) {
+        showErrorToast(messge);
+    }
+}

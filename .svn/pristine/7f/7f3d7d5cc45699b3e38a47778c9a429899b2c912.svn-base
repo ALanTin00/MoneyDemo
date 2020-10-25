@@ -1,0 +1,13 @@
+package com.tanlian.wallet.user.interfaces;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2018/6/28
+ */
+
+public interface ForgotPwdListener {
+    void sendCode(String phone);
+    void modifyPwd(String phone, String pwd, String code);
+    void goUserAgreement();
+}

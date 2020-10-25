@@ -1,0 +1,58 @@
+package com.tanlian.wallet.base.bean;
+
+import android.text.TextUtils;
+
+import com.blankj.utilcode.util.LogUtils;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.jliu.qndklibrary.A;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.util.TreeMap;
+
+/**
+ * 类说明：返回的加密数据
+ * 作者：qiujialiu
+ * 时间：2019/1/21
+ */
+
+public class BaseEncryptResult {
+    public void initResult() {
+        LogUtils.w("initResult start");
+        if (!TextUtils.isEmpty(encryptData)) {
+            String s = A.DecryptData(encryptData);
+
+            TreeMap<String,Object> map = new Gson().fromJson(s,new TypeToken<TreeMap<String, Object>>(){}.getType());
+            if (map != null && map.size() > 0) {
+                Class<?> cls = getClass();
+                Field[] declaredFields = cls.getDeclaredFields();
+                if (declaredFields != null && declaredFields.length > 0) {
+                    for (Field field : declaredFields) {
+                        // 获取Field上的注解
+                        if (map.get(field.getName()) != null) {
+                            field.setAccessible(true);
+                            Type type = field.getGenericType();
+                            try {
+                                if (type.toString().toLowerCase().equals("int")) {
+                                    field.setInt(this, ((int)((double)map.get(field.getName()))));
+                                }else if (type.toString().toLowerCase().equals("long")) {
+                                    field.setLong(this, ((long)((double)map.get(field.getName()))));
+                                }else if (type.toString().toLowerCase().equals("short")) {
+                                    field.setShort(this, ((short)((double)map.get(field.getName()))));
+                                }else {
+                                    field.set(this,map.get(field.getName()));
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        LogUtils.w("initResult end");
+    }
+
+    protected String encryptData;
+}

@@ -1,0 +1,16 @@
+package com.tanlian.wallet.wallet.bean;
+
+public class ProblemFeedBack {
+
+    /**
+     * typeOfProblems : string
+     * contactType : string
+     * otherProblem : string
+     */
+
+   public String typeOfProblems;
+   public String contactType;
+   public String otherProblem;
+   public String extensionField;
+
+}

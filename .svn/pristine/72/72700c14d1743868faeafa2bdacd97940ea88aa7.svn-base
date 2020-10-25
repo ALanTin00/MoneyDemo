@@ -1,0 +1,34 @@
+package com.tanlian.wallet.wallet.presenter;
+
+import com.tanlian.wallet.base.BasePresenter;
+import com.tanlian.wallet.base.bean.BaseMode;
+import com.tanlian.wallet.net.RetrofitManger;
+import com.tanlian.wallet.utils.RxSchedulers;
+import com.tanlian.wallet.wallet.bean.GetCoinDetailResult;
+import com.tanlian.wallet.wallet.constant.ConDetailsConstant;
+
+import io.reactivex.functions.Consumer;
+
+public class ConDetailsPresenter extends BasePresenter<ConDetailsConstant.View> implements ConDetailsConstant.Presenter {
+    @Override
+    public void loadCoinDetail(int type, int page) {
+        RetrofitManger.getInstance().create().getUgaDetailInfo((type > 0 && type < 5) ? type : null, "", page, 10)
+                .compose(RxSchedulers.applySchedulers())
+                .compose(mView.bindToLife())
+                .subscribe(new Consumer<BaseMode<GetCoinDetailResult>>() {
+                    @Override
+                    public void accept(BaseMode<GetCoinDetailResult> result) throws Exception {
+                        if (result.isSuccess()) {
+                            mView.loadCoinDetailSuccess(page, result.getResult());
+                        } else {
+                            mView.loadCoinDetailFail(result.getError().getShowMessage());
+                        }
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+                        throwable.printStackTrace();
+                    }
+                });
+    }
+}

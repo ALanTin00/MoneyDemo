@@ -1,0 +1,320 @@
+package com.tanlian.wallet.base.bean;
+
+import android.util.Log;
+
+import com.tanlian.wallet.base.BaseConfig;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
+import com.jliu.qndklibrary.A;
+
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
+
+/**
+ * 类说明：上传参数，加密和签名的基类
+ * 作者：qiujialiu
+ * 时间：2019/1/17
+ */
+
+public abstract class BaseParams {
+    private Map<String,Object> params;
+    private Map<String,Object> params2;
+    public void initEncryptData() {
+        if (BaseConfig.IS_ENCRYPT_OPEN) {
+            params = null;
+            try {
+                Class<?> cls = getClass();
+                if (cls.getAnnotation(EncryptEntity.class) != null) {
+                    //所有字段加密
+                    params = new TreeMap<>(new Comparator<String>() {
+                        @Override
+                        public int compare(String o1, String o2) {
+                            return o1.compareTo(o2);
+                        }
+                    });
+                    Field[] declaredFields = cls.getDeclaredFields();
+                    if (declaredFields != null && declaredFields.length > 0) {
+                        for (Field field : declaredFields) {
+                            // 获取Field上的注解
+                            if (!field.getName().equals("params") && !field.getName().equals("encryptData") && !field.getName().contains("this$")
+                                    && !field.getName().equals("params2") && !field.getName().equals("sign")&&!field.getName().equals("serialVersionUID")) {
+                                field.setAccessible(true);
+                                params.put(field.getName(), field.get(this));
+                                try {
+                                    field.set(this, null);
+                                } catch (Exception e) {
+                                    try {
+                                        field.set(this, 0);
+                                    } catch (Exception e2) {
+                                        try {
+                                            field.set(this, false);
+                                        } catch (Exception e3) {
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        if (params != null && params.size() > 0) {
+                            encryptData = A.EncryptData(new Gson().toJson(params));
+                        }
+                        params = null;
+                    }
+                } else {
+                    Field[] declaredFields = cls.getDeclaredFields();
+                    if (declaredFields != null && declaredFields.length > 0) {
+                        for (Field field : declaredFields) {
+                            // 获取Field上的注解
+                            Annotation annotation2 = field.getAnnotation(Encrypt.class);
+                            if (annotation2 != null) {
+                                if (params == null) {
+                                    params = new TreeMap<>(new Comparator<String>() {
+                                        @Override
+                                        public int compare(String o1, String o2) {
+                                            return o1.compareTo(o2);
+                                        }
+                                    });
+                                }
+                                field.setAccessible(true);
+                                params.put(field.getName(), field.get(this));
+                                try {
+                                    field.set(this, null);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    try {
+                                        field.set(this, 0);
+                                    } catch (Exception e2) {
+                                        e2.printStackTrace();
+                                    }
+                                }
+                            }
+                        }
+                        if (params != null && params.size() > 0) {
+                            encryptData = A.EncryptData(new Gson().toJson(params));
+                            params = null;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+            }
+        }
+
+    }
+
+    public void initSign() {
+        if (BaseConfig.IS_ENCRYPT_OPEN) {
+            params2 = null;
+            try {
+                Class<?> cls = getClass();
+                Annotation annotation = cls.getAnnotation(SignEntity.class);
+                if (annotation != null) {
+                    //所有字段加密
+                    params2 = new TreeMap<>(new Comparator<String>() {
+                        @Override
+                        public int compare(String o1, String o2) {
+                            return o1.compareTo(o2);
+                        }
+                    });
+                    Field[] declaredFields = cls.getDeclaredFields();
+                    if (declaredFields != null && declaredFields.length > 0) {
+                        for (Field field : declaredFields) {
+                            // 获取Field上的注解
+                            if (!field.getName().equals("params") && !field.getName().equals("encryptData") && !field.getName().contains("this$")
+                                    && !field.getName().equals("params2") && !field.getName().equals("sign")&&!field.getName().equals("serialVersionUID")) {
+                                field.setAccessible(true);
+                                if (field.get(this) != null) {
+                                    Log.d("BaseParams","field type : "+field.getGenericType().toString());
+                                    if (field.getGenericType().toString().startsWith("java.util.List")) {
+                                        StringBuilder builder = new StringBuilder();
+                                        List<Map<String,Object>> list = createGson().fromJson(new Gson().toJson(field.get(this)),new TypeToken<List<TreeMap<String,Object>>>(){}.getType());
+                                        if (list != null && list.size() > 0) {
+                                            for (Map<String,Object> map : list) {
+                                                if (map.size() > 0) {
+                                                    for (String key : map.keySet()) {
+                                                        builder.append(field.getName()+"_"+key+"="+map.get(key)+"&");
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        if (builder.length() > 1) {
+                                            builder.deleteCharAt(builder.length()-1);
+                                            params2.put(field.getName()+"_sign_list", builder.toString());
+                                        }
+                                    }else {
+                                        params2.put(field.getName(), field.get(this));
+                                    }
+
+                                }
+                            }
+                        }
+                        Set<String> stringSet = params2.keySet();
+                        if (stringSet != null && stringSet.size() > 0) {
+                            StringBuilder builder = new StringBuilder();
+                            Iterator<String> iterator = stringSet.iterator();
+                            while (iterator.hasNext()) {
+                                String key = iterator.next();
+                                if (key.endsWith("_sign_list")) {
+                                    builder.append(params2.get(key)+"&");
+                                }else {
+                                    builder.append(key + "=" + params2.get(key) + "&");
+                                }
+                            }
+                            String ss2 = builder.deleteCharAt(builder.length() - 1).toString();
+                            Log.d("BaseParams","real sign str : "+ss2);
+                            sign = A.SignData(ss2);
+                        }
+                        params2 = null;
+                    }
+                } else {
+                    Field[] declaredFields = cls.getDeclaredFields();
+                    if (declaredFields != null && declaredFields.length > 0) {
+                        for (Field field : declaredFields) {
+                            // 获取Field上的注解
+                            Annotation annotation2 = field.getAnnotation(Sign.class);
+                            if (annotation2 != null) {
+                                if (params2 == null) {
+                                    params2 = new TreeMap<>(new Comparator<String>() {
+                                        @Override
+                                        public int compare(String o1, String o2) {
+                                            return o1.compareTo(o2);
+                                        }
+                                    });
+                                }
+                                field.setAccessible(true);
+                                if (field.get(this) != null) {
+                                    params2.put(field.getName(), field.get(this));
+                                }
+                            }
+                        }
+                        if (params2 != null && params2.size() > 0) {
+                            Set<String> stringSet = params2.keySet();
+                            if (stringSet != null && stringSet.size() > 0) {
+                                StringBuilder builder = new StringBuilder();
+                                Iterator<String> iterator = stringSet.iterator();
+                                while (iterator.hasNext()) {
+                                    String key = iterator.next();
+                                    if (params2.get(key).getClass().getCanonicalName().equals("java.lang.Double") || params2.get(key).getClass().getCanonicalName().equals("java.lang.Float")) {
+                                        builder.append(key + "=" + ((int)((double)params2.get(key))) + "&");
+                                    }else {
+                                        builder.append(key + "=" + params2.get(key) + "&");
+                                    }
+                                }
+                                String ss = builder.deleteCharAt(builder.length() - 1).toString();
+                                sign = A.SignData(ss);
+                            }
+                            params2 = null;
+                        }
+                    }
+                }
+            } catch (Exception e) {
+            }
+        }
+    }
+
+    private String sign;
+
+    private String encryptData;
+
+    public String getEncryptData() {
+        return encryptData;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public static String encryptMap(Map<String, Object> map) {
+        if (map != null && map.size() > 0) {
+            return A.EncryptData(new Gson().toJson(map));
+        }
+        return null;
+    }
+
+    public static String signMap(Map<String, Object> map) {
+        if (map != null && map.size() > 0) {
+            Map<String,Object> params3 = new TreeMap<>(new Comparator<String>() {
+                @Override
+                public int compare(String o1, String o2) {
+                    return o1.compareTo(o2);
+                }
+            });
+            Set<String> stringSet = map.keySet();
+            if (stringSet != null && stringSet.size() > 0) {
+                Iterator<String> iterator = stringSet.iterator();
+                while (iterator.hasNext()) {
+                    String key = iterator.next();
+                    if (map.get(key).getClass().getCanonicalName().equals("java.lang.Double") || map.get(key).getClass().getCanonicalName().equals("java.lang.Float")) {
+                        params3.put(key, ((int)((double)map.get(key))));
+                    }else {
+                        params3.put(key, map.get(key));
+                    }
+                }
+            }
+
+            Set<String> stringSet2 = params3.keySet();
+            if (stringSet2 != null && stringSet2.size() > 0) {
+                StringBuilder builder = new StringBuilder();
+                Iterator<String> iterator = stringSet2.iterator();
+                while (iterator.hasNext()) {
+                    String key = iterator.next();
+                    builder.append(key+"="+params3.get(key)+"&");
+                }
+                String ss = builder.deleteCharAt(builder.length() - 1).toString();
+                Log.d("BaseParams","real sign str : "+ss);
+                String sign = A.SignData(ss);
+                return sign;
+                //map.put("sign",sign);
+            }
+            //return new Gson().toJson(map);
+        }
+        return "";
+    }
+
+    public static Map<String,Object> decryptData(String dataStr) {
+        String sss = A.DecryptData(dataStr);
+        Map<String,Object> map = new Gson().fromJson(sss,new TypeToken<Map<String,Object>>(){}.getType());
+        return map;
+    }
+
+    public static Gson createGson() {
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(
+                        new TypeToken<List<TreeMap<String,Object>>>(){}.getType(),
+                        new JsonDeserializer<List<TreeMap<String,Object>>>() {
+                            @Override
+                            public List<TreeMap<String,Object>> deserialize(
+                                    JsonElement json, Type typeOfT,
+                                    JsonDeserializationContext context) throws JsonParseException {
+
+                                TreeMap<String, Object> treeMap = new TreeMap<>();
+                                List<TreeMap<String,Object>> list = new ArrayList<>();
+                                JsonArray jsonArray = json.getAsJsonArray();
+                                for (int i=0;i<jsonArray.size();i++) {
+                                    JsonObject jsObject = jsonArray.get(i).getAsJsonObject();
+                                    Set<Map.Entry<String, JsonElement>> entrySet = jsObject.entrySet();
+                                    for (Map.Entry<String, JsonElement> entry : entrySet) {
+                                        treeMap.put(entry.getKey(), entry.getValue());
+                                    }
+                                    list.add(treeMap);
+                                }
+                                return list;
+                            }
+                        }).create();
+        return gson;
+    }
+
+}

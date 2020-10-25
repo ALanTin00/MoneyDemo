@@ -1,0 +1,16 @@
+package com.tanlian.wallet.base.bean;
+
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+/**
+ * 类说明：标注哪些类所有属性都要参与签名
+ * 作者：qiujialiu
+ * 时间：2019/1/17
+ */
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+public @interface SignEntity {
+}

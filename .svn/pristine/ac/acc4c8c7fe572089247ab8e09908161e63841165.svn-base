@@ -1,0 +1,20 @@
+package com.tanlian.wallet.wallet.constant;
+
+import com.tanlian.wallet.base.BaseContract;
+import com.tanlian.wallet.wallet.bean.GetCashDetailResult;
+import com.tanlian.wallet.wallet.bean.GetCoinDetailResult;
+
+public interface ConDetailsConstant {
+
+    interface View extends BaseContract.BaseView {
+        void loadCoinDetailSuccess(int page, GetCoinDetailResult result);
+        void loadCoinDetailFail(String msg);
+    }
+
+    interface Presenter extends BaseContract.BasePresenter<View> {
+        //获取UGA币的数量
+        void loadCoinDetail(int type, int page);
+
+    }
+}
+

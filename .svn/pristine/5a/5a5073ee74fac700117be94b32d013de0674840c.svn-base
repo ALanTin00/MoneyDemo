@@ -1,0 +1,122 @@
+package com.tanlian.wallet.user.bean;
+
+import com.tanlian.wallet.base.bean.BaseEncryptResult;
+import com.tanlian.wallet.constant.TypeConstant;
+
+import java.io.Serializable;
+
+public class SelfInfo extends BaseEncryptResult implements Serializable{
+    private boolean isWeChatAuthorization;
+    private boolean isAlipayAuthorization;
+    private String name;
+    private int sex;
+    private String identityCard;
+    //private URL imageUrl;
+
+    public SelfInfo() {
+        name = "";
+        sex = TypeConstant.SEX_TYPE_SECRET;
+        identityCard = "";
+        isWeChatAuthorization = false;
+        //imageUrl = null;
+    }
+
+    public String getSexName() {
+        switch (sex) {
+            case TypeConstant.SEX_TYPE_MALE:
+                return "男";
+            case TypeConstant.SEX_TYPE_FEMALE:
+                return "女";
+            case TypeConstant.SEX_TYPE_SECRET:
+                return "保密";
+            default:
+                return "";
+        }
+    }
+
+    public static int getSexFromName(String s) {
+        switch (s) {
+            case "男":
+                return TypeConstant.SEX_TYPE_MALE;
+            case "女":
+                return TypeConstant.SEX_TYPE_FEMALE;
+            case "保密":
+                return TypeConstant.SEX_TYPE_SECRET;
+            default:
+                return 2;
+        }
+    }
+
+    public String getWechetStateName() {
+        return isWeChatAuthorization ? "已绑定" : "未绑定, 点击绑定";
+    }
+
+    public String getAlipayStateName() {
+        return isAlipayAuthorization ? "已绑定" : "未绑定, 点击绑定";
+    }
+
+    public String getWechetStateName1() {
+        return isWeChatAuthorization ? "已绑定" : "未绑定";
+    }
+
+    public static boolean getWechetFromName(String s) {
+        switch (s) {
+            case "已绑定":
+                return true;
+            case "未绑定":
+                return false;
+            default:
+                return false;
+        }
+    }
+
+    public boolean isAlipayAuthorization() {
+        return isAlipayAuthorization;
+    }
+
+    public void setAlipayAuthorization(boolean alipayAuthorization) {
+        isAlipayAuthorization = alipayAuthorization;
+    }
+
+    public boolean isWeChatAuthorization() {
+        return isWeChatAuthorization;
+    }
+
+    public void setWeChatAuthorization(boolean weChatAuthorization) {
+        isWeChatAuthorization = weChatAuthorization;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
+
+    public String getIdentityCard() {
+        return identityCard;
+    }
+
+    public void setIdentityCard(String identityCard) {
+        this.identityCard = identityCard;
+    }
+
+    @Override
+    public String toString() {
+        return "SelfInfo{" +
+                "isWeChatAuthorization=" + isWeChatAuthorization +
+                ", name='" + name + '\'' +
+                ", sex=" + sex +
+                ", identityCard='" + identityCard + '\'' +
+                '}';
+    }
+}

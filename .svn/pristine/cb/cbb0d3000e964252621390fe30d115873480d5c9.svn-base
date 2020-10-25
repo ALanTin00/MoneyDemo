@@ -1,0 +1,48 @@
+package com.tanlian.wallet.user.bean;
+
+import java.util.List;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2018/11/15
+ */
+
+public class WithdrawRecordResult {
+    private int totalCount;
+    private List<WithdrawRecordBean> items;
+    private double hasTotalMoney;
+    private double totalMoney;
+
+    public int getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(int totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    public List<WithdrawRecordBean> getItems() {
+        return items;
+    }
+
+    public void setItems(List<WithdrawRecordBean> items) {
+        this.items = items;
+    }
+
+    public double getHasTotalMoney() {
+        return hasTotalMoney;
+    }
+
+    public void setHasTotalMoney(double hasTotalMoney) {
+        this.hasTotalMoney = hasTotalMoney;
+    }
+
+    public double getTotalMoney() {
+        return totalMoney;
+    }
+
+    public void setTotalMoney(double totalMoney) {
+        this.totalMoney = totalMoney;
+    }
+}

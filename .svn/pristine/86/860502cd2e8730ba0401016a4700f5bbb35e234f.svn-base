@@ -1,0 +1,66 @@
+package com.tanlian.wallet.wallet;
+
+import android.os.Bundle;
+import android.util.TypedValue;
+import android.view.View;
+import android.widget.TextView;
+
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.base.BaseActivity;
+import com.tanlian.wallet.base.BaseContract;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class MessageCenterActivity extends BaseActivity {
+
+
+    @BindView(R.id.activity_message_transfer_accounts_tv)
+    TextView activityMessageTransferAccountsTv;
+    @BindView(R.id.activity_message_system_tv)
+    TextView activityMessageSystemTv;
+    private  int messageType = 0; //0 转账 1 系统
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_message_center;
+    }
+
+    @Override
+    protected void initView() {
+
+    }
+
+    @Override
+    protected void initData() {
+        
+    }
+
+    @Override
+    protected BaseContract.BasePresenter createPresenter() {
+        return null;
+    }
+    @OnClick({R.id.activity_message_transfer_accounts_tv, R.id.activity_message_system_tv,
+              R.id.message_center_back_fl})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.activity_message_transfer_accounts_tv:
+                activityMessageTransferAccountsTv.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimension(R.dimen.sp_18));
+                activityMessageTransferAccountsTv.setTextColor(getResources().getColor(R.color.color_33));
+                activityMessageSystemTv.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimension(R.dimen.sp_15));
+                activityMessageSystemTv.setTextColor(getResources().getColor(R.color.color_A4AAB1));
+                messageType = 0;
+                break;
+            case R.id.activity_message_system_tv:
+                activityMessageSystemTv.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimension(R.dimen.sp_18));
+                activityMessageSystemTv.setTextColor(getResources().getColor(R.color.color_33));
+                activityMessageTransferAccountsTv.setTextSize(TypedValue.COMPLEX_UNIT_PX,getResources().getDimension(R.dimen.sp_15));
+                activityMessageTransferAccountsTv.setTextColor(getResources().getColor(R.color.color_A4AAB1));
+                messageType = 1;
+                break;
+             case R.id.message_center_back_fl:
+                finish();
+                break;
+        }
+    }
+}

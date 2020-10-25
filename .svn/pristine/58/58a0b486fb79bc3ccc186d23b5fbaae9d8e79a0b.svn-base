@@ -1,0 +1,80 @@
+package com.tanlian.wallet.wallet.dialog;
+
+import android.app.Dialog;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.widget.TextView;
+
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.base.BaseDialogFragment;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
+public class SelectQuestinTypeDialog extends BaseDialogFragment implements View.OnClickListener {
+
+    TextView questionTypeCharge;
+    TextView questionTypeDraw;
+    TextView questionTypeOthers;
+    TextView questionTypeCancel;
+    public static  final  int QUESTION_TYPE_CHARGE = 0;
+    public static  final  int QUESTION_TYPE_DRAW = 1;
+    public static  final  int QUESTION_TYPE_OTHERS= 2;
+    public void setListener(OnSelectQuestionTypeListener listener) {
+        this.listener = listener;
+    }
+
+    private OnSelectQuestionTypeListener listener;
+    @Override
+    protected int setContentLayout() {
+        return R.layout.dialog_select_question_type;
+    }
+
+    @Override
+    protected void initView(Dialog dialog) {
+        Window window = dialog.getWindow();
+        window.setWindowAnimations(R.style.BottomDialogAnimation);
+        questionTypeCharge =    dialog.findViewById(R.id.question_type_charge);
+        questionTypeDraw =    dialog.findViewById(R.id.question_type_draw);
+        questionTypeOthers =    dialog.findViewById(R.id.question_type_others);
+        questionTypeCancel =    dialog.findViewById(R.id.question_type_cancel);
+        questionTypeCharge.setOnClickListener(this);
+        questionTypeDraw.setOnClickListener(this);
+        questionTypeOthers.setOnClickListener(this);
+        questionTypeCancel.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.question_type_charge:
+                if (listener!=null){
+                    listener.onSelectQuestionType(QUESTION_TYPE_CHARGE);
+                    dismiss();
+                }
+                break;
+            case R.id.question_type_draw:
+                if (listener!=null){
+                    listener.onSelectQuestionType(QUESTION_TYPE_DRAW);
+                    dismiss();
+                }
+                break;
+            case R.id.question_type_others:
+                if (listener!=null){
+                    listener.onSelectQuestionType(QUESTION_TYPE_OTHERS);
+                    dismiss();
+                }
+                break;
+            case R.id.question_type_cancel:
+                dismiss();
+                break;
+        }
+    }
+    public interface OnSelectQuestionTypeListener{
+        void onSelectQuestionType(int questtionType);
+    }
+}

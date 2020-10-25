@@ -1,0 +1,26 @@
+package com.tanlian.wallet.wxapi;
+
+import android.view.MotionEvent;
+
+import com.umeng.socialize.weixin.view.WXCallbackActivity;
+
+/**
+ * <pre>
+ *
+ * @author liufe
+ *
+ * @date 2018/4/9
+ *
+ * @des
+ *
+ * <pre>
+ */
+public class WXEntryActivity extends WXCallbackActivity{
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            finish();
+        }
+        return super.dispatchTouchEvent(ev);
+    }
+}

@@ -1,0 +1,83 @@
+package com.tanlian.wallet.wallet.bean;
+
+/**
+ * 应用版本信息
+ */
+public class NewVersion {
+    String v;
+    int vInt;
+    int minVInt;
+    String downUrl;
+    int size;
+    String des;
+    String dateTime;
+
+    public String getV() {
+        return v;
+    }
+
+    public void setV(String v) {
+        this.v = v;
+    }
+
+    public int getvInt() {
+        return vInt;
+    }
+
+    public void setvInt(int vInt) {
+        this.vInt = vInt;
+    }
+
+    public int getMinVInt() {
+        return minVInt;
+    }
+
+    public void setMinVInt(int minVInt) {
+        this.minVInt = minVInt;
+    }
+
+    public String getDownUri() {
+        return downUrl;
+    }
+
+    public void setDownUri(String downUri) {
+        this.downUrl = downUri;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public String getDes() {
+        return des;
+    }
+
+    public void setDes(String des) {
+        this.des = des;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public void setDateTime(String dateTime) {
+        this.dateTime = dateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "NewVersion{" +
+                "v='" + v + '\'' +
+                ", vInt=" + vInt +
+                ", minVInt=" + minVInt +
+                ", downUri='" + downUrl + '\'' +
+                ", size=" + size +
+                ", des='" + des + '\'' +
+                ", dateTime='" + dateTime + '\'' +
+                '}';
+    }
+}

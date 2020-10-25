@@ -1,0 +1,37 @@
+package com.tanlian.wallet.constant;
+
+import android.support.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
+/**
+ * 类说明：车友圈消息相关常量
+ * 作者：qiujialiu
+ * 时间：2018/12/10
+ */
+
+public class MessageConstant {
+    public static final int TYPE_MSG_P2P = 0;//p2p消息
+    public static final int TYPE_MSG_COMMENT = 1;//评论消息
+    public static final int TYPE_MSG_UP = 2;//点赞消息
+    public static final int TYPE_MSG_NEW_FANS = 3;//新粉丝消息
+
+    @IntDef({TYPE_MSG_P2P,TYPE_MSG_COMMENT,TYPE_MSG_UP,TYPE_MSG_NEW_FANS})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface MsgType {}
+
+    //1文本 2：图片地址 3：声音文件地址 4：时间分割
+    public static final int MSG_TYPE_TEXT = 1;
+    public static final int MSG_TYPE_IMAGE = 2;
+    public static final int MSG_TYPE_AUDIO = 3;
+    public static final int MSG_TYPE_TIME = 4;
+
+    @IntDef({MSG_TYPE_TEXT,MSG_TYPE_IMAGE,MSG_TYPE_AUDIO,MSG_TYPE_TIME})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface ContentType {}
+
+    public static final int STATE_NORMAL = 0;
+    public static final int STATE_SENDING = 1;
+    public static final int STATE_SEND_FAIL = 2;
+}

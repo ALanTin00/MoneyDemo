@@ -1,0 +1,66 @@
+package com.tanlian.wallet.main.bean;
+
+import com.tanlian.wallet.base.bean.BaseParams;
+import com.tanlian.wallet.base.bean.EncryptEntity;
+import com.tanlian.wallet.constant.TypeConstant;
+
+/**
+ * Created by liufe on 2018/7/4
+ */
+@EncryptEntity
+public class UpdatePhoneParams extends BaseParams{
+
+    /**
+     * authenticationType : 0
+     * drivingImg : string
+     * newPhoneNumber : string
+     * newCode : string
+     * code : string
+     */
+    @TypeConstant.AuthType
+    private int authenticationType;
+    private String drivingImg;
+    private String newPhoneNumber;
+    private String newCode;
+    private String code;
+
+    public int getAuthenticationType() {
+        return authenticationType;
+    }
+
+    public void setAuthenticationType(int authenticationType) {
+        this.authenticationType = authenticationType;
+    }
+
+    public String getDrivingImg() {
+        return drivingImg;
+    }
+
+    public void setDrivingImg(String drivingImg) {
+        this.drivingImg = drivingImg;
+    }
+
+    public String getNewPhoneNumber() {
+        return newPhoneNumber;
+    }
+
+    public void setNewPhoneNumber(String newPhoneNumber) {
+        this.newPhoneNumber = newPhoneNumber;
+    }
+
+    public String getNewCode() {
+        return newCode;
+    }
+
+    public void setNewCode(String newCode) {
+        this.newCode = newCode;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+}

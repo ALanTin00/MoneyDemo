@@ -1,0 +1,91 @@
+package com.tanlian.wallet.wallet;
+
+import android.view.View;
+import android.widget.TextView;
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.base.BaseActivity;
+import com.tanlian.wallet.base.BaseContract;
+import com.tanlian.wallet.utils.PackageUtil;
+import com.tanlian.wallet.wallet.bean.NewVersion;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+public class AboutUsActivity extends BaseActivity implements UpdateManager.CheckResult {
+
+    @BindView(R.id.version_update_tips)
+    TextView mTips;
+    @BindView(R.id.current_version)
+    TextView mCurrentVersion;
+    private NewVersion newVersion;
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_about_us;
+    }
+
+    @Override
+    protected void initView() {
+        UpdateManager.getNewVersion(UpdateManager.getLocalVersionNameType(this), this, this);
+        mCurrentVersion.setText(PackageUtil.getLocalVersionName(this));
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
+    protected BaseContract.BasePresenter createPresenter() {
+        return null;
+    }
+    @OnClick({R.id.activity_about_us_back,R.id.version_update_tips})
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.activity_about_us_back:
+                finish();
+                break;
+            case R.id.version_update_tips:
+                upDateVersion();
+                break;
+        }
+    }
+    private void upDateVersion() {
+        if (newVersion != null) {
+            if (PackageUtil.getLocalVersionCode(this) < newVersion.getvInt()) {
+                if (PackageUtil.getLocalVersionCode(this) < newVersion.getMinVInt()) {
+                    showNewVersionDetectedDialog(newVersion, true);
+                } else {
+                    if (UpdateManager.getIgnoreVersionCode() < newVersion.getvInt())
+                        showNewVersionDetectedDialog(newVersion, false);
+                    else {
+                        if (System.currentTimeMillis() - UpdateManager.getIgnoreTime() > UpdateManager.IGNORE_DAYS * 24 * 60 * 60 * 1000) {
+                            showNewVersionDetectedDialog(newVersion, false);
+                        } else
+                            return;
+                    }
+                }
+            } else
+                return;
+        }
+    }
+
+    @Override
+    public void checkNewVersion(NewVersion newVersion) {
+        if (PackageUtil.getLocalVersionCode(this) < newVersion.getvInt()){
+            mTips.setTextColor(getResources().getColor(R.color.color_3c77fc));
+            mTips.setText("版本更新");
+        }else{
+            mTips.setTextColor(getResources().getColor(R.color.color_A1ABB9));
+            mTips.setText("版本无需更新");
+        }
+        this.newVersion = newVersion;
+    }
+    private void showNewVersionDetectedDialog(NewVersion newVersion, boolean isForcedUpdate) {
+        UpdateManager.showNewVersionDialog(newVersion, this, isForcedUpdate, this);
+    }
+    @Override
+    public void getVersionFail(String message) {
+        mTips.setTextColor(getResources().getColor(R.color.color_A1ABB9));
+        mTips.setText("获取版本信息失败");
+    }
+}

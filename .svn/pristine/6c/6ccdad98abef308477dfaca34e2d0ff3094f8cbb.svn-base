@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/title_content"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:background="@color/color_F8F8F9"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingLeft="@dimen/dp_18">
+
+            <ImageView
+                android:layout_width="@dimen/dp_21"
+                android:layout_height="@dimen/dp_16"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/icon_back" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_F8F8F9">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/withdraw_rl"
+            android:background="@color/color_F8F8F9"
+            android:overScrollMode="never">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_F8F8F9"
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_5"
+                        android:layout_marginBottom="@dimen/dp_28"
+                        android:background="@color/color_F8F8F9">
+
+                        <TextView
+                            android:id="@+id/push_uga"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp_16"
+                            android:text="提币"
+                            android:fontFamily="@font/ping_fang_bold"
+                            android:textColor="@color/color_33"
+                            android:textSize="@dimen/sp_20"/>
+
+                        <View
+                            android:id="@+id/line"
+                            android:layout_width="@dimen/dp_1"
+                            android:layout_height="@dimen/dp_20"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="@dimen/dp_15"
+                            android:layout_marginRight="@dimen/dp_15"
+                            android:layout_toRightOf="@+id/push_uga"
+                            android:background="@color/color_9CA1A9" />
+
+                        <ImageView
+                            android:layout_width="@dimen/dp_51"
+                            android:layout_height="@dimen/dp_20"
+                            android:layout_centerVertical="true"
+                            android:layout_toRightOf="@+id/line"
+                            android:src="@mipmap/uga_logo" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="16dp"
+                            android:text="提币地址（以太坊ERC20网络）"
+                            android:textColor="#333333"
+                            android:fontFamily="@font/ping_fang_bold"
+                            android:textSize="@dimen/sp_14" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_55"
+                            android:layout_marginLeft="@dimen/dp_9"
+                            android:layout_marginTop="@dimen/dp_6"
+                            android:layout_marginRight="@dimen/dp_9"
+                            android:layout_marginBottom="@dimen/dp_12"
+                            android:background="@mipmap/qrcode_bg">
+
+                            <EditText
+                                android:id="@+id/withdraw_addr_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dp_16"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_16"
+                                android:layout_toLeftOf="@id/scan_qr_iv"
+                                android:background="@null"
+                                android:hint="输入或长按粘贴地址"
+                                android:includeFontPadding="false"
+                                android:maxLength="42"
+                                android:textColor="@color/color_33"
+                                android:textColorHint="@color/color_A3ADC6"
+                                android:fontFamily="@font/ping_fang_bold"
+                                android:singleLine="true"
+                                android:textSize="@dimen/sp_12" />
+
+                            <ImageView
+                                android:id="@+id/scan_qr_iv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dp_10"
+                                android:padding="@dimen/dp_8"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="@dimen/dp_13"
+                                android:src="@mipmap/scan_qrcode" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/dp_17"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/count_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/dp_15"
+                            android:layout_centerVertical="true"
+                            android:text="提币数量"
+                            android:fontFamily="@font/ping_fang_bold"
+                            android:textColor="#333333"
+                            android:textSize="@dimen/sp_16" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/dp_55"
+                            android:layout_marginLeft="@dimen/dp_9"
+                            android:layout_marginRight="@dimen/dp_9"
+                            android:background="@mipmap/qrcode_bg">
+
+                            <EditText
+                                android:id="@+id/withdraw_amount_et"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dp_15"
+                                android:layout_marginRight="@dimen/dp_4"
+                                android:layout_marginTop="@dimen/dp_16"
+                                android:layout_toLeftOf="@+id/uga_tip"
+                                android:background="@null"
+                                android:includeFontPadding="false"
+                                android:inputType="numberDecimal"
+                                android:textColor="#333333"
+                                android:singleLine="true"
+                                android:textColorHint="@color/color_A3ADC6"
+                                android:fontFamily="@font/ping_fang_bold"
+                                android:textSize="13sp"
+                                tools:hint="最小提币数量100" />
+
+
+                            <TextView
+                                android:id="@+id/uga_tip"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/dp_15"
+                                android:layout_marginTop="@dimen/dp_17"
+                                android:layout_toLeftOf="@+id/line1"
+                                android:text="UGA"
+                                android:fontFamily="@font/ping_fang_bold"
+                                android:textColor="@color/color_A3ADC6"
+                                android:textSize="@dimen/sp_13" />
+
+                            <View
+                                android:id="@+id/line1"
+                                android:layout_width="@dimen/dp_1"
+                                android:layout_height="@dimen/dp_13"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_19"
+                                android:layout_toLeftOf="@+id/all_in"
+                                android:background="@color/color_line" />
+
+                            <TextView
+                                android:id="@+id/all_in"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginRight="@dimen/dp_10"
+                                android:layout_marginTop="@dimen/dp_12"
+                                android:padding="@dimen/dp_5"
+                                android:text="全部"
+                                android:fontFamily="@font/ping_fang_bold"
+                                android:textColor="@color/color_3E42FF"
+                                android:textSize="@dimen/sp_13" />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/withdraw_all_rl"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:id="@+id/total_available_coins_tv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dp_24"
+                                android:includeFontPadding="false"
+                                android:textColor="@color/color_A4AAB1"
+                                android:textSize="12sp"
+                                android:fontFamily="@font/ping_fang_bold"
+                                tools:text="当前可用0.00000000UGA" />
+
+
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="手续费"
+                        android:layout_marginTop="@dimen/dp_25"
+                        android:layout_marginLeft="@dimen/dp_15"
+                        android:layout_marginBottom="@dimen/dp_7"
+                        android:textColor="#333333"
+                        android:fontFamily="@font/ping_fang_bold"
+                        android:textSize="15sp" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/dp_55"
+                        android:layout_marginLeft="@dimen/dp_9"
+                        android:layout_marginRight="@dimen/dp_9"
+                        android:background="@mipmap/qrcode_bg">
+
+
+                        <TextView
+                            android:id="@+id/fee_tv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dp_16"
+                            android:includeFontPadding="false"
+                            android:layout_marginLeft="@dimen/dp_16"
+                            android:fontFamily="@font/ping_fang_bold"
+                            android:textColor="#333333"
+                            android:textSize="14sp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                           android:layout_marginTop="@dimen/dp_17"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginRight="@dimen/dp_15"
+                            android:text="UGA"
+                            android:fontFamily="@font/ping_fang_bold"
+                            android:textColor="@color/color_A3ADC6"
+                            android:textSize="@dimen/sp_13" />
+                    </RelativeLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@color/color_F8F8F9"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/withdraw_coin_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="15dp"
+                            android:textColor="@color/color_A4AAB1"
+                            android:layout_marginTop="15dp"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginBottom="20dp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+        <RelativeLayout
+            android:id="@+id/withdraw_rl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_F8F8F9"
+            android:paddingBottom="15dp">
+
+            <RelativeLayout
+                android:id="@+id/content_relative"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_5"
+                android:background="@color/color_F8F8F9"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="到账数量"
+                    android:fontFamily="@font/ping_fang_bold"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/sp_15" />
+
+                <TextView
+                    android:id="@+id/actual_withdraw_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:fontFamily="@font/ping_fang_bold"
+                    android:textColor="#333333"
+                    android:textSize="@dimen/sp_15"
+                    tools:text="0.00000000UGA" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/withdraw_tv"
+                android:layout_below="@+id/content_relative"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="@dimen/dp_15"
+                android:layout_marginRight="@dimen/dp_15"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/dp_20"
+                android:background="@drawable/commit_btn_bg"
+                android:paddingLeft="90dp"
+                android:paddingTop="12dp"
+                android:paddingRight="90dp"
+                android:paddingBottom="12dp"
+                android:enabled="false"
+                android:text="申请提币"
+                android:fontFamily="@font/ping_fang_bold"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </RelativeLayout>
+</LinearLayout>

@@ -1,0 +1,160 @@
+package com.tanlian.wallet.wallet;
+
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.LogUtils;
+import com.gyf.barlibrary.ImmersionBar;
+import com.tanlian.wallet.R;
+import com.tanlian.wallet.base.BaseActivity;
+import com.tanlian.wallet.manager.AccountManager;
+import com.tanlian.wallet.utils.PackageUtil;
+import com.tanlian.wallet.utils.UtilCodeEx;
+import com.tanlian.wallet.wallet.bean.NewVersion;
+import com.tanlian.wallet.wallet.presenter.LoginContract;
+import com.tanlian.wallet.wallet.presenter.LoginPresenter;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginContract.View, UpdateManager.CheckResult {
+    @BindView(R.id.welcome_back_tv)
+    TextView welcomeBackTv;
+    @BindView(R.id.activity_login_phone_et)
+    EditText activityLoginPhoneEt;
+    @BindView(R.id.phone_number_input_ll)
+    LinearLayout phoneNumberInputLl;
+    @BindView(R.id.activity_login_pwd_et)
+    EditText activityLoginPwdEt;
+    @BindView(R.id.pass_word_input_ll)
+    LinearLayout passWordInputLl;
+    @BindView(R.id.activity_login_btn)
+    FrameLayout activityLoginBtn;
+    @BindView(R.id.activity_login_bottom_iv)
+    ImageView activityLoginBottomIv;
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_login;
+    }
+    @Override
+    protected void initView() {
+          if (AccountManager.getInstance().isUserLogin()){
+              startToActivity(HomeActivity.class);
+              finish();
+          }
+    }
+    @Override
+    protected void initStatusBar() {
+        mImmersionBar = ImmersionBar.with(this)
+                .fitsSystemWindows(true)
+                .statusBarDarkFont(true, 0.2f)
+                .statusBarColor(R.color.white);
+        mImmersionBar.init();
+    }
+    @Override
+    protected void initData() {
+       // UpdateManager.getNewVersion(UpdateManager.getLocalVersionNameType(this), this, this);
+    }
+    @Override
+    protected LoginPresenter createPresenter() {
+        return new LoginPresenter();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+
+    @OnClick({R.id.activity_login_btn})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.activity_login_btn:
+                login();
+                break;
+        }
+    }
+
+    /**
+     * 登录鉴权
+     */
+    private void login() {
+        String phone = activityLoginPhoneEt.getText().toString();
+        if (TextUtils.isEmpty(phone)){
+            showErrorToast(getString(R.string.please_input_phone_num));
+            return;
+        }
+        if (!UtilCodeEx.isMobileExact(phone)){
+            showErrorToast(getString(R.string.pelease_input_correct_phone));
+            return;
+        }
+        String pwd = activityLoginPwdEt.getText().toString();
+        if (TextUtils.isEmpty(pwd)){
+            showErrorToast(getString(R.string.please_input_pwd));
+            return;
+        }
+        mPresenter.login(phone,pwd);
+    }
+
+    @Override
+    public void onBackPressed() {
+        ActivityUtils.finishAllActivities();
+    }
+
+    @Override
+    public void loginSuccess() {
+        showErrorToast(getString(R.string.login_success));
+        startToActivity(HomeActivity.class);
+        finish();
+    }
+
+    @Override
+    public void loginFail(int code, String message) {
+        showErrorToast(message);
+    }
+
+    @Override
+    public void requestFail(int code, String message) {
+        showErrorToast(message);
+    }
+
+    @Override
+    public void verifyCode(String phone, String pwd) {
+
+    }
+
+    @Override
+    public void checkNewVersion(NewVersion newVersion) {
+        if (newVersion != null) {
+            if (PackageUtil.getLocalVersionCode(this) < newVersion.getvInt()) {
+                if (PackageUtil.getLocalVersionCode(this) < newVersion.getMinVInt()) {
+                    showNewVersionDetectedDialog(newVersion, true);
+                } else {
+                    if (UpdateManager.getIgnoreVersionCode() < newVersion.getvInt())
+                        showNewVersionDetectedDialog(newVersion, false);
+                    else {
+                        if (System.currentTimeMillis() - UpdateManager.getIgnoreTime() > UpdateManager.IGNORE_DAYS * 24 * 60 * 60 * 1000) {
+                            showNewVersionDetectedDialog(newVersion, false);
+                        } else
+                            return;
+                    }
+                }
+            } else
+                return;
+        }
+    }
+    private void showNewVersionDetectedDialog(NewVersion newVersion, boolean isForcedUpdate) {
+        UpdateManager.showNewVersionDialog(newVersion, this, isForcedUpdate, this);
+    }
+    @Override
+    public void getVersionFail(String message) {
+
+    }
+}

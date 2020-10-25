@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.tanlian.wallet">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- 用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" /> <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    <application
+        android:name=".base.App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup">
+        <activity android:name=".wallet.LoginActivity">
+        </activity>
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5b3ae3f3b27b0a658400005b" />
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="normal" />
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="70b433550d23f93f43c8c8ebb9d49626" />
+        <meta-data
+            android:name="com.huawei.hms.client.appid"
+            android:value="appid=100395923" /> <!-- vivo push参数声明 -->
+        <meta-data
+            android:name="com.vivo.push.api_key"
+            android:value="1aa1e50f-f85c-4633-9e94-c1ae283fc366" />
+        <meta-data
+            android:name="com.vivo.push.app_id"
+            android:value="15616" /> <!-- 魅族push应用定义消息receiver声明 -->
+        <receiver android:name=".base.MeizuTestReceiver">
+            <intent-filter>
+
+                <!-- 接收push消息 -->
+                <action android:name="com.meizu.flyme.push.intent.MESSAGE" />
+                <!-- 接收register消息 -->
+                <action android:name="com.meizu.flyme.push.intent.REGISTER.FEEDBACK" />
+                <!-- 接收unregister消息 -->
+                <action android:name="com.meizu.flyme.push.intent.UNREGISTER.FEEDBACK" />
+                <!-- 兼容低版本Flyme3推送服务配置 -->
+                <action android:name="com.meizu.c2dm.intent.REGISTRATION" />
+                <action android:name="com.meizu.c2dm.intent.RECEIVE" />
+
+                <category android:name="${applicationId}" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="com.tanlian.wallet.constant.GlideCache"
+            android:value="GlideCache" />
+
+        <activity android:name=".wallet.HomeActivity" />
+        <activity android:name=".wallet.activity.ChargeCoinsActivity" />
+        <activity android:name=".wallet.MyInformationActivity" />
+        <activity android:name=".wallet.MessageCenterActivity" />
+        <activity android:name=".wallet.OpionFeedbackActivity" />
+        <activity android:name=".wallet.activity.WithdrawCoinsActivity" />
+        <activity android:name=".wallet.activity.QRActivity" />
+        <activity android:name=".wallet.AboutUsActivity" />
+        <activity android:name=".wallet.SplashActivity"
+            android:theme="@style/Theme.Splash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

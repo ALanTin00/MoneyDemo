@@ -1,0 +1,82 @@
+package com.tanlian.wallet.cars.bean;
+
+import java.util.Random;
+
+public class DrivingReportDetail {
+    int drivingTime;
+    double drivingMile;
+    double moneyReward;
+    //String creditReward;
+    double fuelConsumption;
+    double topSpeed;
+
+    static Random random = new Random(20);
+//    public DrivingReportDetail() {
+//        this.drivingTime = String.valueOf(random.nextInt(50));
+//        this.drivingMile = String.valueOf(random.nextInt(500));
+//        this.moneyReward = String.valueOf(random.nextInt(50));
+//        this.creditReward = String.valueOf(random.nextInt(500));
+//        this.fuelConsumption = String.valueOf(random.nextInt(50));
+//        this.topSpeed = String.valueOf(random.nextInt(200));
+//    }
+
+
+    public DrivingReportDetail() {
+
+    }
+    public DrivingReportDetail(int drivingTime, double drivingMile, double moneyReward, double fuelConsumption, double topSpeed) {
+        this.drivingTime = drivingTime;
+        this.drivingMile = drivingMile;
+        this.moneyReward = moneyReward;
+        this.fuelConsumption = fuelConsumption;
+        this.topSpeed = topSpeed;
+    }
+
+    public int getDrivingTime() {
+        return drivingTime;
+    }
+
+    public void setDrivingTime(int drivingTime) {
+        this.drivingTime = drivingTime;
+    }
+
+    public double getDrivingMile() {
+        return drivingMile;
+    }
+
+    public void setDrivingMile(double drivingMile) {
+        this.drivingMile = drivingMile;
+    }
+
+    public double getMoneyReward() {
+        return moneyReward;
+    }
+
+    public void setMoneyReward(double moneyReward) {
+        this.moneyReward = moneyReward;
+    }
+
+    public double getFuelConsumption() {
+        return fuelConsumption;
+    }
+
+    public void setFuelConsumption(double fuelConsumption) {
+        this.fuelConsumption = fuelConsumption;
+    }
+
+    public double getTopSpeed() {
+        return topSpeed;
+    }
+
+    public void setTopSpeed(double topSpeed) {
+        this.topSpeed = topSpeed;
+    }
+
+    public static Random getRandom() {
+        return random;
+    }
+
+    public static void setRandom(Random random) {
+        DrivingReportDetail.random = random;
+    }
+}

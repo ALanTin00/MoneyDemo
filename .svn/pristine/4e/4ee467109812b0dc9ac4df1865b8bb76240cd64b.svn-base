@@ -1,0 +1,27 @@
+package com.tanlian.wallet.server.bean;
+
+public class CarBrandBean {
+    String t_initial;
+    String t_brandname;
+
+    public CarBrandBean() {
+        this.t_initial = "";
+        this.t_brandname = "";
+    }
+
+    public String getT_initial() {
+        return t_initial;
+    }
+
+    public void setT_initial(String t_initial) {
+        this.t_initial = t_initial;
+    }
+
+    public String getT_brandname() {
+        return t_brandname;
+    }
+
+    public void setT_brandname(String t_brandname) {
+        this.t_brandname = t_brandname;
+    }
+}

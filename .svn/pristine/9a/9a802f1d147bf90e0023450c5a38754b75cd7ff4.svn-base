@@ -1,0 +1,52 @@
+package com.tanlian.wallet.cars.bean;
+
+import java.util.List;
+
+/**
+ * Created by liufe on 2018/7/6
+ * 数据库分页模型
+ */
+public class PageModel<T> {
+    /**
+     * 当前页
+     */
+    private int page;
+    /**
+     * 是否排满
+     */
+    private boolean full;
+    private List<T> datas;
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public boolean isFull() {
+        return full;
+    }
+
+    public void setFull(boolean full) {
+        this.full = full;
+    }
+
+    public List<T> getDatas() {
+        return datas;
+    }
+
+    public void setDatas(List<T> datas) {
+        this.datas = datas;
+    }
+
+    @Override
+    public String toString() {
+        return "PageModel{" +
+                "page=" + page +
+                ", full=" + full +
+                ", datas=" + datas +
+                '}';
+    }
+}

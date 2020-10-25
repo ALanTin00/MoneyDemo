@@ -1,0 +1,167 @@
+package com.tanlian.wallet.wallet;
+
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.tanlian.wallet.base.BaseContract;
+import com.tanlian.wallet.base.bean.BaseMode;
+import com.tanlian.wallet.net.RetrofitManger;
+import com.tanlian.wallet.utils.PackageUtil;
+import com.tanlian.wallet.utils.RxSchedulers;
+import com.tanlian.wallet.wallet.bean.NewVersion;
+import com.tanlian.wallet.wallet.dialog.NewVersionDetecedDialog2;
+
+import androidkun.com.versionupdatelibrary.entity.VersionUpdateConfig;
+import io.reactivex.functions.Consumer;
+
+/**
+ * 类说明：
+ * 作者：qiujialiu
+ * 时间：2019/2/21
+ */
+
+public class UpdateManager {
+    public static final int OFFICIAL_VERSION = 2;
+    public static final int TEST_VERSION = 1;
+    public static final int IGNORE_DAYS = 5;
+
+    public static int getLocalVersionNameType(Context ctx) {
+        if (PackageUtil.getLocalVersionName(ctx).split("\\.").length == 3)
+            return OFFICIAL_VERSION;
+        else
+            return TEST_VERSION;
+
+
+    }
+
+    public static void showNewVersionDialog(NewVersion newVersion, BaseContract.BaseView view, boolean isForcedUpdate, AppCompatActivity context) {
+        NewVersionDetecedDialog2 dialog = NewVersionDetecedDialog2.getInstance();
+        dialog.setOnUpdateNowListener(new NewVersionDetecedDialog2.OnUpdateNowListener() {
+            @Override
+            public void updateNow() {
+                String downloadUri = newVersion.getDownUri();
+                if (TextUtils.isEmpty(downloadUri)) {
+                    if (view != null) {
+                        view.showErrorToast("无效的下载地址");
+                    }
+                    return;
+                }
+
+                VersionUpdateConfig versionUpdateConfig = VersionUpdateConfig.getInstance();
+                versionUpdateConfig.setContext(context);
+                versionUpdateConfig.setDownLoadURL(downloadUri);
+                versionUpdateConfig.setNewVersion(newVersion.getV());
+                versionUpdateConfig.startDownLoad();
+                if (view != null) {
+                    view.showErrorToast("开始下载");
+                }
+            }
+
+            @Override
+            public void updateLater() {
+               saveIgnoreVersionCode(newVersion.getvInt(),true);
+            }
+
+            @Override
+            public void onDismiss(boolean isForcedUpdate, boolean isConfirm) {
+                if (isForcedUpdate && !isConfirm) {
+                    context.finish();
+                }
+            }
+        });
+        dialog.setParams(newVersion.getV(), newVersion.getSize(), newVersion.getDes(), isForcedUpdate);
+        dialog.show(context.getSupportFragmentManager(), "version dialog");
+    }
+
+    public static void getNewVersion(int type, BaseContract.BaseView mView, CheckResult result) {
+        if (type == OFFICIAL_VERSION) {
+            RetrofitManger.getInstance().create().getNewVersion(4).compose(RxSchedulers.applySchedulers())
+                    .compose(mView.bindToLife())
+                    .subscribe(new Consumer<BaseMode<NewVersion>>() {
+                        @Override
+                        public void accept(BaseMode<NewVersion> newVersionBaseMode) throws Exception {
+                            if (newVersionBaseMode.isSuccess() && newVersionBaseMode.getResult() != null) {
+                                if (result != null) {
+                                    result.checkNewVersion(newVersionBaseMode.getResult());
+                                    saveIgnoreVersionCode(newVersionBaseMode.getResult().getvInt());
+                                }
+                                LogUtils.e("获取版本成功 ");
+                            } else {
+                                //mView.showErrorToast("请求版本信息失败");
+                                if (result != null) {
+                                    result.getVersionFail(newVersionBaseMode.getError().getMessage());
+                                }
+                                LogUtils.e("获取版本失败 " + newVersionBaseMode.getError().getMessage()) ;
+                            }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            //mView.showErrorToast("请求版本信息失败");
+                            if (result != null) {
+                                result.getVersionFail(throwable.getMessage());
+                            }
+                            LogUtils.e("获取版本失败 " + throwable.getMessage()) ;
+                        }
+                    });
+        } else {
+            RetrofitManger.getInstance().create().getNewVersionForTest(4).compose(RxSchedulers.applySchedulers())
+                    .compose(mView.bindToLife())
+                    .subscribe(new Consumer<BaseMode<NewVersion>>() {
+                        @Override
+                        public void accept(BaseMode<NewVersion> newVersionBaseMode) throws Exception {
+                            if (newVersionBaseMode.isSuccess() && newVersionBaseMode.getResult() != null) {
+                                if (result != null) {
+                                    result.checkNewVersion(newVersionBaseMode.getResult());
+                                    saveIgnoreVersionCode(newVersionBaseMode.getResult().getvInt());
+                                }
+                                LogUtils.e("获取版本成功 ");
+                            } else {
+                                //mView.showErrorToast("请求版本信息失败");
+                                if (result != null) {
+                                    result.getVersionFail(newVersionBaseMode.getError().getMessage());
+                                }
+                                LogUtils.e("获取版本失败 " + newVersionBaseMode.getError().getMessage()) ;
+                            }
+                        }
+                    }, new Consumer<Throwable>() {
+                        @Override
+                        public void accept(Throwable throwable) throws Exception {
+                            //mView.showErrorToast("请求版本信息失败");
+                            if (result != null) {
+                                result.getVersionFail(throwable.getMessage());
+                            }
+                            LogUtils.e("获取版本失败 " + throwable.getMessage()) ;
+                        }
+                    });
+        }
+    }
+
+    public static void saveIgnoreVersionCode(int versionCode) {
+        saveIgnoreVersionCode(versionCode,false);
+    }
+
+    private static void saveIgnoreVersionCode(int versionCode, boolean saveTime) {
+        SPUtils.getInstance().put("update_manager_ignore_code",versionCode);
+        if (saveTime) {
+            SPUtils.getInstance().put("update_manager_ignore_time", System.currentTimeMillis());
+        }
+    }
+
+    public static int getIgnoreVersionCode() {
+        return SPUtils.getInstance().getInt("update_manager_ignore_code");
+    }
+
+    public static long getIgnoreTime() {
+        return SPUtils.getInstance().getLong("update_manager_ignore_time");
+    }
+
+
+    public interface CheckResult{
+        void checkNewVersion(NewVersion version);
+        void getVersionFail(String message);
+    }
+}

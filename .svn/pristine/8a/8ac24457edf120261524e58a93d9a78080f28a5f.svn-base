@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/popup_view_cont"
+    android:layout_width="120dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <ListView
+        android:id="@+id/popup_view_listView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        android:divider="@android:color/transparent"
+        android:listSelector="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:scrollbars="none"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_search_location">
+    </ListView>
+    <ImageView
+        android:id="@+id/top"
+        android:layout_width="18dp"
+        android:layout_height="10dp"
+        android:layout_marginRight="7dp"
+        android:src="@mipmap/menu_triangle"
+        android:layout_alignParentRight="true"/>
+
+</RelativeLayout>
