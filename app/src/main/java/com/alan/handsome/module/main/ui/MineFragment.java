@@ -38,6 +38,7 @@ public class MineFragment extends BaseFragment {
             case R.id.my_profile_lin:
                 break;
             case R.id.feedback_lin:
+                startToActivity(FeedBackActivity.class);
                 break;
             case R.id.customer_service_lin:
                 break;

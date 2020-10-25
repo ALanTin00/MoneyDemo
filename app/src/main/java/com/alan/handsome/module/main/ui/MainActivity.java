@@ -107,7 +107,6 @@ public class MainActivity extends BaseActivity {
             mImmersionBar = ImmersionBar.with(this)
                     .fitsSystemWindows(true)
                     .statusBarDarkFont(true, 0.2f)
-//                    .statusBarColor(R.color.color_BE282A);
                     .statusBarColor(R.color.color_55EDCF);
             mImmersionBar.init();
         }
