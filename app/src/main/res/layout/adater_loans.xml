@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="@dimen/dp_25"
+    android:background="@drawable/bg_97_r4">
+
+    <ImageView
+        android:id="@+id/head_iv"
+        android:layout_width="@dimen/dp_47"
+        android:layout_height="@dimen/dp_47"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_16"
+        android:src="@mipmap/user_icon"/>
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/head_iv"
+        android:text="Donald Fleming"
+        android:textSize="@dimen/sp_16"
+        android:layout_marginLeft="@dimen/dp_10"
+        android:layout_marginTop="@dimen/dp_32"
+        android:textColor="@color/color_313131"/>
+
+    <ImageView
+        android:id="@+id/apply_iv"
+        android:layout_width="@dimen/dp_90"
+        android:layout_height="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:background="@mipmap/apply_btn"
+        android:layout_toRightOf="@+id/name_tv"/>
+
+    <TextView
+        android:id="@+id/content_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/head_iv"
+        android:layout_marginLeft="@dimen/dp_16"
+        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_17"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/color_646464"
+        android:text="Cheng added to the class world to increase the number of styles to make the system. Huaxian mentioned that it was more"/>
+
+
+    <TextView
+        android:id="@+id/loanable_tv"
+        android:layout_width="@dimen/dp_90"
+        android:layout_height="@dimen/dp_60"
+        android:layout_alignLeft="@id/head_iv"
+        android:layout_below="@id/content_iv"
+        android:layout_marginTop="@dimen/dp_16"
+        android:text="0.04~0.05(%\nloanable"
+        android:textColor="@color/color_026A82"
+        android:gravity="center"
+        android:textSize="@dimen/sp_12"
+        android:background="@drawable/bg_97_r4"/>
+
+    <TextView
+        android:id="@+id/Interest_tv"
+        android:layout_width="@dimen/dp_90"
+        android:layout_height="@dimen/dp_60"
+        android:layout_alignTop="@+id/loanable_tv"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_toRightOf="@+id/loanable_tv"
+        android:background="@drawable/bg_97_r4"
+        android:gravity="center"
+        android:text="0.04~0.05(%\nloanable"
+        android:textColor="@color/color_026A82"
+        android:textSize="@dimen/sp_12" />
+
+    <TextView
+        android:id="@+id/Successful_tv"
+        android:layout_width="@dimen/dp_90"
+        android:layout_height="@dimen/dp_60"
+        android:layout_alignTop="@+id/loanable_tv"
+        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_toRightOf="@+id/Interest_tv"
+        android:background="@drawable/bg_97_r4"
+        android:gravity="center"
+        android:text="0.04~0.05(%\nloanable"
+        android:textColor="@color/color_026A82"
+        android:textSize="@dimen/sp_12" />
+
+</RelativeLayout>

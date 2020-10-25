@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <declare-styleable name="TitleBar">
+        <attr name="title" format="string" />
+        <attr name="have_back" format="boolean" />
+        <attr name="right_text_color" format="color" />
+        <attr name="bg_color" format="color" />
+        <attr name="title_color" format="color" />
+        <attr name="right_text" format="string" />
+        <attr name="have_right_icon" format="boolean" />
+        <attr name="right_icon_src" format="reference" />
+        <attr name="left_icon_src" format="reference" />
+    </declare-styleable>
+
     <declare-styleable name="CodeCountDownTextView">
         <attr name="normal_message" format="string" />
         <attr name="countdown" format="integer" />

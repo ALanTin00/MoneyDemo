@@ -1,4 +1,4 @@
-package com.alan.handsome.module.main;
+package com.alan.handsome.module.main.ui;
 
 import android.view.View;
 
@@ -33,6 +33,7 @@ public class SplashActivity extends BaseActivity<SPresenter> implements SConstan
         findViewById(R.id.tv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                startToActivity(MainActivity.class);
             }
         });
 

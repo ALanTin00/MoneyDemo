@@ -1,4 +1,4 @@
-package com.tanlian.hmaddoil.widget;
+package com.alan.handsome.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -13,8 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.tanlian.hmaddoil.R;
-import com.tanlian.hmaddoil.utils.DensityUtil;
+import com.alan.handsome.R;
 
 
 /**
@@ -50,11 +49,11 @@ public class TitleBar extends LinearLayout {
         TypedArray typedArray = getResources().obtainAttributes(attrs, R.styleable.TitleBar);
         back = typedArray.getBoolean(R.styleable.TitleBar_have_back, true);
         title = typedArray.getString(R.styleable.TitleBar_title);
-        textRightColor = typedArray.getColor(R.styleable.TitleBar_right_text_color, ContextCompat.getColor(context, R.color.color_33));
-        titleColor = typedArray.getColor(R.styleable.TitleBar_title_color, ContextCompat.getColor(context, R.color.color_303545));
-        bgColor = typedArray.getColor(R.styleable.TitleBar_bg_color, ContextCompat.getColor(context, R.color.color_FF));
+        textRightColor = typedArray.getColor(R.styleable.TitleBar_right_text_color, ContextCompat.getColor(context, R.color.color_121624));
+        titleColor = typedArray.getColor(R.styleable.TitleBar_title_color, ContextCompat.getColor(context, R.color.color_121624));
+        bgColor = typedArray.getColor(R.styleable.TitleBar_bg_color, ContextCompat.getColor(context, R.color.white));
         rightTextStr = typedArray.getString(R.styleable.TitleBar_right_text);
-        rightIconSrc = typedArray.getResourceId(R.styleable.TitleBar_right_icon_src, R.mipmap.app_logo);
+        rightIconSrc = typedArray.getResourceId(R.styleable.TitleBar_right_icon_src, R.mipmap.back );
         leftIconSrc = typedArray.getResourceId(R.styleable.TitleBar_left_icon_src, R.mipmap.back);
         haveRightIcon = typedArray.getBoolean(R.styleable.TitleBar_have_right_icon, false);
         initView();
@@ -62,7 +61,7 @@ public class TitleBar extends LinearLayout {
     }
 
     private void initView() {
-        LayoutInflater.from(getContext()).inflate(R.layout.view_title_bar, this);
+        LayoutInflater.from(getContext()).inflate(R.layout.title_bar_layout, this);
         textViewTitle = findViewById(R.id.tv_titlebar_title);
         textViewRight = findViewById(R.id.tv_title_right);
         imageViewRight = findViewById(R.id.iv_right_content);
