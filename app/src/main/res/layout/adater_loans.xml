@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/head_iv"
-        android:layout_width="@dimen/dp_47"
-        android:layout_height="@dimen/dp_47"
+        android:layout_width="@dimen/dp_54"
+        android:layout_height="@dimen/dp_54"
         android:layout_marginLeft="@dimen/dp_16"
         android:layout_marginTop="@dimen/dp_16"
         android:src="@mipmap/user_icon"/>
@@ -27,8 +27,8 @@
 
     <ImageView
         android:id="@+id/apply_iv"
-        android:layout_width="@dimen/dp_90"
-        android:layout_height="@dimen/dp_30"
+        android:layout_width="@dimen/dp_98"
+        android:layout_height="@dimen/dp_32"
         android:layout_marginTop="@dimen/dp_30"
         android:layout_marginLeft="@dimen/dp_8"
         android:background="@mipmap/apply_btn"
@@ -49,8 +49,8 @@
 
     <TextView
         android:id="@+id/loanable_tv"
-        android:layout_width="@dimen/dp_90"
-        android:layout_height="@dimen/dp_60"
+        android:layout_width="@dimen/dp_88"
+        android:layout_height="@dimen/dp_62"
         android:layout_alignLeft="@id/head_iv"
         android:layout_below="@id/content_iv"
         android:layout_marginTop="@dimen/dp_16"
@@ -62,8 +62,8 @@
 
     <TextView
         android:id="@+id/Interest_tv"
-        android:layout_width="@dimen/dp_90"
-        android:layout_height="@dimen/dp_60"
+        android:layout_width="@dimen/dp_88"
+        android:layout_height="@dimen/dp_62"
         android:layout_alignTop="@+id/loanable_tv"
         android:layout_marginLeft="@dimen/dp_12"
         android:layout_toRightOf="@+id/loanable_tv"
@@ -75,8 +75,8 @@
 
     <TextView
         android:id="@+id/Successful_tv"
-        android:layout_width="@dimen/dp_90"
-        android:layout_height="@dimen/dp_60"
+        android:layout_width="@dimen/dp_88"
+        android:layout_height="@dimen/dp_62"
         android:layout_alignTop="@+id/loanable_tv"
         android:layout_marginLeft="@dimen/dp_12"
         android:layout_toRightOf="@+id/Interest_tv"

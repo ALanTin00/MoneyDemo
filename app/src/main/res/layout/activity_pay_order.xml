@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/color_32DDAE">
+
+    <com.alan.handsome.widget.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        app:title="Check Out"
+        app:bg_color="@color/color_32DDAE"/>
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/dp_10"
+        android:background="@drawable/bg_ff_r32_r32_r0_r0"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_30"
+                android:layout_marginLeft="@dimen/dp_32"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/color_A4AAC8"
+                android:text="Loan Interest"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/loan_interest_recycler"
+                android:layout_marginTop="@dimen/dp_10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_marginLeft="@dimen/dp_32"
+                android:textSize="@dimen/sp_16"
+                android:textColor="@color/color_A4AAC8"
+                android:text="Term (month)"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/term_recycler"
+                android:layout_marginTop="@dimen/dp_20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_32"
+                android:layout_marginRight="@dimen/dp_29"
+                android:layout_marginTop="@dimen/dp_20">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Disbursal"
+                    android:textSize="@dimen/sp_16"
+                    android:textColor="@color/color_A4AAC8"/>
+
+                <TextView
+                    android:id="@+id/disbursal_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="30000"
+                    android:textColor="@color/color_121624"
+                    android:textSize="@dimen/sp_16"/>
+            </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/color_0FCDE8"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_33"
+            android:layout_marginRight="@dimen/dp_29"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_32"
+                android:layout_marginRight="@dimen/dp_29"
+                android:layout_marginTop="@dimen/dp_13">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Interest"
+                    android:textSize="@dimen/sp_16"
+                    android:textColor="@color/color_A4AAC8"/>
+
+                <TextView
+                    android:id="@+id/interest_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="30000"
+                    android:textColor="@color/color_121624"
+                    android:textSize="@dimen/sp_16"/>
+            </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/color_0FCDE8"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_33"
+            android:layout_marginRight="@dimen/dp_29"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_32"
+                android:layout_marginRight="@dimen/dp_29"
+                android:layout_marginTop="@dimen/dp_13">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Repayment"
+                    android:textSize="@dimen/sp_16"
+                    android:textColor="@color/color_A4AAC8"/>
+
+                <TextView
+                    android:id="@+id/repayment_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="30000"
+                    android:textColor="@color/color_121624"
+                    android:textSize="@dimen/sp_16"/>
+            </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/color_0FCDE8"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_33"
+            android:layout_marginRight="@dimen/dp_29"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_32"
+                android:layout_marginRight="@dimen/dp_29"
+                android:layout_marginTop="@dimen/dp_13">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Security Deposit"
+                    android:textSize="@dimen/sp_16"
+                    android:textColor="@color/color_A4AAC8"/>
+
+                <TextView
+                    android:id="@+id/security_deposit_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="30000"
+                    android:textColor="@color/color_121624"
+                    android:textSize="@dimen/sp_16"/>
+            </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_1"
+            android:background="@color/color_0FCDE8"
+            android:layout_marginTop="@dimen/dp_10"
+            android:layout_marginLeft="@dimen/dp_33"
+            android:layout_marginRight="@dimen/dp_29"/>
+
+            <TextView
+                android:id="@+id/warm_tv"
+                android:layout_width="@dimen/dp_311"
+                android:layout_height="@dimen/dp_66"
+                android:layout_marginTop="@dimen/dp_84"
+                android:padding="@dimen/dp_13"
+                android:textSize="@dimen/sp_14"
+                android:textColor="@color/color_FE5A59"
+                android:gravity="center"
+                android:background="@drawable/bg_fe5a59_r4"
+                android:layout_gravity="center_horizontal"/>
+
+            <TextView
+                android:id="@+id/pay_now_tv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_50"
+                android:layout_marginLeft="@dimen/dp_20"
+                android:layout_marginRight="@dimen/dp_20"
+                android:layout_marginBottom="@dimen/dp_21"
+                android:layout_marginTop="@dimen/dp_33"
+                android:background="@drawable/bg_00bcb8_00d1af_r23"
+                android:gravity="center"
+                android:text="Pay Now"
+                android:textColor="@color/white"
+                android:textSize="@dimen/sp_20" />
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>

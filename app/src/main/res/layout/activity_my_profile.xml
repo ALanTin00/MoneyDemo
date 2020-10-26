@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/bg_ff_e7fffd">
+
+    <com.alan.handsome.widget.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_33"
+        android:layout_marginTop="@dimen/dp_10"
+        app:bg_color="@color/transparent"
+        app:title="My Profile"/>
+
+    <RelativeLayout
+        android:id="@+id/basic_information_relate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_25"
+        android:layout_marginRight="@dimen/dp_37"
+        android:padding="@dimen/dp_12">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Basic information"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/color_black"/>
+
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_12"
+            android:src="@mipmap/right_arrows"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/color_89C6C2"
+        android:layout_marginLeft="@dimen/dp_37"
+        android:layout_marginRight="@dimen/dp_37"/>
+
+    <RelativeLayout
+        android:id="@+id/work_information_relate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_7"
+        android:layout_marginLeft="@dimen/dp_25"
+        android:layout_marginRight="@dimen/dp_37"
+        android:padding="@dimen/dp_12">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Work information"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/color_black"/>
+
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_12"
+            android:src="@mipmap/right_arrows"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/color_89C6C2"
+        android:layout_marginLeft="@dimen/dp_37"
+        android:layout_marginRight="@dimen/dp_37"/>
+
+    <RelativeLayout
+        android:id="@+id/bank_information_relate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_7"
+        android:layout_marginLeft="@dimen/dp_25"
+        android:layout_marginRight="@dimen/dp_37"
+        android:padding="@dimen/dp_12">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Bank information"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/color_black"/>
+
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_12"
+            android:src="@mipmap/right_arrows"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:background="@color/color_89C6C2"
+        android:layout_marginLeft="@dimen/dp_37"
+        android:layout_marginRight="@dimen/dp_37"/>
+
+</LinearLayout>

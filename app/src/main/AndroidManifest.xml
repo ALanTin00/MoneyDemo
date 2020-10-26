@@ -36,6 +36,39 @@
         <activity
             android:name=".module.main.ui.FeedBackActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.main.ui.MyProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.main.ui.BasicInformation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.main.ui.WorkInfoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.main.ui.BankInformationActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.loans.ui.LoansPrepareActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.loans.ui.CheckActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.loans.ui.PassSuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.loans.ui.AuthenticationBaseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.loans.ui.AuthenticationWorkActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.loans.ui.AuthenticationBankActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.loans.ui.PayOrderActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

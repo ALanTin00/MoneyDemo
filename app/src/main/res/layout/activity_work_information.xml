@@ -1,0 +1,156 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/bg_ff_e7fffd">
+
+    <com.alan.handsome.widget.TitleBar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_33"
+        android:layout_marginTop="@dimen/dp_10"
+        app:bg_color="@color/transparent"
+        app:title="Basic information"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_47"
+        android:layout_marginTop="@dimen/dp_30"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/color_ADADAD"
+        android:text="Employment Type "/>
+
+    <RelativeLayout
+        android:id="@+id/employment_type_relate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_47"
+        android:layout_marginRight="@dimen/dp_53"
+        android:layout_marginTop="@dimen/dp_14">
+
+        <TextView
+            android:id="@+id/gender_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/color_black"/>
+
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_12"
+            android:src="@mipmap/right_arrows"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_34"
+        android:layout_marginRight="@dimen/dp_41"
+        android:background="@color/color_89C6C2"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_47"
+        android:layout_marginTop="@dimen/dp_14"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/color_ADADAD"
+        android:text="Your Monthly Salary"/>
+
+    <RelativeLayout
+        android:id="@+id/your_monthly_salary_relate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_47"
+        android:layout_marginRight="@dimen/dp_53"
+        android:layout_marginTop="@dimen/dp_14">
+
+        <TextView
+            android:id="@+id/your_monthly_salary_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/color_black"/>
+
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_12"
+            android:src="@mipmap/right_arrows"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_34"
+        android:layout_marginRight="@dimen/dp_41"
+        android:background="@color/color_89C6C2"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_47"
+        android:layout_marginTop="@dimen/dp_14"
+        android:textSize="@dimen/sp_16"
+        android:textColor="@color/color_ADADAD"
+        android:text="Monthly Family Income"/>
+
+    <RelativeLayout
+        android:id="@+id/monthly_family_income_relate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_47"
+        android:layout_marginRight="@dimen/dp_53"
+        android:layout_marginTop="@dimen/dp_14">
+
+        <TextView
+            android:id="@+id/monthly_family_income_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_16"
+            android:textColor="@color/color_black"/>
+
+        <ImageView
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_width="@dimen/dp_8"
+            android:layout_height="@dimen/dp_12"
+            android:src="@mipmap/right_arrows"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_1"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginLeft="@dimen/dp_34"
+        android:layout_marginRight="@dimen/dp_41"
+        android:background="@color/color_89C6C2"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <TextView
+        android:id="@+id/save_tv"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_52"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_19"
+        android:text="Save"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_20"
+        android:background="@drawable/bg_00bcb8_00d1af_r23"/>
+
+</LinearLayout>

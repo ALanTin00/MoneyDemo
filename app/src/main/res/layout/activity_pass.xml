@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.alan.handsome.widget.TitleBar
+        android:id="@+id/title_bar"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_44"
+        app:title="Mo 9 Credit"/>
+
+    <RelativeLayout
+        android:layout_below="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_123"
+        android:layout_marginLeft="@dimen/dp_13"
+        android:layout_marginRight="@dimen/dp_13"
+        android:background="@mipmap/congratulation_bg">
+
+        <ImageView
+            android:id="@+id/sure_iv"
+            android:layout_width="@dimen/dp_82"
+            android:layout_height="@dimen/dp_85"
+            android:layout_marginTop="@dimen/dp_16"
+            android:layout_marginLeft="@dimen/dp_16"
+            android:src="@mipmap/congratulation_sure"/>
+
+        <TextView
+            android:id="@+id/tip_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/sure_iv"
+            android:layout_marginTop="@dimen/dp_35"
+            android:layout_marginLeft="@dimen/dp_7"
+            android:text="Congratulation!"
+            android:textSize="@dimen/sp_20"
+            android:textColor="@color/color_02BFA6"/>
+
+        <TextView
+            android:id="@+id/tip_four_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/dp_31"
+            android:layout_below="@+id/tip_tv"
+            android:layout_alignLeft="@+id/tip_tv"
+            android:textSize="@dimen/sp_12"/>
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_221"
+        android:layout_marginTop="@dimen/dp_124"
+        android:background="@mipmap/loans_bg_two">
+
+        <TextView
+            android:id="@+id/phone_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/sp_24"
+            android:layout_marginLeft="@dimen/dp_44"
+            android:layout_marginTop="@dimen/dp_71"
+            android:textColor="@color/color_black"
+            android:text="982****261"/>
+
+        <TextView
+            android:id="@+id/tip_two_tv"
+            android:layout_below="@+id/phone_tv"
+            android:layout_marginLeft="@dimen/dp_44"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="become a member and just borrowed"
+            android:textSize="@dimen/sp_12"
+            android:textColor="@color/color_646464"/>
+        
+        <ImageView
+            android:layout_width="@dimen/dp_147"
+            android:layout_height="@dimen/dp_71"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/dp_43"
+            android:layout_marginTop="@dimen/dp_71"
+            android:src="@mipmap/pass_suc_icon"/>
+        
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/pass_cri_iv"
+        android:layout_width="@dimen/dp_16"
+        android:layout_height="@dimen/dp_16"
+        android:layout_marginTop="@dimen/dp_303"
+        android:layout_marginLeft="@dimen/dp_28"
+        android:src="@mipmap/pass_cri"/>
+    
+    <TextView
+        android:id="@+id/tip_three_tv"
+        android:layout_toRightOf="@+id/pass_cri_iv"
+        android:layout_marginTop="@dimen/dp_300"
+        android:layout_marginLeft="@dimen/dp_8"
+        android:layout_marginRight="@dimen/dp_27"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/color_646464" />
+    <TextView
+        android:id="@+id/get_money_new_tv"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_50"
+        android:layout_marginLeft="@dimen/dp_20"
+        android:layout_marginRight="@dimen/dp_20"
+        android:layout_marginBottom="@dimen/dp_21"
+        android:background="@drawable/bg_00bcb8_00d1af_r23"
+        android:gravity="center"
+        android:text="Get Money Now"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_20" />
+
+
+</RelativeLayout>

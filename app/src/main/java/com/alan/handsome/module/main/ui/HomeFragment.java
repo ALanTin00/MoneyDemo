@@ -14,6 +14,9 @@ import java.util.List;
 
 import butterknife.BindView;
 
+/**
+ * 主页面
+ */
 public class HomeFragment extends BaseFragment {
     @BindView(R.id.adfb_rl)
     RecyclerView recyclerView;
