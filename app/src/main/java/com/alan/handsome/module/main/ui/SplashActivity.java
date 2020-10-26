@@ -4,13 +4,11 @@ import android.view.View;
 
 import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
-import com.alan.handsome.module.loans.ui.LoansPrepareActivity;
+import com.alan.handsome.module.loans.ui.LoginActivity;
 import com.alan.handsome.module.main.constant.SConstant;
 import com.alan.handsome.module.main.presenter.SPresenter;
 import com.gyf.barlibrary.BarHide;
 import com.gyf.barlibrary.ImmersionBar;
-
-import java.util.function.LongPredicate;
 
 public class SplashActivity extends BaseActivity<SPresenter> implements SConstant.View {
 
@@ -36,7 +34,7 @@ public class SplashActivity extends BaseActivity<SPresenter> implements SConstan
         findViewById(R.id.tv).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startToActivity(LoansPrepareActivity.class);
+                startToActivity(LoginActivity.class);
             }
         });
 

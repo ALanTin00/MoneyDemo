@@ -24,7 +24,6 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                layout="@layout/view_loans_progress"
                 android:layout_height="@dimen/dp_20"
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/dp_25"
@@ -94,6 +93,7 @@
             <EditText
                 android:id="@+id/ifsc_code_edit"
                 android:layout_width="match_parent"
+                android:singleLine="true"
                 android:layout_height="@dimen/dp_53"
                 android:paddingLeft="@dimen/dp_24"
                 android:paddingRight="@dimen/dp_24"
@@ -109,6 +109,7 @@
             <EditText
                 android:id="@+id/bank_name_edit"
                 android:layout_width="match_parent"
+                android:singleLine="true"
                 android:layout_height="@dimen/dp_53"
                 android:paddingLeft="@dimen/dp_24"
                 android:paddingRight="@dimen/dp_24"
@@ -123,6 +124,8 @@
             <EditText
                 android:id="@+id/bank_num_edit"
                 android:layout_width="match_parent"
+                android:singleLine="true"
+                android:inputType="number"
                 android:layout_height="@dimen/dp_53"
                 android:paddingLeft="@dimen/dp_24"
                 android:paddingRight="@dimen/dp_24"

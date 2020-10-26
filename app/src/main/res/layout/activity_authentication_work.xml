@@ -24,7 +24,6 @@
             android:orientation="vertical">
 
             <RelativeLayout
-                layout="@layout/view_loans_progress"
                 android:layout_height="@dimen/dp_20"
                 android:layout_width="match_parent"
                 android:layout_marginTop="@dimen/dp_25"
