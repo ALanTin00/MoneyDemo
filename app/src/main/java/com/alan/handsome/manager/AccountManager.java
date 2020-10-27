@@ -2,22 +2,20 @@ package com.alan.handsome.manager;
 
 import android.text.TextUtils;
 
-import com.blankj.utilcode.util.SPUtils;
-import com.alan.handsome.constant.Constant;
-import com.alan.handsome.user.TokenModel;
+import com.alan.handsome.user.SystemInfo;
 import com.alan.handsome.user.UserInformation;
 import com.alan.handsome.utils.GsonUtils;
+import com.blankj.utilcode.util.SPUtils;
 
 /**
  * 类说明：用户账号管理
- * 作者：qiujialiu
- * 时间：2018/6/28
  */
 
 public class AccountManager {
     public static AccountManager instance;
     private String accessToken;
     private UserInformation userInformation;//账户主账号用户信息
+    private SystemInfo systemInfo;
     public synchronized static AccountManager getInstance() {
         if (instance == null) {
             instance = new AccountManager();
@@ -25,11 +23,11 @@ public class AccountManager {
         return instance;
     }
 
-    public void saveToken(TokenModel result) {
+    public void saveToken(UserInformation result) {
         if (result != null) {
             accessToken = result.getToken();
             SPUtils.getInstance().put("key_access_token", accessToken);
-            SPUtils.getInstance().put("key_refresh_token", result.getToken());
+//            SPUtils.getInstance().put("key_refresh_token", result.getToken());
         }
     }
 
@@ -47,16 +45,8 @@ public class AccountManager {
         if (result != null) {
             userInformation = result;
             SPUtils.getInstance().put("key_user_info", GsonUtils.toJson(result));
+            saveToken(result);
         }
-    }
-
-
-    public void logout() {
-        userInformation = null;
-        accessToken = null;
-        SPUtils.getInstance().remove("key_user_info");
-        SPUtils.getInstance().remove("key_access_token");
-        SPUtils.getInstance().remove("key_refresh_token");
     }
 
     public UserInformation getUserInformation() {
@@ -70,7 +60,42 @@ public class AccountManager {
         }
         return null;
     }
+
+    /**
+     * 存储系统信息
+     * @param result
+     */
+    public void saveSysInfo(SystemInfo result) {
+        if (result != null) {
+            systemInfo = result;
+            SPUtils.getInstance().put("key_sys_info", GsonUtils.toJson(result));
+        }
+    }
+
+    public SystemInfo getSysInfo() {
+        if (systemInfo != null) {
+            return systemInfo;
+        }
+        String userStr = SPUtils.getInstance().getString("key_sys_info");
+        if (!TextUtils.isEmpty(userStr)) {
+            systemInfo = GsonUtils.convertObj(userStr, SystemInfo.class);
+            return systemInfo;
+        }
+        return null;
+    }
+
+    public void logout() {
+        userInformation = null;
+        accessToken = null;
+        systemInfo=null;
+        SPUtils.getInstance().remove("key_user_info");
+        SPUtils.getInstance().remove("key_access_token");
+//        SPUtils.getInstance().remove("key_refresh_token");
+        SPUtils.getInstance().remove("key_sys_info");
+    }
+
     public boolean isUserLogin() {
-        return  AccountManager.getInstance().getUserInformation() != null;
+        return  AccountManager.getInstance().getUserInformation() != null &&
+                AccountManager.getInstance().getAccessToken()!=null;
     }
 }

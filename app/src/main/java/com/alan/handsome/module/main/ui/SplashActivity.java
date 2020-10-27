@@ -1,16 +1,15 @@
 package com.alan.handsome.module.main.ui;
 
-import android.view.View;
-
 import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
+import com.alan.handsome.manager.AccountManager;
 import com.alan.handsome.module.loans.ui.LoansPrepareActivity;
+import com.alan.handsome.module.loans.ui.LoginActivity;
 import com.alan.handsome.module.main.constant.SConstant;
 import com.alan.handsome.module.main.presenter.SPresenter;
+import com.alan.handsome.user.SystemInfo;
 import com.gyf.barlibrary.BarHide;
 import com.gyf.barlibrary.ImmersionBar;
-
-import java.util.function.LongPredicate;
 
 public class SplashActivity extends BaseActivity<SPresenter> implements SConstant.View {
 
@@ -33,13 +32,9 @@ public class SplashActivity extends BaseActivity<SPresenter> implements SConstan
 
     @Override
     protected void initData() {
-        findViewById(R.id.tv).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startToActivity(LoginActivity.class);
-            }
-        });
 
+        //请求系统参数
+        mPresenter.getSysInfo();
     }
 
     @Override
@@ -47,13 +42,33 @@ public class SplashActivity extends BaseActivity<SPresenter> implements SConstan
         return new SPresenter();
     }
 
-    //发送验证码
+    //获取系统参数
     @Override
-    public void sendMsgSuc(String result) {
+    public void getSysInfoSuc(SystemInfo systemInfo) {
+        AccountManager.getInstance().saveSysInfo(systemInfo);
+        if (AccountManager.getInstance().isUserLogin()){
+
+            switch (AccountManager.getInstance().getUserInformation().getAuthorized()) {
+                case 0:
+                    //已认证
+                    startToActivity(MainActivity.class);
+                    break;
+                case 1: ;
+                case 2:
+                case 3:
+                    //跳转认证页面
+                    startToActivity(LoansPrepareActivity.class);
+                    break;
+            }
+
+
+        }else {
+            startToActivity(LoginActivity.class);
+        }
     }
 
     @Override
-    public void sendMsgFail(String msg) {
+    public void getSysInfoFail(String msg) {
         showErrorToast(msg);
     }
 }

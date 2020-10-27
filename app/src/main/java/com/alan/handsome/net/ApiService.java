@@ -2,7 +2,8 @@ package com.alan.handsome.net;
 
 import com.alan.handsome.BuildConfig;
 import com.alan.handsome.base.bean.BaseMode;
-import com.alan.handsome.user.TokenModel;
+import com.alan.handsome.user.SystemInfo;
+import com.alan.handsome.user.UserInformation;
 
 import java.util.Map;
 
@@ -25,7 +26,7 @@ public interface ApiService {
      */
     @Headers({"url:" + BuildConfig.BASE_URL})
     @POST(UrlManager.URL_BASICS+"/user/login")
-    Observable<BaseMode<TokenModel>> login(@Body Map<String, Object> map);
+    Observable<BaseMode<UserInformation>> login(@Body Map<String, Object> map);
 
     /**
      * 发送验证码
@@ -35,4 +36,11 @@ public interface ApiService {
     @GET(UrlManager.URL_BASICS+"/user/sms")
     Observable<BaseMode<Object>> sendMsg(@Query("mobile") String mobile);
 
+    /**
+     * 获取系统参数
+     * @return
+     */
+    @Headers({"url:" + BuildConfig.BASE_URL})
+    @GET(UrlManager.URL_BASICS+"/config")
+    Observable<BaseMode<SystemInfo>> getSysInfo();
 }

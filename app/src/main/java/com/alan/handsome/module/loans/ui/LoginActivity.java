@@ -1,29 +1,33 @@
 package com.alan.handsome.module.loans.ui;
 
-<<<<<<< HEAD
-=======
 import android.text.TextUtils;
 import android.view.View;
->>>>>>> origin/master
 import android.widget.EditText;
 
 import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
-import com.alan.handsome.base.BaseContract;
+import com.alan.handsome.manager.AccountManager;
+import com.alan.handsome.module.loans.constant.LoginConstant;
+import com.alan.handsome.module.loans.presenter.LoginPresenter;
+import com.alan.handsome.module.main.ui.MainActivity;
+import com.alan.handsome.user.UserInformation;
+import com.alan.handsome.widget.CodeCountDownTextView;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity<LoginPresenter> implements LoginConstant.View {
     @BindView(R.id.phone_edit)
     EditText phoneEdit;
-<<<<<<< HEAD
-=======
     @BindView(R.id.code_edit)
     EditText codeEdit;
     @BindView(R.id.code_count_down)
     CodeCountDownTextView codeCountDown;
->>>>>>> origin/master
+
+    private Map<String, Object> loginMap;
 
     @Override
     protected int getLayoutId() {
@@ -37,47 +41,84 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
+        loginMap = new HashMap<>();
     }
 
     @Override
-    protected BaseContract.BasePresenter createPresenter() {
-        return null;
+    protected LoginPresenter createPresenter() {
+        return new LoginPresenter();
     }
 
-<<<<<<< HEAD
-    @OnClick(R.id.Next_tv)
-    public void onClick() {
-        startToActivity(AuthenticationBaseActivity.class);
-    }
-
-=======
     @OnClick({R.id.code_count_down, R.id.login_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             //发送验证码
             case R.id.code_count_down:
-                if (TextUtils.isEmpty(phoneEdit.getText().toString())){
+                if (TextUtils.isEmpty(phoneEdit.getText().toString())) {
                     showErrorToast("Please input your phone number");
                     return;
                 }
                 codeCountDown.startCountDown();
-                showErrorToast("已发送");
+                mPresenter.sedCode(phoneEdit.getText().toString().trim());
                 break;
 
             //登录
             case R.id.login_tv:
-                if (TextUtils.isEmpty(phoneEdit.getText().toString())){
+                if (TextUtils.isEmpty(phoneEdit.getText().toString())) {
                     showErrorToast("Please input your phone number");
                     return;
                 }
 
-                if (TextUtils.isEmpty(codeEdit.getText().toString())){
+                if (TextUtils.isEmpty(codeEdit.getText().toString())) {
                     showErrorToast("Please input verification code");
                     return;
                 }
+                showDialog();
+                loginMap.put("mobile", phoneEdit.getText().toString().trim());
+                loginMap.put("code", codeEdit.getText().toString().trim());
+                mPresenter.login(loginMap);
                 break;
         }
     }
->>>>>>> origin/master
+
+    //发送验证码
+    @Override
+    public void sedCodeSuccess() {
+        showErrorToast("Verification code sent successfully");
+    }
+
+    @Override
+    public void sedCodeFail(String msg) {
+        showErrorToast(msg);
+        codeCountDown.stop();
+    }
+
+    //登录
+    @Override
+    public void loginSuccess(UserInformation userInformation) {
+
+        AccountManager.getInstance().saveUserInfo(userInformation);
+
+        switch (userInformation.getAuthorized()) {
+            case 0:
+                //已认证
+                startToActivity(MainActivity.class);
+                break;
+            case 1: ;
+            case 2:
+            case 3:
+                //跳转认证页面
+                startToActivity(LoansPrepareActivity.class);
+                break;
+        }
+
+        finish();
+        hideDialog();
+    }
+
+    @Override
+    public void loginFail(String msg) {
+        hideDialog();
+        showErrorToast(msg);
+    }
 }
