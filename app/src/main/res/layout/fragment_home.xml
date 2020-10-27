@@ -18,8 +18,8 @@
         android:id="@+id/adfb_srl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/dp_27"
-        android:layout_marginRight="@dimen/dp_27">
+        android:layout_marginLeft="@dimen/dp_17"
+        android:layout_marginRight="@dimen/dp_17">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/adfb_rl"

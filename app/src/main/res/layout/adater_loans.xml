@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="@dimen/dp_25"
-    android:background="@drawable/bg_97_r4">
+    android:background="@mipmap/my_item">
 
     <ImageView
         android:id="@+id/head_iv"
         android:layout_width="@dimen/dp_54"
         android:layout_height="@dimen/dp_54"
-        android:layout_marginLeft="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_26"
+        android:layout_marginTop="@dimen/dp_26"
         android:src="@mipmap/user_icon"/>
 
     <TextView
@@ -22,14 +22,14 @@
         android:text="Donald Fleming"
         android:textSize="@dimen/sp_16"
         android:layout_marginLeft="@dimen/dp_10"
-        android:layout_marginTop="@dimen/dp_32"
+        android:layout_marginTop="@dimen/dp_42"
         android:textColor="@color/color_313131"/>
 
     <ImageView
         android:id="@+id/apply_iv"
         android:layout_width="@dimen/dp_98"
         android:layout_height="@dimen/dp_32"
-        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_38"
         android:layout_marginLeft="@dimen/dp_8"
         android:background="@mipmap/apply_btn"
         android:layout_toRightOf="@+id/name_tv"/>
@@ -39,8 +39,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/head_iv"
-        android:layout_marginLeft="@dimen/dp_16"
-        android:layout_marginRight="@dimen/dp_16"
+        android:layout_marginLeft="@dimen/dp_26"
+        android:layout_marginRight="@dimen/dp_26"
         android:layout_marginTop="@dimen/dp_17"
         android:textSize="@dimen/sp_14"
         android:textColor="@color/color_646464"

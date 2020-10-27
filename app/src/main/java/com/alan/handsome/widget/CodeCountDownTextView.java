@@ -16,20 +16,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-
-/***
- * 功能描述:获取验证码的倒计时
- * 作者:qiujialiu
- * 时间:2017/6/2
- ***/
-
+/**
+ * 验证码倒计时
+ */
 public class CodeCountDownTextView extends AppCompatTextView {
     private int countDownL;
     private Disposable mSubscription;
     //验证码
-    private String normalMessage = "验证码";
+    private String normalMessage = "Get verification code";
     private int time = 60;
-    private String disableRegex = "sss后重试";//不可点击显示 如ss秒后重新发送
+    private String disableRegex = "Retry in sss";//不可点击显示 如ss秒后重新发送
 
     public CodeCountDownTextView(Context context) {
         super(context);
