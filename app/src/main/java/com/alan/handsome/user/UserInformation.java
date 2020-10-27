@@ -8,18 +8,18 @@ package com.alan.handsome.user;
 
 public class UserInformation  {
 
-    private long id; //用户id
+    private String id; //用户id
     private String action;//"register" or "login"
     private String mobile; //	手机号
     private int authorized; //是否认证 0:已认证 1:第一步认证 2：第二步认证 3：第三步认证
     private String token;
     private String name;
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

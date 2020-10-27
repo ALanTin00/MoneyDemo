@@ -1,7 +1,5 @@
 package com.alan.handsome.base.bean;
 
-import android.text.TextUtils;
-
 /**
  * Created by liufe on 2018/6/26
  * {"name":123,"age":1}
@@ -15,7 +13,7 @@ public class BaseMode<T> {
     //放回信息
     private String message;
     //结果
-    private T result;
+    private T data;
 
     public int getStatus() {
         return status;
@@ -42,11 +40,11 @@ public class BaseMode<T> {
     }
 
     public T getResult() {
-        return result;
+        return data;
     }
 
     public void setResult(T result) {
-        this.result = result;
+        this.data = result;
     }
 
 }
