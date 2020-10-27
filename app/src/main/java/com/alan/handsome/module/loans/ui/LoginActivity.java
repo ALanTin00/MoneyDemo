@@ -1,6 +1,6 @@
 package com.alan.handsome.module.loans.ui;
 
-import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
@@ -10,7 +10,6 @@ import com.alan.handsome.base.BaseContract;
 import com.alan.handsome.widget.CodeCountDownTextView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class LoginActivity extends BaseActivity {
@@ -46,12 +45,25 @@ public class LoginActivity extends BaseActivity {
         switch (view.getId()) {
             //发送验证码
             case R.id.code_count_down:
+                if (TextUtils.isEmpty(phoneEdit.getText().toString())){
+                    showErrorToast("Please input your phone number");
+                    return;
+                }
                 codeCountDown.startCountDown();
                 showErrorToast("已发送");
                 break;
 
             //登录
             case R.id.login_tv:
+                if (TextUtils.isEmpty(phoneEdit.getText().toString())){
+                    showErrorToast("Please input your phone number");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(codeEdit.getText().toString())){
+                    showErrorToast("Please input verification code");
+                    return;
+                }
                 break;
         }
     }

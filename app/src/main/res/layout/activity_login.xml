@@ -44,8 +44,8 @@
             android:textSize="@dimen/sp_16"
             android:background="@null"
             android:textColor="@color/color_black"
-            android:hint="Please enter the phone number"
-            android:textColorHint="@color/color_B5B5B5"/>
+            android:hint="Please input your phone number"
+            android:textColorHint="@color/color_C2C2C2"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -76,7 +76,7 @@
                 android:textColor="@color/color_black"
                 android:textSize="@dimen/sp_16"
                 android:hint="Verification code"
-                android:textColorHint="@color/color_B5B5B5"/>
+                android:textColorHint="@color/color_C2C2C2"/>
 
             <com.alan.handsome.widget.CodeCountDownTextView
                 android:id="@+id/code_count_down"
