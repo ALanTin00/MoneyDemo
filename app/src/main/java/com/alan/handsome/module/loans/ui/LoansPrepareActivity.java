@@ -1,6 +1,5 @@
 package com.alan.handsome.module.loans.ui;
 
-import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -132,11 +131,11 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
             case 2:
                 //审核通过
                 if (AccountManager.getInstance().getUserInformation().isSeePassType()){
-                    startToActivity(PayBeginActivity.class);
+                    //跳转支付页面
+                    startToActivity(PayOrderActivity.class);
                 }else {
-                    Intent intent=new Intent(this,CheckActivity.class);
-                    intent.putExtra("type",CheckActivity.CONGRATULATIONS_TYPE);
-                    startActivity(intent);
+                    //跳转审核通过页面
+                    startToActivity(PayBeginActivity.class);
                 }
                 break;
             case 3:

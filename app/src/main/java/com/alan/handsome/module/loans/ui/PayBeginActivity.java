@@ -28,6 +28,7 @@ public class PayBeginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        //存储这个状态，这个页面只显示一次
         UserInformation userInformation= AccountManager.getInstance().getUserInformation();
         userInformation.setSeePassType(true);
         AccountManager.getInstance().saveUserInfo(userInformation);
@@ -37,7 +38,7 @@ public class PayBeginActivity extends BaseActivity {
     protected void initData() {
         phoneTv.setText(AccountManager.getInstance().getUserInformation().getMobile());
 
-        tipFourTv.setText("Your opplication has been approved and you are eligible to borrow");
+        tipFourTv.setText(AccountManager.getInstance().getSysInfo().getTips_congratulations());
         tipTwoTv.setText("become a member and just \nborrowed ₹ 100.000");
         tipThreeTv.setText("Next, you need to become a member to get an installment loan." +
                 " After becoming a member, you will also get very low loan interest");

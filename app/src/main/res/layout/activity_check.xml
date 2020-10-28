@@ -19,13 +19,6 @@
         android:layout_height="@dimen/dp_314"
         android:background="@mipmap/processing_iocn" />
 
-    <ImageView
-        android:id="@+id/congratulations_iv"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_360"
-        android:background="@mipmap/congratulations_icon"
-        android:visibility="gone" />
-
     <TextView
         android:id="@+id/tip_one_tv"
         android:layout_width="wrap_content"

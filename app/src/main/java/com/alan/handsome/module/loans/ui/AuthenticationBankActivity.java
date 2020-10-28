@@ -1,6 +1,5 @@
 package com.alan.handsome.module.loans.ui;
 
-import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -120,9 +119,7 @@ public class AuthenticationBankActivity extends BaseActivity<CommitInfoPresenter
     @Override
     public void commitBankSuc() {
         hideDialog();
-        Intent intent = new Intent(this, CheckActivity.class);
-        intent.putExtra("type", CheckActivity.PROCESSING_TYPE);
-        startActivity(intent);
+        startToActivity(CheckActivity.class);
         finish();
     }
 

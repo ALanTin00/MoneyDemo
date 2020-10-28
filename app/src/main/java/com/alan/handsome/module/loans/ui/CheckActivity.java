@@ -17,7 +17,7 @@ import butterknife.OnClick;
 /**
  * 审核界面
  */
-public class CheckActivity  extends BaseActivity<LoansPreparePresenter> implements LoansPrepareConstant.View {
+public class CheckActivity extends BaseActivity<LoansPreparePresenter> implements LoansPrepareConstant.View {
     @BindView(R.id.processing_iv)
     ImageView processingIv;
     @BindView(R.id.tip_one_tv)
@@ -26,13 +26,6 @@ public class CheckActivity  extends BaseActivity<LoansPreparePresenter> implemen
     TextView tipTwoTv;
     @BindView(R.id.refresh_tv)
     TextView refreshTv;
-    @BindView(R.id.congratulations_iv)
-    ImageView congratulationsIv;
-
-    public static final int PROCESSING_TYPE = 101;//审核中页面
-    public static final int CONGRATULATIONS_TYPE = 102;//审核通过页面
-
-    private int type;
 
     @Override
     protected int getLayoutId() {
@@ -41,34 +34,15 @@ public class CheckActivity  extends BaseActivity<LoansPreparePresenter> implemen
 
     @Override
     protected void initView() {
-
+        processingIv.setVisibility(View.VISIBLE);
+        tipOneTv.setText("Processing..");
+        tipTwoTv.setText(AccountManager.getInstance().getSysInfo().getTips_processing());
+        refreshTv.setText("Refresh");
     }
 
     @Override
     protected void initData() {
-        type = getIntent().getIntExtra("type", PROCESSING_TYPE);
-        setUI(type);
-        if (type==PROCESSING_TYPE){
-            showDialog();
-            mPresenter.getProduct();
-        }
-    }
-
-    //设置审核状态还是审核通过状态
-    public void setUI(int type){
-        if (type == PROCESSING_TYPE) {
-            processingIv.setVisibility(View.VISIBLE);
-            congratulationsIv.setVisibility(View.GONE);
-            tipOneTv.setText("Processing..");
-            tipTwoTv.setText(AccountManager.getInstance().getSysInfo().getTips_processing());
-            refreshTv.setText("Refresh");
-        } else {
-            processingIv.setVisibility(View.GONE);
-            congratulationsIv.setVisibility(View.VISIBLE);
-            tipOneTv.setText("Congratulations!");
-            tipTwoTv.setText(AccountManager.getInstance().getSysInfo().getTips_congratulations());
-            refreshTv.setText("Continue");
-        }
+        mPresenter.getProduct();
     }
 
     @Override
@@ -79,12 +53,7 @@ public class CheckActivity  extends BaseActivity<LoansPreparePresenter> implemen
     @OnClick(R.id.refresh_tv)
     public void onViewClicked() {
 
-        if (type==PROCESSING_TYPE){
-            showDialog();
-            mPresenter.getProduct();
-        }else {
-            startToActivity(PayBeginActivity.class);
-        }
+        mPresenter.getProduct();
 
     }
 
@@ -92,10 +61,11 @@ public class CheckActivity  extends BaseActivity<LoansPreparePresenter> implemen
     @Override
     public void getProductSuc(LoansBean loansBean) {
 
-        if (loansBean!=null){
-            if (loansBean.getPhase()==2){
+        if (loansBean != null) {
+            if (loansBean.getPhase() == 2) {
                 //审核通过
-                setUI(CONGRATULATIONS_TYPE);
+                finish();
+                startToActivity(PayBeginActivity.class);
             }
         }
 
