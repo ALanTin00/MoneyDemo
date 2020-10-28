@@ -1,17 +1,17 @@
 package com.alan.handsome.module.loans.ui;
 
-import android.os.Bundle;
 import android.widget.TextView;
 
 import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
 import com.alan.handsome.base.BaseContract;
+import com.alan.handsome.manager.AccountManager;
+import com.alan.handsome.user.UserInformation;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class PassSuccessActivity extends BaseActivity {
+public class PayBeginActivity extends BaseActivity {
     @BindView(R.id.phone_tv)
     TextView phoneTv;
     @BindView(R.id.tip_two_tv)
@@ -28,11 +28,15 @@ public class PassSuccessActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        UserInformation userInformation= AccountManager.getInstance().getUserInformation();
+        userInformation.setSeePassType(true);
+        AccountManager.getInstance().saveUserInfo(userInformation);
     }
 
     @Override
     protected void initData() {
+        phoneTv.setText(AccountManager.getInstance().getUserInformation().getMobile());
+
         tipFourTv.setText("Your opplication has been approved and you are eligible to borrow");
         tipTwoTv.setText("become a member and just \nborrowed ₹ 100.000");
         tipThreeTv.setText("Next, you need to become a member to get an installment loan." +

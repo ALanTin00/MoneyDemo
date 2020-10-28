@@ -14,6 +14,15 @@ public class UserInformation  {
     private int authorized; //是否认证 0:已认证 1:第一步认证 2：第二步认证 3：第三步认证
     private String token;
     private String name;
+    private boolean seePassType;//有没有看过审核通过界面
+
+    public boolean isSeePassType() {
+        return seePassType;
+    }
+
+    public void setSeePassType(boolean seePassType) {
+        this.seePassType = seePassType;
+    }
 
     public String getId() {
         return id;

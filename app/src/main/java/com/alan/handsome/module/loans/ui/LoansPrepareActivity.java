@@ -1,5 +1,6 @@
 package com.alan.handsome.module.loans.ui;
 
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.TextView;
 
 import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
+import com.alan.handsome.manager.AccountManager;
 import com.alan.handsome.module.loans.bean.LimitsBean;
 import com.alan.handsome.module.loans.bean.LoansBean;
 import com.alan.handsome.module.loans.constant.LoansPrepareConstant;
@@ -33,6 +35,8 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
     private List<LimitsBean> list;
     private LoansAdapter loansAdapter;
 
+    private boolean isFirst = true;
+
     public int selectPosition = 0;//选择的额度
     private int certification;//认证状态（0 认证完成 1 baseinfo 2 workinfo 3 bankinfo）
     private int phase; //	用户状态（0 未认证 1 审核中 2 审核通过 3 已缴费）
@@ -55,7 +59,7 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
 
     @Override
     protected void initView() {
-        showDialog();
+//        showDialog();
     }
 
     @Override
@@ -93,6 +97,7 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
     @Override
     protected void onResume() {
         super.onResume();
+        showDialog();
         //请求产品信息
         mPresenter.getProduct();
     }
@@ -126,10 +131,18 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
                 break;
             case 2:
                 //审核通过
-                startToActivity(PassSuccessActivity.class);
+                if (AccountManager.getInstance().getUserInformation().isSeePassType()){
+                    startToActivity(PayBeginActivity.class);
+                }else {
+                    Intent intent=new Intent(this,CheckActivity.class);
+                    intent.putExtra("type",CheckActivity.CONGRATULATIONS_TYPE);
+                    startActivity(intent);
+                }
                 break;
             case 3:
                 //已付款
+                startToActivity(MainActivity.class);
+                finish();
                 break;
         }
     }
@@ -138,16 +151,15 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
     @Override
     public void getProductSuc(LoansBean loansBean) {
         //第一个默认选中
-        if (list.size() > 0) {
-            list.clear();
-        }
         if (loansBean != null & loansBean.getLimits().size() > 0) {
             this.phase = loansBean.getPhase();
             this.certification = loansBean.getCertification();
-
-            loansBean.getLimits().get(0).setSelect(true);
-            moneyTv.setText("₹" + loansBean.getLimits().get(0).getAmount());
-            list.addAll(loansBean.getLimits());
+            if (isFirst) {
+                isFirst = false;
+                loansBean.getLimits().get(0).setSelect(true);
+                moneyTv.setText("₹" + loansBean.getLimits().get(0).getAmount());
+                list.addAll(loansBean.getLimits());
+            }
         }
         loansAdapter.notifyDataSetChanged();
         hideDialog();

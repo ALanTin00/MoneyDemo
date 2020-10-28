@@ -1,23 +1,23 @@
 package com.alan.handsome.module.loans.ui;
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
-import com.alan.handsome.base.BaseContract;
 import com.alan.handsome.manager.AccountManager;
+import com.alan.handsome.module.loans.bean.LoansBean;
+import com.alan.handsome.module.loans.constant.LoansPrepareConstant;
+import com.alan.handsome.module.loans.presenter.LoansPreparePresenter;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * 审核界面
  */
-public class CheckActivity extends BaseActivity {
+public class CheckActivity  extends BaseActivity<LoansPreparePresenter> implements LoansPrepareConstant.View {
     @BindView(R.id.processing_iv)
     ImageView processingIv;
     @BindView(R.id.tip_one_tv)
@@ -48,8 +48,13 @@ public class CheckActivity extends BaseActivity {
     protected void initData() {
         type = getIntent().getIntExtra("type", PROCESSING_TYPE);
         setUI(type);
+        if (type==PROCESSING_TYPE){
+            showDialog();
+            mPresenter.getProduct();
+        }
     }
 
+    //设置审核状态还是审核通过状态
     public void setUI(int type){
         if (type == PROCESSING_TYPE) {
             processingIv.setVisibility(View.VISIBLE);
@@ -67,12 +72,38 @@ public class CheckActivity extends BaseActivity {
     }
 
     @Override
-    protected BaseContract.BasePresenter createPresenter() {
-        return null;
+    protected LoansPreparePresenter createPresenter() {
+        return new LoansPreparePresenter();
     }
 
     @OnClick(R.id.refresh_tv)
     public void onViewClicked() {
+
+        if (type==PROCESSING_TYPE){
+            showDialog();
+            mPresenter.getProduct();
+        }else {
+            startToActivity(PayBeginActivity.class);
+        }
+
     }
 
+    //获取审核状态
+    @Override
+    public void getProductSuc(LoansBean loansBean) {
+
+        if (loansBean!=null){
+            if (loansBean.getPhase()==2){
+                //审核通过
+                setUI(CONGRATULATIONS_TYPE);
+            }
+        }
+
+    }
+
+    @Override
+    public void getProductFail(String msg) {
+
+        showErrorToast(msg);
+    }
 }

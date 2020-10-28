@@ -55,7 +55,7 @@
             android:name=".module.loans.ui.CheckActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.loans.ui.PassSuccessActivity"
+            android:name=".module.loans.ui.PayBeginActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.loans.ui.AuthenticationBaseActivity"
