@@ -53,7 +53,7 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
 
     @Override
     protected void initView() {
-
+        showDialog();
     }
 
     @Override
@@ -109,16 +109,19 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
             list.addAll(loansBean.getLimits());
         }
         loansAdapter.notifyDataSetChanged();
+        hideDialog();
     }
 
     @Override
     public void getProductFail(String msg) {
+        hideDialog();
         showErrorToast(msg);
     }
 
     //监听返回键
     @Override
     public void onBackPressed() {
+        hideDialog();
         moveTaskToBack(true);
     }
 

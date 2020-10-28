@@ -9,7 +9,7 @@ public class VipListBean {
     private long min_amount;//最低额度
     private long max_amount;//最高额度
     private long min_interest;// 最低利息
-    private long max_interest;//最高额度
+    private long max_interest;//最高利息
     private long successful;//成功借款人数
     private long star;//星级
     private String is_best_recommend; //是否最佳推荐

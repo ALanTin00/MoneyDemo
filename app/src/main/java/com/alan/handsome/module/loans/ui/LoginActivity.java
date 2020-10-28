@@ -12,6 +12,7 @@ import com.alan.handsome.module.loans.presenter.LoginPresenter;
 import com.alan.handsome.module.main.ui.MainActivity;
 import com.alan.handsome.user.UserInformation;
 import com.alan.handsome.widget.CodeCountDownTextView;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -99,17 +100,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
         AccountManager.getInstance().saveUserInfo(userInformation);
 
-        switch (userInformation.getAuthorized()) {
-            case 0:
-                //已认证
-                startToActivity(MainActivity.class);
-                break;
-            case 1: ;
-            case 2:
-            case 3:
-                //跳转认证页面
-                startToActivity(LoansPrepareActivity.class);
-                break;
+        if (userInformation.getAuthorized()==0){
+            //已认证
+            startToActivity(MainActivity.class);
+        }else {
+            //跳转认证页面
+            startToActivity(LoansPrepareActivity.class);
         }
 
         finish();

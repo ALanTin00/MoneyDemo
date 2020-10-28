@@ -35,7 +35,7 @@
         android:layout_toRightOf="@+id/name_tv"/>
 
     <TextView
-        android:id="@+id/content_iv"
+        android:id="@+id/content_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/head_iv"
@@ -49,12 +49,12 @@
 
     <TextView
         android:id="@+id/loanable_tv"
-        android:layout_width="@dimen/dp_88"
+        android:layout_width="@dimen/dp_90"
         android:layout_height="@dimen/dp_62"
         android:layout_alignLeft="@id/head_iv"
-        android:layout_below="@id/content_iv"
+        android:layout_below="@id/content_tv"
         android:layout_marginTop="@dimen/dp_16"
-        android:text="0.04~0.05(%\nloanable"
+        android:text="0.04~0.05(%\nlloanable"
         android:textColor="@color/color_026A82"
         android:gravity="center"
         android:textSize="@dimen/sp_12"
@@ -62,27 +62,27 @@
 
     <TextView
         android:id="@+id/Interest_tv"
-        android:layout_width="@dimen/dp_88"
+        android:layout_width="@dimen/dp_90"
         android:layout_height="@dimen/dp_62"
         android:layout_alignTop="@+id/loanable_tv"
-        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginLeft="@dimen/dp_10"
         android:layout_toRightOf="@+id/loanable_tv"
         android:background="@drawable/bg_97_r4"
         android:gravity="center"
-        android:text="0.04~0.05(%\nloanable"
+        android:text="0.04~0.05(%\nInterest"
         android:textColor="@color/color_026A82"
         android:textSize="@dimen/sp_12" />
 
     <TextView
         android:id="@+id/Successful_tv"
-        android:layout_width="@dimen/dp_88"
+        android:layout_width="@dimen/dp_90"
         android:layout_height="@dimen/dp_62"
         android:layout_alignTop="@+id/loanable_tv"
-        android:layout_marginLeft="@dimen/dp_12"
+        android:layout_marginLeft="@dimen/dp_10"
         android:layout_toRightOf="@+id/Interest_tv"
         android:background="@drawable/bg_97_r4"
         android:gravity="center"
-        android:text="0.04~0.05(%\nloanable"
+        android:text="0.04~0.05(%\nSuccessful"
         android:textColor="@color/color_026A82"
         android:textSize="@dimen/sp_12" />
 

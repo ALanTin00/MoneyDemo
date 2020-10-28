@@ -8,7 +8,6 @@ public class LimitsBean {
     private int is_default; //	默认值
     private boolean isSelect;//是否选中
     private List<DurationsBean> durations; //产品周期列表
-    private List<VipListBean> viplist;//vip产品列表
 
     public boolean isSelect() {
         return isSelect;
@@ -16,14 +15,6 @@ public class LimitsBean {
 
     public void setSelect(boolean select) {
         isSelect = select;
-    }
-
-    public List<VipListBean> getViplist() {
-        return viplist;
-    }
-
-    public void setViplist(List<VipListBean> viplist) {
-        this.viplist = viplist;
     }
 
     public long getAmount() {

@@ -7,6 +7,15 @@ public class LoansBean {
     private int certification;//认证状态（0 认证完成 1 baseinfo 2 workinfo 3 bankinfo）
     private int phase; //	用户状态（0 未认证 1 审核中 2 审核通过 3 已缴费）
     private List<LimitsBean> limits; //产品额度列表
+    private List<VipListBean> viplist;//vip产品列表
+
+    public List<VipListBean> getViplist() {
+        return viplist;
+    }
+
+    public void setViplist(List<VipListBean> viplist) {
+        this.viplist = viplist;
+    }
 
     public int getCertification() {
         return certification;

@@ -47,20 +47,13 @@ public class SplashActivity extends BaseActivity<SPresenter> implements SConstan
     public void getSysInfoSuc(SystemInfo systemInfo) {
         AccountManager.getInstance().saveSysInfo(systemInfo);
         if (AccountManager.getInstance().isUserLogin()){
-
-            switch (AccountManager.getInstance().getUserInformation().getAuthorized()) {
-                case 0:
-                    //已认证
-                    startToActivity(MainActivity.class);
-                    break;
-                case 1: ;
-                case 2:
-                case 3:
-                    //跳转认证页面
-                    startToActivity(LoansPrepareActivity.class);
-                    break;
+            if (AccountManager.getInstance().getUserInformation().getAuthorized()==0){
+                //已认证
+                startToActivity(MainActivity.class);
+            }else {
+                //跳转认证页面
+                startToActivity(LoansPrepareActivity.class);
             }
-
 
         }else {
             startToActivity(LoginActivity.class);
