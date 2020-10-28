@@ -16,7 +16,7 @@ public class InfoAdapter extends BaseQuickAdapter<DictsBean, BaseViewHolder> {
         super(R.layout.item_select_list_view);
     }
 
-    public void setSelectPhone(String selectPhone) {
+    public void setSelect(String selectPhone) {
         this.selectPhone = selectPhone;
     }
 

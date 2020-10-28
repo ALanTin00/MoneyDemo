@@ -8,4 +8,4 @@
     android:lines="1"
     android:ellipsize="end"
     android:textColor="@color/color_99"
-    android:textSize="@dimen/sp_14"></TextView>
+    android:textSize="@dimen/sp_16"></TextView>

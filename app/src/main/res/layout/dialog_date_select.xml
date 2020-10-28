@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Choose your birthday"
-        android:textColor="@color/color_33"
+        android:textColor="@color/color_00D1AF"
         android:textSize="@dimen/sp_15" />
 
     <DatePicker

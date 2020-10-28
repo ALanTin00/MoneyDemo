@@ -1,18 +1,22 @@
 package com.alan.handsome.module.loans.ui;
 
+import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
-import com.alan.handsome.base.BaseContract;
+import com.alan.handsome.module.loans.bean.ReqBank;
+import com.alan.handsome.module.loans.constant.CommitInfoConstant;
+import com.alan.handsome.module.loans.presenter.CommitInfoPresenter;
 import com.gyf.barlibrary.ImmersionBar;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class AuthenticationBankActivity extends BaseActivity {
+public class AuthenticationBankActivity extends BaseActivity<CommitInfoPresenter> implements CommitInfoConstant.View {
     @BindView(R.id.line_one_tv)
     TextView lineOneTv;
     @BindView(R.id.line_two_tv)
@@ -61,21 +65,71 @@ public class AuthenticationBankActivity extends BaseActivity {
     }
 
     @Override
-    protected BaseContract.BasePresenter createPresenter() {
-        return null;
+    protected CommitInfoPresenter createPresenter() {
+        return new CommitInfoPresenter();
     }
 
-    @OnClick({R.id.ifsc_code_edit, R.id.bank_name_edit, R.id.bank_num_edit, R.id.Next_tv})
+    @OnClick({R.id.Next_tv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.ifsc_code_edit:
-                break;
-            case R.id.bank_name_edit:
-                break;
-            case R.id.bank_num_edit:
-                break;
             case R.id.Next_tv:
+                if (TextUtils.isEmpty(ifscCodeEdit.getText().toString().trim())) {
+                    showErrorToast("Please input IFSC Code");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(bankNameEdit.getText().toString().trim())) {
+                    showErrorToast("Please input Bank Name");
+                    return;
+                }
+
+                if (TextUtils.isEmpty(bankNumEdit.getText().toString().trim())) {
+                    showErrorToast("Please input Bank number");
+                    return;
+                }
+                showDialog();
+                //提交银行信息
+                ReqBank bank = new ReqBank();
+                bank.setIfsc_code(ifscCodeEdit.getText().toString().trim());
+                bank.setBank_name(bankNameEdit.getText().toString().trim());
+                bank.setBank_account_no(bankNumEdit.getText().toString().trim());
+                mPresenter.commitBankInfo(bank);
                 break;
         }
     }
+
+    //提交基础信息
+    @Override
+    public void commitBaseInfoSuc() {
+    }
+
+    @Override
+    public void commitBaseInfoFail(String msg) {
+    }
+
+    //提交工作信息
+    @Override
+    public void commitWorkInfoSuc() {
+    }
+
+    @Override
+    public void commitWorkInfoFail(String msg) {
+    }
+
+    //提交银行信息
+    @Override
+    public void commitBankSuc() {
+        hideDialog();
+        Intent intent = new Intent(this, CheckActivity.class);
+        intent.putExtra("type", CheckActivity.PROCESSING_TYPE);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void commitBankFail(String msg) {
+        hideDialog();
+        showErrorToast(msg);
+    }
+
 }

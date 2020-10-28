@@ -87,6 +87,12 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
             }
         });
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         //请求产品信息
         mPresenter.getProduct();
     }
@@ -102,13 +108,13 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
         switch (phase) {
             case 0:
                 // 用户未认证
-                if (certification==1){
+                if (certification == 1) {
                     //基础信息
                     startToActivity(AuthenticationBaseActivity.class);
-                }else if (certification==2){
+                } else if (certification == 2) {
                     //工作信息
                     startToActivity(AuthenticationWorkActivity.class);
-                }else if (certification==3){
+                } else if (certification == 3) {
                     //银行信息
                     startToActivity(AuthenticationBankActivity.class);
                 }
@@ -132,6 +138,9 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
     @Override
     public void getProductSuc(LoansBean loansBean) {
         //第一个默认选中
+        if (list.size() > 0) {
+            list.clear();
+        }
         if (loansBean != null & loansBean.getLimits().size() > 0) {
             this.phase = loansBean.getPhase();
             this.certification = loansBean.getCertification();
