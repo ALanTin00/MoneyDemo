@@ -112,5 +112,9 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-
+    //监听返回键
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 }

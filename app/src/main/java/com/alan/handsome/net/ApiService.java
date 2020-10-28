@@ -2,6 +2,7 @@ package com.alan.handsome.net;
 
 import com.alan.handsome.BuildConfig;
 import com.alan.handsome.base.bean.BaseMode;
+import com.alan.handsome.module.loans.bean.LoansBean;
 import com.alan.handsome.user.SystemInfo;
 import com.alan.handsome.user.UserInformation;
 
@@ -43,4 +44,13 @@ public interface ApiService {
     @Headers({"url:" + BuildConfig.BASE_URL})
     @GET(UrlManager.URL_BASICS+"/config")
     Observable<BaseMode<SystemInfo>> getSysInfo();
+
+    /**
+     * 产品首页
+     * @return
+     */
+    @Headers({"url:" + BuildConfig.BASE_URL})
+    @GET(UrlManager.URL_BASICS+"/product")
+    Observable<BaseMode<LoansBean>> getProduct();
+
 }

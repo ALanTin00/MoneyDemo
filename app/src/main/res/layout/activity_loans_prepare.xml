@@ -47,49 +47,11 @@
 
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/loans_two"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dp_200"
-            android:layout_marginTop="@dimen/dp_345"
-            android:background="@mipmap/loans_bg_two">
-
-            <ImageView
-                android:id="@+id/icon_iv"
-                android:layout_width="@dimen/dp_45"
-                android:layout_height="@dimen/dp_45"
-                android:layout_marginLeft="@dimen/dp_35"
-                android:layout_marginTop="@dimen/dp_70"
-                android:background="@mipmap/info_icon"/>
-
-            <TextView
-                android:id="@+id/tip_tv"
-                android:layout_alignTop="@+id/icon_iv"
-                android:layout_toRightOf="@+id/icon_iv"
-                android:layout_marginLeft="@dimen/dp_13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Choose Loan Amount"
-                android:textSize="@dimen/sp_15"
-                android:textColor="@color/color_646464"/>
-
-            <TextView
-                android:id="@+id/select_money_tv"
-                android:layout_alignLeft="@+id/tip_tv"
-                android:layout_below="@+id/tip_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="₹5000.00"
-                android:textSize="@dimen/sp_22"
-                android:textColor="@color/color_313131"/>
-
-        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"
-            android:layout_below="@+id/loans_one_lin"
-            android:layout_marginTop="@dimen/dp_80">
+            android:layout_marginTop="@dimen/dp_400">
             
             <ImageView
                 android:id="@+id/iv"
@@ -103,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/iv"
                 android:layout_marginLeft="@dimen/dp_10"
-                android:text="New user interest rate as low as 0% per month"
+                android:text="New user interest rate as low as 1% per month"
                 android:textSize="@dimen/sp_14"
                 android:textColor="@color/color_121624"/>
 
@@ -122,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/loans_one_lin"
-            android:layout_marginTop="@dimen/dp_130"
+            android:layout_marginTop="@dimen/dp_30"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal">
             
@@ -147,7 +109,7 @@
         <TextView
             android:id="@+id/get_money_new_tv"
             android:layout_below="@+id/loans_one_lin"
-            android:layout_marginTop="@dimen/dp_270"
+            android:layout_marginTop="@dimen/dp_180"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_52"
             android:layout_marginLeft="@dimen/dp_20"

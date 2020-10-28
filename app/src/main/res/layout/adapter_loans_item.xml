@@ -6,6 +6,7 @@
     android:layout_marginRight="@dimen/dp_6">
 
     <TextView
+        android:id="@+id/content_tv"
         android:layout_width="@dimen/dp_70"
         android:layout_height="@dimen/dp_40"
         android:background="@drawable/select_loans"

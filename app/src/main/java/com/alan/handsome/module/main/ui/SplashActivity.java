@@ -65,6 +65,8 @@ public class SplashActivity extends BaseActivity<SPresenter> implements SConstan
         }else {
             startToActivity(LoginActivity.class);
         }
+
+        finish();
     }
 
     @Override

@@ -4,8 +4,8 @@ public class DictsBean {
 
     private String id;
     private String name;
-    private int value;
-    private String type;
+    private int value; //	索引
+    private String type;//	类型
 
     public String getId() {
         return id;
