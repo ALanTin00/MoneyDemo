@@ -3,6 +3,9 @@ package com.alan.handsome.net;
 import com.alan.handsome.BuildConfig;
 import com.alan.handsome.base.bean.BaseMode;
 import com.alan.handsome.module.loans.bean.LoansBean;
+import com.alan.handsome.module.loans.bean.ReqBank;
+import com.alan.handsome.module.loans.bean.ReqBase;
+import com.alan.handsome.module.loans.bean.ReqWork;
 import com.alan.handsome.user.SystemInfo;
 import com.alan.handsome.user.UserInformation;
 
@@ -52,5 +55,29 @@ public interface ApiService {
     @Headers({"url:" + BuildConfig.BASE_URL})
     @GET(UrlManager.URL_BASICS+"/product")
     Observable<BaseMode<LoansBean>> getProduct();
+
+    /**
+     * 提交基础信息
+     * @return
+     */
+    @Headers({"url:" + BuildConfig.BASE_URL})
+    @POST(UrlManager.URL_BASICS+"/profile/update_baseinfo")
+    Observable<BaseMode<Object>> updateBaseInfo(@Body ReqBase reqBase);
+
+    /**
+     * 提交工作信息
+     * @return
+     */
+    @Headers({"url:" + BuildConfig.BASE_URL})
+    @POST(UrlManager.URL_BASICS+"/profile/update_workinfo")
+    Observable<BaseMode<Object>> updateWorkInfo(@Body ReqWork reqWork);
+
+    /**
+     * 提交银行信息
+     * @return
+     */
+    @Headers({"url:" + BuildConfig.BASE_URL})
+    @POST(UrlManager.URL_BASICS+"/profile/update_bankinfo")
+    Observable<BaseMode<Object>> updateBankInfo(@Body ReqBank reqBank);
 
 }

@@ -5,6 +5,7 @@ import android.widget.TextView;
 import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
 import com.alan.handsome.base.BaseContract;
+import com.alan.handsome.manager.AccountManager;
 import com.gyf.barlibrary.ImmersionBar;
 
 import butterknife.BindView;
@@ -37,7 +38,7 @@ public class FeedBackActivity extends BaseActivity {
     protected void initData() {
 
         contentTv.setText("Any questions about the App, please contact us by E-mail, \n"
-                + "\n" + "E-mail: service@xxCash.com");
+                + "\n" + "E-mail: "+ AccountManager.getInstance().getSysInfo().getSys_service_email());
 
     }
 

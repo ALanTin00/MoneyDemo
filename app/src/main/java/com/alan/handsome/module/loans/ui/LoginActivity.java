@@ -117,4 +117,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         hideDialog();
         showErrorToast(msg);
     }
+
+    //监听返回键
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+    }
 }

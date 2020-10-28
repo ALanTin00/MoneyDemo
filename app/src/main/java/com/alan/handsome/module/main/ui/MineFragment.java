@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.alan.handsome.R;
 import com.alan.handsome.base.BaseContract;
 import com.alan.handsome.base.BaseFragment;
+import com.alan.handsome.manager.AccountManager;
+import com.alan.handsome.module.loans.ui.LoginActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +64,9 @@ public class MineFragment extends BaseFragment {
                 break;
             //登出
             case R.id.log_out_lin:
+                AccountManager.getInstance().logout();
+                getActivity2().finish();
+                startToActivity(LoginActivity.class);
                 break;
         }
     }

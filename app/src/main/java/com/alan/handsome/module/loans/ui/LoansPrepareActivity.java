@@ -33,7 +33,9 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
     private List<LimitsBean> list;
     private LoansAdapter loansAdapter;
 
-    public int selectPosition = 0;
+    public int selectPosition = 0;//选择的额度
+    private int certification;//认证状态（0 认证完成 1 baseinfo 2 workinfo 3 bankinfo）
+    private int phase; //	用户状态（0 未认证 1 审核中 2 审核通过 3 已缴费）
 
     @Override
     protected int getLayoutId() {
@@ -96,7 +98,34 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
 
     @OnClick(R.id.get_money_new_tv)
     public void onViewClicked() {
-        startToActivity(MainActivity.class);
+        //跳转
+        switch (phase) {
+            case 0:
+                // 用户未认证
+                if (certification==1){
+                    //基础信息
+                    startToActivity(AuthenticationBaseActivity.class);
+                }else if (certification==2){
+                    //工作信息
+                    startToActivity(AuthenticationWorkActivity.class);
+                }else if (certification==3){
+                    //银行信息
+                    startToActivity(AuthenticationBankActivity.class);
+                }
+
+                break;
+            case 1:
+                //审核中
+                startToActivity(CheckActivity.class);
+                break;
+            case 2:
+                //审核通过
+                startToActivity(PassSuccessActivity.class);
+                break;
+            case 3:
+                //已付款
+                break;
+        }
     }
 
     //获取产品信息
@@ -104,6 +133,9 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
     public void getProductSuc(LoansBean loansBean) {
         //第一个默认选中
         if (loansBean != null & loansBean.getLimits().size() > 0) {
+            this.phase = loansBean.getPhase();
+            this.certification = loansBean.getCertification();
+
             loansBean.getLimits().get(0).setSelect(true);
             moneyTv.setText("₹" + loansBean.getLimits().get(0).getAmount());
             list.addAll(loansBean.getLimits());

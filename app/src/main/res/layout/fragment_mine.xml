@@ -28,7 +28,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="@dimen/dp_30"
             android:layout_marginLeft="@dimen/dp_21"
-            android:background="@mipmap/ic_launcher"/>
+            android:background="@mipmap/user_head"/>
 
         <TextView
             android:id="@+id/phone_tv"
