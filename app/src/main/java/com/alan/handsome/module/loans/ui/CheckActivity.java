@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
 import com.alan.handsome.base.BaseContract;
+import com.alan.handsome.manager.AccountManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,8 +29,8 @@ public class CheckActivity extends BaseActivity {
     @BindView(R.id.congratulations_iv)
     ImageView congratulationsIv;
 
-    public static final int PROCESSING_TYPE = 101;
-    public static final int CONGRATULATIONS_TYPE = 102;
+    public static final int PROCESSING_TYPE = 101;//审核中页面
+    public static final int CONGRATULATIONS_TYPE = 102;//审核通过页面
 
     private int type;
 
@@ -46,20 +47,21 @@ public class CheckActivity extends BaseActivity {
     @Override
     protected void initData() {
         type = getIntent().getIntExtra("type", PROCESSING_TYPE);
+        setUI(type);
+    }
 
+    public void setUI(int type){
         if (type == PROCESSING_TYPE) {
             processingIv.setVisibility(View.VISIBLE);
             congratulationsIv.setVisibility(View.GONE);
             tipOneTv.setText("Processing..");
-            tipTwoTv.setText("your application information has been submitted," +
-                    " we will complete the review of your information within," +
-                    "3minutes,please pay attention in time");
+            tipTwoTv.setText(AccountManager.getInstance().getSysInfo().getTips_processing());
             refreshTv.setText("Refresh");
         } else {
             processingIv.setVisibility(View.GONE);
             congratulationsIv.setVisibility(View.VISIBLE);
             tipOneTv.setText("Congratulations!");
-            tipTwoTv.setText("Congratulations on passing the loan review, please click the button to get money");
+            tipTwoTv.setText(AccountManager.getInstance().getSysInfo().getTips_congratulations());
             refreshTv.setText("Continue");
         }
     }
