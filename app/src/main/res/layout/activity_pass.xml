@@ -26,8 +26,8 @@
             android:id="@+id/sure_iv"
             android:layout_width="@dimen/dp_82"
             android:layout_height="@dimen/dp_85"
-            android:layout_marginTop="@dimen/dp_16"
-            android:layout_marginLeft="@dimen/dp_16"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginLeft="@dimen/dp_20"
             android:src="@mipmap/congratulation_sure"/>
 
         <TextView

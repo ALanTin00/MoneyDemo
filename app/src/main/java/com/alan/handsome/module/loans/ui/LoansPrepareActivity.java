@@ -129,13 +129,13 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
                 startToActivity(CheckActivity.class);
                 break;
             case 2:
-                //审核通过
+                //审核通过(只展示一次审核通过页面后面都调支付页面)
                 if (AccountManager.getInstance().getUserInformation().isSeePassType()){
                     //跳转支付页面
                     startToActivity(PayOrderActivity.class);
                 }else {
                     //跳转审核通过页面
-                    startToActivity(PayBeginActivity.class);
+                    startToActivity(PassSuccessActivity.class);
                 }
                 break;
             case 3:

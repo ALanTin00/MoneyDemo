@@ -11,7 +11,7 @@ import com.alan.handsome.user.UserInformation;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class PayBeginActivity extends BaseActivity {
+public class PassSuccessActivity extends BaseActivity {
     @BindView(R.id.phone_tv)
     TextView phoneTv;
     @BindView(R.id.tip_two_tv)
@@ -38,10 +38,9 @@ public class PayBeginActivity extends BaseActivity {
     protected void initData() {
         phoneTv.setText(AccountManager.getInstance().getUserInformation().getMobile());
 
-        tipFourTv.setText(AccountManager.getInstance().getSysInfo().getTips_congratulations());
+        tipFourTv.setText("Your opplication has been approved and you are eligible to borrow");
         tipTwoTv.setText("become a member and just \nborrowed ₹ 100.000");
-        tipThreeTv.setText("Next, you need to become a member to get an installment loan." +
-                " After becoming a member, you will also get very low loan interest");
+        tipThreeTv.setText(AccountManager.getInstance().getSysInfo().getTips_congratulations());
     }
 
     @Override
@@ -51,5 +50,8 @@ public class PayBeginActivity extends BaseActivity {
 
     @OnClick(R.id.get_money_new_tv)
     public void onViewClicked() {
+
+        startToActivity(PayOrderActivity.class);
+
     }
 }

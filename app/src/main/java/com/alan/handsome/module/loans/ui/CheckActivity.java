@@ -1,6 +1,7 @@
 package com.alan.handsome.module.loans.ui;
 
-import android.view.View;
+import android.os.Handler;
+import android.os.Message;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -10,6 +11,9 @@ import com.alan.handsome.manager.AccountManager;
 import com.alan.handsome.module.loans.bean.LoansBean;
 import com.alan.handsome.module.loans.constant.LoansPrepareConstant;
 import com.alan.handsome.module.loans.presenter.LoansPreparePresenter;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -27,6 +31,11 @@ public class CheckActivity extends BaseActivity<LoansPreparePresenter> implement
     @BindView(R.id.refresh_tv)
     TextView refreshTv;
 
+    //定时请求后台的审核状态
+    private Timer mTimer;
+    private TimerTask mTimerTask;
+    private static final int REQUEST_TYPE = 102;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_check;
@@ -34,7 +43,6 @@ public class CheckActivity extends BaseActivity<LoansPreparePresenter> implement
 
     @Override
     protected void initView() {
-        processingIv.setVisibility(View.VISIBLE);
         tipOneTv.setText("Processing..");
         tipTwoTv.setText(AccountManager.getInstance().getSysInfo().getTips_processing());
         refreshTv.setText("Refresh");
@@ -42,7 +50,51 @@ public class CheckActivity extends BaseActivity<LoansPreparePresenter> implement
 
     @Override
     protected void initData() {
-        mPresenter.getProduct();
+        initTimer();
+        // 参数：0，延时0秒后执行;3000，每隔3秒执行1次task。
+        mTimer.schedule(mTimerTask, 0, 3 * 1000);
+    }
+
+    // 初始化Timer
+    public void initTimer() {
+        mTimer = new Timer();
+        mTimerTask = new TimerTask() {
+            @Override
+            public void run() {
+                Message message = new Message();
+                message.what = REQUEST_TYPE;
+                mHandler.sendMessage(message);
+
+            }
+        };
+
+    }
+
+    Handler mHandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case REQUEST_TYPE:
+                    //轮询请求审核状态
+                    mPresenter.getProduct();
+                    break;
+
+            }
+        }
+    };
+
+
+    //onDestroy上使用的
+    public void destroyTimer() {
+        if (mTimer != null) {
+            mTimer.cancel();
+            mTimer = null;
+        }
+        if (mTimerTask != null) {
+            mTimerTask.cancel();
+            mTimerTask = null;
+        }
+
     }
 
     @Override
@@ -52,7 +104,7 @@ public class CheckActivity extends BaseActivity<LoansPreparePresenter> implement
 
     @OnClick(R.id.refresh_tv)
     public void onViewClicked() {
-
+        showDialog();
         mPresenter.getProduct();
 
     }
@@ -60,12 +112,13 @@ public class CheckActivity extends BaseActivity<LoansPreparePresenter> implement
     //获取审核状态
     @Override
     public void getProductSuc(LoansBean loansBean) {
-
+        hideDialog();
         if (loansBean != null) {
             if (loansBean.getPhase() == 2) {
                 //审核通过
+                startToActivity(PassSuccessActivity.class);
+                destroyTimer();
                 finish();
-                startToActivity(PayBeginActivity.class);
             }
         }
 
@@ -73,7 +126,13 @@ public class CheckActivity extends BaseActivity<LoansPreparePresenter> implement
 
     @Override
     public void getProductFail(String msg) {
-
+        hideDialog();
         showErrorToast(msg);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        destroyTimer();
     }
 }
