@@ -22,17 +22,6 @@ import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * <pre>
- *
- * @author liufe
- *
- * @date 2018/4/8
- *
- * @des
- *
- * <pre>
- */
 public class HttpHeadInterceptor implements Interceptor {
 
     @Override
@@ -89,11 +78,10 @@ public class HttpHeadInterceptor implements Interceptor {
         }
 
         if (response.code() == 401) {
+            //todo 处理异常登录
             throw new ApiException(5,"Log out or Login date");
+
         }
-//        else if (response.code() == 403) {
-//            throw new ApiException(6,"该账号已在别处登录");
-//        }
         return response;
     }
 }

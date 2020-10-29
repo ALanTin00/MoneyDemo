@@ -130,6 +130,5 @@ dependencies {
     implementation rootProject.ext.dependencies["SmartRefreshHeader"]
     implementation rootProject.ext.dependencies["glide"]
     implementation rootProject.ext.dependencies["compressor"]
-//    implementation rootProject.ext.dependencies["zxing"]
 
 }

@@ -2,6 +2,9 @@ package com.alan.handsome.user;
 
 import java.util.List;
 
+/**
+ * 系统参数
+ */
 public class SystemInfo {
 
     private String pay_channel;//支付渠道

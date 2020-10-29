@@ -2,10 +2,6 @@ package com.alan.handsome.net;
 
 import java.io.IOException;
 
-/**
- * @author liufe
- * @time 2018/6/26 13:24
- */
 public class ApiException extends IOException {
 
     public static final int TYPE_SHOW_MESSAGE = 0;

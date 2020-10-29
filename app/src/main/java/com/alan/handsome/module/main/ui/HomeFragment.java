@@ -1,5 +1,7 @@
 package com.alan.handsome.module.main.ui;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -58,7 +60,9 @@ public class HomeFragment extends BaseFragment<LoansPreparePresenter> implements
             @Override
             public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
                 if (view.getId()==R.id.apply_iv){
-                    showErrorToast("apply");
+                    Uri uri = Uri.parse(list.get(position).getDownload_url());
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(intent);
                 }
             }
         });

@@ -14,11 +14,6 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static com.alan.handsome.BuildConfig.LOG_DEBUG;
-
-/**
- * @author liufe
- * @time 2018/6/26 13:23
- */
 public class RetrofitManger {
 
     ApiService apiService;

@@ -10,10 +10,6 @@ import java.net.UnknownHostException;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
-/**
- * @author liufe
- * @time 2018/6/26 13:23
- */
 public class ObservableSubscribeHooker<T> implements Observer<T> {
 
     private Observer<T> actual;
@@ -48,17 +44,17 @@ public class ObservableSubscribeHooker<T> implements Observer<T> {
 //        }
         //自己网络质量差
         if (e instanceof SocketTimeoutException) {
-            actual.onError(new ApiException("网络连接异常，请检查网络！"));
+            actual.onError(new ApiException("The network connection is abnormal. Please check the network！"));
             return;
         }
         //服务器错误
         if (e instanceof ConnectException) {
-            actual.onError(new ApiException("网络连接异常，请检查网络！"));
+            actual.onError(new ApiException("The network connection is abnormal. Please check the network！"));
             return;
         }
         //无法解析域名
         if (e instanceof UnknownHostException) {
-            actual.onError(new ApiException("网络连接异常，请检查网络！"));
+            actual.onError(new ApiException("The network connection is abnormal. Please check the network！"));
             return;
         }
 

@@ -19,10 +19,6 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 
-/**
- * @author liufe
- * @time 2018/6/26 13:23
- */
 public interface ApiService {
 
     /**

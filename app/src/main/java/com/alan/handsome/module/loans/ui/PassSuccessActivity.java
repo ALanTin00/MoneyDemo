@@ -56,6 +56,6 @@ public class PassSuccessActivity extends BaseActivity {
     public void onViewClicked() {
 
         startToActivity(PayOrderActivity.class);
-
+        finish();
     }
 }
