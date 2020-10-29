@@ -76,20 +76,20 @@ public class HttpHeadInterceptor implements Interceptor {
             try {
                 response = chain.proceed(builder1.url(newFullUrl).build());
             } catch (ConnectException e) {
-                throw new ApiException(1, "网络连接异常，请检查网络！");
+                throw new ApiException(1, "The network connection is abnormal. Please check the network！");
             } catch (ConnectTimeoutException e2) {
-                throw new ApiException(2, "网络连接异常，请检查网络！");
+                throw new ApiException(2, "The network connection is abnormal. Please check the network！");
             } catch (SocketTimeoutException | SocketException e3) {
-                throw new ApiException(3, "网络连接异常，请检查网络！");
+                throw new ApiException(3, "The network connection is abnormal. Please check the network！");
             } catch (UnknownHostException e4) {
-                throw new ApiException(4, "网络连接异常，请检查网络！");
+                throw new ApiException(4, "The network connection is abnormal. Please check the network！");
             }
         }else {
             response = chain.proceed(builder1.build());
         }
 
         if (response.code() == 401) {
-            throw new ApiException(5,"未登录或登录已过期");
+            throw new ApiException(5,"Log out or Login date");
         }
 //        else if (response.code() == 403) {
 //            throw new ApiException(6,"该账号已在别处登录");
