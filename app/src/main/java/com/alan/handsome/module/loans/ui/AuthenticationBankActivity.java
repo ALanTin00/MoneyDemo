@@ -86,8 +86,8 @@ public class AuthenticationBankActivity extends BaseActivity<CommitInfoPresenter
                     showErrorToast("Please input Bank number");
                     return;
                 }
-                showDialog();
                 //提交银行信息
+                showDialog();
                 ReqBank bank = new ReqBank();
                 bank.setIfsc_code(ifscCodeEdit.getText().toString().trim());
                 bank.setBank_name(bankNameEdit.getText().toString().trim());

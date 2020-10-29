@@ -49,7 +49,7 @@ public class FeedBackActivity extends BaseActivity {
 
         contentTv.setText(type == FEEDBACK_TYPE ?
                 "Any questions about the App, please contact us by E-mail, \n"
-                        + "\n" + "E-mail: " + content : content);
+                        + "\n" + "E-mail: " + content : "E-mail: " + content);
 
     }
 
