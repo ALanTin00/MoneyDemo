@@ -87,11 +87,8 @@ public class AccountManager {
     public void logout() {
         userInformation = null;
         accessToken = null;
-        systemInfo=null;
         SPUtils.getInstance().remove("key_user_info");
         SPUtils.getInstance().remove("key_access_token");
-//        SPUtils.getInstance().remove("key_refresh_token");
-        SPUtils.getInstance().remove("key_sys_info");
     }
 
     public boolean isUserLogin() {

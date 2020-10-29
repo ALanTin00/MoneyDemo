@@ -6,6 +6,7 @@ import com.alan.handsome.module.loans.bean.LoansBean;
 import com.alan.handsome.module.loans.bean.ReqBank;
 import com.alan.handsome.module.loans.bean.ReqBase;
 import com.alan.handsome.module.loans.bean.ReqWork;
+import com.alan.handsome.module.main.bean.UserInfoBean;
 import com.alan.handsome.user.SystemInfo;
 import com.alan.handsome.user.UserInformation;
 
@@ -80,4 +81,11 @@ public interface ApiService {
     @POST(UrlManager.URL_BASICS+"/profile/update_bankinfo")
     Observable<BaseMode<Object>> updateBankInfo(@Body ReqBank reqBank);
 
+    /**
+     *获取用户信息
+     * @return
+     */
+    @Headers({"url:" + BuildConfig.BASE_URL})
+    @GET(UrlManager.URL_BASICS+"/profile")
+    Observable<BaseMode<UserInfoBean>> getUserInfo();
 }

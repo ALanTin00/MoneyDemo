@@ -1,5 +1,6 @@
 package com.alan.handsome.module.loans.ui;
 
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.alan.handsome.R;
@@ -40,7 +41,10 @@ public class PassSuccessActivity extends BaseActivity {
 
         tipFourTv.setText("Your opplication has been approved and you are eligible to borrow");
         tipTwoTv.setText("become a member and just \nborrowed ₹ 100.000");
-        tipThreeTv.setText(AccountManager.getInstance().getSysInfo().getTips_congratulations());
+        if (!TextUtils.isEmpty(AccountManager.getInstance().getSysInfo().getTips_congratulations())){
+
+            tipThreeTv.setText(AccountManager.getInstance().getSysInfo().getTips_congratulations());
+        }
     }
 
     @Override

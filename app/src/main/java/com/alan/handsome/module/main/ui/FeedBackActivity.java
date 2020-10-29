@@ -1,5 +1,6 @@
 package com.alan.handsome.module.main.ui;
 
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.alan.handsome.R;
@@ -41,10 +42,14 @@ public class FeedBackActivity extends BaseActivity {
     @Override
     protected void initData() {
         type = getIntent().getIntExtra("type", FEEDBACK_TYPE);
+        String content = "";
+        if (!TextUtils.isEmpty(AccountManager.getInstance().getSysInfo().getSys_service_email())) {
+            content = AccountManager.getInstance().getSysInfo().getSys_service_email();
+        }
+
         contentTv.setText(type == FEEDBACK_TYPE ?
                 "Any questions about the App, please contact us by E-mail, \n"
-                        + "\n" + "E-mail: " + AccountManager.getInstance().getSysInfo().getSys_service_email() :
-                AccountManager.getInstance().getSysInfo().getSys_service_email());
+                        + "\n" + "E-mail: " + content : content);
 
     }
 

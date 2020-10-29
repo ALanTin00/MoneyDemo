@@ -2,6 +2,7 @@ package com.alan.handsome.module.loans.ui;
 
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,7 +45,9 @@ public class CheckActivity extends BaseActivity<LoansPreparePresenter> implement
     @Override
     protected void initView() {
         tipOneTv.setText("Processing..");
-        tipTwoTv.setText(AccountManager.getInstance().getSysInfo().getTips_processing());
+        if (!TextUtils.isEmpty(AccountManager.getInstance().getSysInfo().getTips_processing())) {
+            tipTwoTv.setText(AccountManager.getInstance().getSysInfo().getTips_processing());
+        }
         refreshTv.setText("Refresh");
     }
 
