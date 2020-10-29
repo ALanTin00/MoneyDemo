@@ -92,6 +92,7 @@ public class AuthenticationBaseActivity extends BaseActivity<CommitInfoPresenter
                     //截止购买时间
                     case 1:
                         birthdayTv.setText(dateString);
+                        birthdayTv.setTextColor(getResources().getColor(R.color.color_33));
                         data=dateString;
                         break;
 
@@ -147,6 +148,7 @@ public class AuthenticationBaseActivity extends BaseActivity<CommitInfoPresenter
                     dialog.dismiss();
                 }
                 genderAdapter.setSelect(genderList.get(position).getName());
+                genderTv.setTextColor(getResources().getColor(R.color.color_33));
                 genderTv.setText(genderList.get(position).getName());
                 genderValue = genderList.get(position).getValue();
             }
@@ -159,6 +161,7 @@ public class AuthenticationBaseActivity extends BaseActivity<CommitInfoPresenter
                     dialog.dismiss();
                 }
                 maritalAdapter.setSelect(maritalList.get(position).getName());
+                maritalTv.setTextColor(getResources().getColor(R.color.color_33));
                 maritalTv.setText(maritalList.get(position).getName());
                 maritalValue = maritalList.get(position).getValue();
             }
@@ -172,6 +175,7 @@ public class AuthenticationBaseActivity extends BaseActivity<CommitInfoPresenter
                     dialog.dismiss();
                 }
                 educationAdapter.setSelect(educationList.get(position).getName());
+                educationTv.setTextColor(getResources().getColor(R.color.color_33));
                 educationTv.setText(educationList.get(position).getName());
                 educationValue = educationList.get(position).getValue();
             }

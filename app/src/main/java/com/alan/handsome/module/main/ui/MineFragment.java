@@ -1,5 +1,6 @@
 package com.alan.handsome.module.main.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void initView(View view) {
         customerServiceLin.setVisibility(View.GONE);
+        phoneTv.setText(AccountManager.getInstance().getUserInformation().getMobile());
     }
 
     @OnClick({R.id.my_profile_lin, R.id.feedback_lin, R.id.customer_service_lin, R.id.about_us_lin, R.id.log_out_lin})
@@ -54,13 +56,18 @@ public class MineFragment extends BaseFragment {
                 break;
             //反馈
             case R.id.feedback_lin:
-                startToActivity(FeedBackActivity.class);
+                Intent intent=new Intent(getActivity(),FeedBackActivity.class);
+                intent.putExtra("type",FeedBackActivity.FEEDBACK_TYPE);
+                startActivity(intent);
                 break;
             //客服
             case R.id.customer_service_lin:
                 break;
             //关于我们
             case R.id.about_us_lin:
+                Intent intent1=new Intent(getActivity(),FeedBackActivity.class);
+                intent1.putExtra("type",FeedBackActivity.ABOUT_US_TYPE);
+                startActivity(intent1);
                 break;
             //登出
             case R.id.log_out_lin:

@@ -14,6 +14,10 @@ public class FeedBackActivity extends BaseActivity {
     @BindView(R.id.content_tv)
     TextView contentTv;
 
+    public static final int FEEDBACK_TYPE = 105;
+    public static final int ABOUT_US_TYPE = 106;
+    private int type;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_feed_back;
@@ -36,9 +40,11 @@ public class FeedBackActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
-        contentTv.setText("Any questions about the App, please contact us by E-mail, \n"
-                + "\n" + "E-mail: "+ AccountManager.getInstance().getSysInfo().getSys_service_email());
+        type = getIntent().getIntExtra("type", FEEDBACK_TYPE);
+        contentTv.setText(type == FEEDBACK_TYPE ?
+                "Any questions about the App, please contact us by E-mail, \n"
+                        + "\n" + "E-mail: " + AccountManager.getInstance().getSysInfo().getSys_service_email() :
+                AccountManager.getInstance().getSysInfo().getSys_service_email());
 
     }
 

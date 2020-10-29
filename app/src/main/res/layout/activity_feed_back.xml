@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingExtra="@dimen/sp_8"
-        android:layout_marginTop="@dimen/dp_168"
+        android:layout_marginTop="@dimen/dp_180"
         android:layout_marginLeft="@dimen/dp_34"
         android:layout_marginRight="@dimen/dp_34"
         android:textColor="@color/color_0C0D34"

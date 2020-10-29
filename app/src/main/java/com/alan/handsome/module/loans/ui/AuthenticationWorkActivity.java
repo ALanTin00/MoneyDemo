@@ -121,6 +121,7 @@ public class AuthenticationWorkActivity extends BaseActivity<CommitInfoPresenter
                     dialog.dismiss();
                 }
                 employmentAdapter.setSelect(employmentList.get(position).getName());
+                employmentTypeTv.setTextColor(getResources().getColor(R.color.color_33));
                 employmentTypeTv.setText(employmentList.get(position).getName());
                 employmentValue = employmentList.get(position).getValue();
             }
@@ -133,6 +134,7 @@ public class AuthenticationWorkActivity extends BaseActivity<CommitInfoPresenter
                     dialog.dismiss();
                 }
                 monthlyAdapter.setSelect(monthlyList.get(position).getName());
+                yourMonthlySalaryTv.setTextColor(getResources().getColor(R.color.color_33));
                 yourMonthlySalaryTv.setText(monthlyList.get(position).getName());
                 monthlyValue = monthlyList.get(position).getValue();
             }
@@ -146,6 +148,7 @@ public class AuthenticationWorkActivity extends BaseActivity<CommitInfoPresenter
                     dialog.dismiss();
                 }
                 familyAdapter.setSelect(familyList.get(position).getName());
+                monthlyFamilyIncomeTv.setTextColor(getResources().getColor(R.color.color_33));
                 monthlyFamilyIncomeTv.setText(familyList.get(position).getName());
                 familyValue = familyList.get(position).getValue();
             }

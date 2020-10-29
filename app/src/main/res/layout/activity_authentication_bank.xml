@@ -101,7 +101,7 @@
                 android:layout_marginLeft="@dimen/dp_34"
                 android:layout_marginRight="@dimen/dp_30"
                 android:textSize="@dimen/sp_16"
-                android:textColor="@color/color_ADADAD"
+                android:textColor="@color/color_33"
                 android:textColorHint="@color/color_ADADAD"
                 android:hint="IFSC Code"
                 android:background="@drawable/bg_ff_138d85_r27"/>
@@ -117,7 +117,7 @@
                 android:layout_marginLeft="@dimen/dp_34"
                 android:layout_marginRight="@dimen/dp_30"
                 android:textSize="@dimen/sp_16"
-                android:textColor="@color/color_ADADAD"
+                android:textColor="@color/color_33"
                 android:hint="Bank Name"
                 android:background="@drawable/bg_ff_138d85_r27"/>
 
@@ -133,7 +133,7 @@
                 android:layout_marginLeft="@dimen/dp_34"
                 android:layout_marginRight="@dimen/dp_30"
                 android:textSize="@dimen/sp_16"
-                android:textColor="@color/color_ADADAD"
+                android:textColor="@color/color_33"
                 android:hint="Bank Account NO."
                 android:background="@drawable/bg_ff_138d85_r27"/>
 
