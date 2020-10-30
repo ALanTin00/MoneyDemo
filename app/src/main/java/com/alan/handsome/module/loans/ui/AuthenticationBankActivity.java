@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
+import com.alan.handsome.manager.AccountManager;
 import com.alan.handsome.module.loans.bean.ReqBank;
 import com.alan.handsome.module.loans.constant.CommitInfoConstant;
 import com.alan.handsome.module.loans.presenter.CommitInfoPresenter;
@@ -119,6 +120,7 @@ public class AuthenticationBankActivity extends BaseActivity<CommitInfoPresenter
     @Override
     public void commitBankSuc() {
         hideDialog();
+        AccountManager.getInstance().saveAuthenticationType(1,-1);
         startToActivity(CheckActivity.class);
         finish();
     }

@@ -253,6 +253,7 @@ public class AuthenticationWorkActivity extends BaseActivity<CommitInfoPresenter
     @Override
     public void commitWorkInfoSuc() {
         hideDialog();
+        AccountManager.getInstance().saveAuthenticationType(-1,3);
         startToActivity(AuthenticationBankActivity.class);
         finish();
     }

@@ -31,7 +31,7 @@ public class HttpHeadInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
         Request.Builder builder1 = request.newBuilder();
-        //todo 在这里添加token
+        //todo 在这里添加adid和gps-adid
         builder1.addHeader("token",  AccountManager.getInstance().getAccessToken())
                 .addHeader("os-type", "android")
                 .addHeader("os-version", PackageUtil.getSystemVersion()) //ANDROID版本

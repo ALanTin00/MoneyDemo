@@ -1,5 +1,11 @@
 package com.alan.handsome.module.main.ui;
 
+import android.app.AlertDialog;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.TextView;
+
 import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
 import com.alan.handsome.manager.AccountManager;
@@ -12,6 +18,7 @@ import com.gyf.barlibrary.BarHide;
 import com.gyf.barlibrary.ImmersionBar;
 
 public class SplashActivity extends BaseActivity<SPresenter> implements SConstant.View {
+    private AlertDialog dialog;
 
     @Override
     protected int getLayoutId() {
@@ -46,16 +53,16 @@ public class SplashActivity extends BaseActivity<SPresenter> implements SConstan
     @Override
     public void getSysInfoSuc(SystemInfo systemInfo) {
         AccountManager.getInstance().saveSysInfo(systemInfo);
-        if (AccountManager.getInstance().isUserLogin()){
-            if (AccountManager.getInstance().getUserInformation().getAuthorized()==0){
-                //已认证
+        if (AccountManager.getInstance().isUserLogin()) {
+            if (AccountManager.getInstance().getUserInformation().getPhase() == 3) {
+                //已付款
                 startToActivity(MainActivity.class);
-            }else {
+            } else {
                 //跳转认证页面
                 startToActivity(LoansPrepareActivity.class);
             }
 
-        }else {
+        } else {
             startToActivity(LoginActivity.class);
         }
 
@@ -64,6 +71,38 @@ public class SplashActivity extends BaseActivity<SPresenter> implements SConstan
 
     @Override
     public void getSysInfoFail(String msg) {
-        showErrorToast(msg);
+        showSelectCarOrPhone();
+    }
+
+    /**
+     * 强制弹窗
+     */
+    public void showSelectCarOrPhone() {
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_sp, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(view);
+        TextView confirmTV = view.findViewById(R.id.dds_confirm_tv);
+
+        confirmTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                mPresenter.getSysInfo();
+            }
+        });
+        dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
+        dialog.setView(view);
+        dialog.show();
+
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            return false;//返回false进行拦截点击事件
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

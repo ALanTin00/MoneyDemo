@@ -12,7 +12,25 @@ public class UserInformation  {
     private int authorized; //是否认证 0:已认证 1:第一步认证 2：第二步认证 3：第三步认证
     private String token;
     private String name;
-    private boolean seePassType;//有没有看过审核通过界面
+    private boolean seePassType;//有没有看过审核通过界面 （自己加）
+    private int phase; //0: 用户未认证  1: 审核中  2: 审核通过。 3: 已付款。 （自己加）
+    private int certification; //0: 认证完成  1: 跳转Bas 2: 跳转Work 3: 跳转Bank  （自己加）
+
+    public int getCertification() {
+        return certification;
+    }
+
+    public void setCertification(int certification) {
+        this.certification = certification;
+    }
+
+    public int getPhase() {
+        return phase;
+    }
+
+    public void setPhase(int phase) {
+        this.phase = phase;
+    }
 
     public boolean isSeePassType() {
         return seePassType;

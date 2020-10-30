@@ -49,6 +49,19 @@ public class AccountManager {
         }
     }
 
+    //存储审核状态值
+    public void saveAuthenticationType(int phase,int certification){
+        UserInformation userInfo=getUserInformation();
+        if (phase!=-1){
+            userInfo.setPhase(phase);
+        }
+
+        if (certification!=-1){
+            userInfo.setCertification(certification);
+        }
+        saveUserInfo(userInfo);
+    }
+
     public UserInformation getUserInformation() {
         if (userInformation != null) {
             return userInformation;

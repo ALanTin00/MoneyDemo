@@ -13,6 +13,7 @@ import com.alan.handsome.module.loans.bean.LoansBean;
 import com.alan.handsome.module.loans.constant.LoansPrepareConstant;
 import com.alan.handsome.module.loans.presenter.LoansPreparePresenter;
 import com.alan.handsome.module.main.ui.MainActivity;
+import com.alan.handsome.user.UserInformation;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.gyf.barlibrary.ImmersionBar;
 
@@ -37,8 +38,7 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
     private boolean isFirst = true;
 
     public int selectPosition = 0;//选择的额度
-    private int certification;//认证状态（0 认证完成 1 baseinfo 2 workinfo 3 bankinfo）
-    private int phase; //	用户状态（0 未认证 1 审核中 2 审核通过 3 已缴费）
+    private UserInformation userInfo;
 
     @Override
     protected int getLayoutId() {
@@ -58,7 +58,7 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
 
     @Override
     protected void initView() {
-//        showDialog();
+        showDialog();
     }
 
     @Override
@@ -90,15 +90,13 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
             }
         });
 
-
+        //请求产品信息
+        mPresenter.getProduct();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        showDialog();
-        //请求产品信息
-        mPresenter.getProduct();
     }
 
     @Override
@@ -108,17 +106,18 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
 
     @OnClick(R.id.get_money_new_tv)
     public void onViewClicked() {
+        userInfo = AccountManager.getInstance().getUserInformation();
         //跳转
-        switch (phase) {
+        switch (userInfo.getPhase()) {
             case 0:
                 // 用户未认证
-                if (certification == 1) {
+                if (userInfo.getCertification() == 1) {
                     //基础信息
                     startToActivity(AuthenticationBaseActivity.class);
-                } else if (certification == 2) {
+                } else if (userInfo.getCertification() == 2) {
                     //工作信息
                     startToActivity(AuthenticationWorkActivity.class);
-                } else if (certification == 3) {
+                } else if (userInfo.getCertification() == 3) {
                     //银行信息
                     startToActivity(AuthenticationBankActivity.class);
                 }
@@ -130,10 +129,10 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
                 break;
             case 2:
                 //审核通过(只展示一次审核通过页面后面都调支付页面)
-                if (AccountManager.getInstance().getUserInformation().isSeePassType()){
+                if (AccountManager.getInstance().getUserInformation().isSeePassType()) {
                     //跳转支付页面
                     startToActivity(PayOrderActivity.class);
-                }else {
+                } else {
                     //跳转审核通过页面
                     startToActivity(PassSuccessActivity.class);
                 }
@@ -150,9 +149,9 @@ public class LoansPrepareActivity extends BaseActivity<LoansPreparePresenter> im
     @Override
     public void getProductSuc(LoansBean loansBean) {
         //第一个默认选中
+        AccountManager.getInstance().saveAuthenticationType(loansBean.getPhase(), loansBean.getCertification());
         if (loansBean != null & loansBean.getLimits().size() > 0) {
-            this.phase = loansBean.getPhase();
-            this.certification = loansBean.getCertification();
+
             if (isFirst) {
                 isFirst = false;
                 loansBean.getLimits().get(0).setSelect(true);

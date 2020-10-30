@@ -119,6 +119,7 @@ public class CheckActivity extends BaseActivity<LoansPreparePresenter> implement
         if (loansBean != null) {
             if (loansBean.getPhase() == 2) {
                 //审核通过
+                AccountManager.getInstance().saveAuthenticationType(2,-1);
                 startToActivity(PassSuccessActivity.class);
                 destroyTimer();
                 finish();

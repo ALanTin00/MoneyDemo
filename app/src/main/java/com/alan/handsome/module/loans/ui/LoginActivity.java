@@ -11,6 +11,7 @@ import com.alan.handsome.module.loans.bean.LoansBean;
 import com.alan.handsome.module.loans.constant.LoginConstant;
 import com.alan.handsome.module.loans.presenter.LoginPresenter;
 import com.alan.handsome.module.main.ui.MainActivity;
+import com.alan.handsome.user.SystemInfo;
 import com.alan.handsome.user.UserInformation;
 import com.alan.handsome.widget.CodeCountDownTextView;
 
@@ -118,10 +119,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         showErrorToast(msg);
     }
 
-    //获取审核状态
+    //获取审核状态(是否已经付费)
     @Override
     public void getProductSuc(LoansBean loansBean) {
         hideDialog();
+        AccountManager.getInstance().saveAuthenticationType(loansBean.getPhase(),loansBean.getCertification());
         if (loansBean.getPhase()==3){
             //已付费
             startToActivity(MainActivity.class);
