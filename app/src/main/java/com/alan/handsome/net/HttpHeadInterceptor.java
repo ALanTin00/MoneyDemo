@@ -1,10 +1,13 @@
 package com.alan.handsome.net;
 
+import android.content.Intent;
 import android.util.Log;
 
 import com.alan.handsome.BuildConfig;
 import com.alan.handsome.base.App;
 import com.alan.handsome.manager.AccountManager;
+import com.alan.handsome.module.loans.ui.LoginActivity;
+import com.alan.handsome.module.main.ui.MainActivity;
 import com.alan.handsome.utils.PackageUtil;
 
 import org.apache.http.conn.ConnectTimeoutException;
@@ -78,7 +81,10 @@ public class HttpHeadInterceptor implements Interceptor {
         }
 
         if (response.code() == 401) {
-            //todo 处理异常登录
+            Intent intent = new Intent(App.getApp(), LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+            App.getApp().startActivity(intent);
+            AccountManager.getInstance().logout();
             throw new ApiException(5,"Log out or Login date");
 
         }

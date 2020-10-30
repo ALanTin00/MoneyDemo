@@ -1,7 +1,10 @@
 package com.alan.handsome.module.main.ui;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,8 @@ public class MineFragment extends BaseFragment {
     TextView phoneTv;
     @BindView(R.id.customer_service_lin)
     LinearLayout customerServiceLin;
+
+    private AlertDialog dialog;
 
     @Override
     protected int getLayoutId() {
@@ -71,11 +76,42 @@ public class MineFragment extends BaseFragment {
                 break;
             //登出
             case R.id.log_out_lin:
+                showSelectCarOrPhone();
+                break;
+        }
+    }
+
+    /**
+     * 退出弹出框
+     */
+    public void showSelectCarOrPhone() {
+        View view = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_logout, null);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(view);
+        TextView cancelTV = view.findViewById(R.id.dds_cancel_tv);
+        TextView confirmTV = view.findViewById(R.id.dds_confirm_tv);
+
+        cancelTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
+        confirmTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
                 AccountManager.getInstance().logout();
                 getActivity2().finish();
                 startToActivity(LoginActivity.class);
-                break;
-        }
+            }
+        });
+
+        dialog = builder.create();
+        dialog.setView(view);
+        dialog.show();
+
     }
 
 }
