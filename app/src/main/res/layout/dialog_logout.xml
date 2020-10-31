@@ -34,7 +34,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Cancel"
-            android:textColor="@color/color_66"
+            android:textColor="@color/color_00D1AF"
             android:textSize="@dimen/sp_15" />
 
         <View
@@ -49,7 +49,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Confirm"
-            android:textColor="@color/color_00D1AF"
+            android:textColor="@color/color_66"
             android:textSize="@dimen/sp_15" />
     </LinearLayout>
 
