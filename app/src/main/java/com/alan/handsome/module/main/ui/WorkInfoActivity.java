@@ -3,6 +3,7 @@ package com.alan.handsome.module.main.ui;
 import android.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -219,14 +220,22 @@ public class WorkInfoActivity extends BaseActivity<SaveInfoPresenter> implements
     public void getUserInfoSuc(UserInfoBean userInfoBean) {
         hideDialog();
         if (userInfoBean != null) {
-            yourMonthlySalaryTv.setText(userInfoBean.getMonthly_salary());
-            monthlyAdapter.setSelect(userInfoBean.getMonthly_salary());
 
-            employmentTv.setText(userInfoBean.getEmployment_type());
-            employmentAdapter.setSelect(userInfoBean.getEmployment_type());
+            if (!TextUtils.isEmpty(userInfoBean.getMonthly_salary())) {
+                yourMonthlySalaryTv.setText(userInfoBean.getMonthly_salary());
+                monthlyAdapter.setSelect(userInfoBean.getMonthly_salary());
+            }
 
-            monthlyFamilyIncomeTv.setText(userInfoBean.getMonthly_family_salary());
-            familyAdapter.setSelect(userInfoBean.getMonthly_family_salary());
+            if (!TextUtils.isEmpty(userInfoBean.getEmployment_type())) {
+                employmentTv.setText(userInfoBean.getEmployment_type());
+                employmentAdapter.setSelect(userInfoBean.getEmployment_type());
+            }
+
+            if (!TextUtils.isEmpty(userInfoBean.getMonthly_family_salary())) {
+                monthlyFamilyIncomeTv.setText(userInfoBean.getMonthly_family_salary());
+                familyAdapter.setSelect(userInfoBean.getMonthly_family_salary());
+            }
+
         }
     }
 

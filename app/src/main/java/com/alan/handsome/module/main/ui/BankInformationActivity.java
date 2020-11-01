@@ -78,9 +78,21 @@ public class BankInformationActivity extends BaseActivity<SaveInfoPresenter> imp
     public void getUserInfoSuc(UserInfoBean userInfoBean) {
         hideDialog();
         if (userInfoBean!=null){
-            ifscCodeEdit.setText(userInfoBean.getIfsc_code());
-            bankNameEdit.setText(userInfoBean.getBank_name());
-            bankNumEdit.setText(userInfoBean.getBank_account_no());
+            if (!TextUtils.isEmpty(userInfoBean.getIfsc_code())){
+
+                ifscCodeEdit.setText(userInfoBean.getIfsc_code());
+            }
+
+            if (!TextUtils.isEmpty(userInfoBean.getBank_name())){
+
+                bankNameEdit.setText(userInfoBean.getBank_name());
+            }
+
+            if (!TextUtils.isEmpty(userInfoBean.getBank_account_no())){
+
+                bankNumEdit.setText(userInfoBean.getBank_account_no());
+            }
+
         }
 
     }

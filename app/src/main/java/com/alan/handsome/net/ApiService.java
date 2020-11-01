@@ -84,4 +84,12 @@ public interface ApiService {
     @Headers({"url:" + BuildConfig.BASE_URL})
     @GET(UrlManager.URL_BASICS+"/profile")
     Observable<BaseMode<UserInfoBean>> getUserInfo();
+
+    /**
+     *反馈意见
+     * @return
+     */
+    @Headers({"url:" + BuildConfig.BASE_URL})
+    @POST(UrlManager.URL_BASICS+"/feedback")
+    Observable<Map<String, Object>> feedBack(@Body Map<String,Object> reqMap);
 }

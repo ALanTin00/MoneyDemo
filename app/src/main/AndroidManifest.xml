@@ -40,7 +40,7 @@
             android:name=".module.main.ui.MyProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.main.ui.BasicInformation"
+            android:name=".module.main.ui.BaseInformationActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.main.ui.WorkInfoActivity"

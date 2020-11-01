@@ -13,7 +13,6 @@ import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
 import com.alan.handsome.manager.AccountManager;
 import com.alan.handsome.module.loans.bean.ReqBase;
-import com.alan.handsome.module.loans.ui.AuthenticationWorkActivity;
 import com.alan.handsome.module.loans.ui.InfoAdapter;
 import com.alan.handsome.module.main.bean.UserInfoBean;
 import com.alan.handsome.module.main.constant.SaveInfoConstant;
@@ -28,7 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class BasicInformation extends BaseActivity<SaveInfoPresenter> implements SaveInfoConstant.View {
+public class BaseInformationActivity extends BaseActivity<SaveInfoPresenter> implements SaveInfoConstant.View {
     @BindView(R.id.full_name_edit)
     EditText fullNameEdit;
     @BindView(R.id.birthday_tv)

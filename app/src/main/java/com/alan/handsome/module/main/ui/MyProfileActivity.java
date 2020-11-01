@@ -45,7 +45,7 @@ public class MyProfileActivity extends BaseActivity {
         switch (view.getId()) {
 
             case R.id.basic_information_relate:
-                startToActivity(BasicInformation.class);
+                startToActivity(BaseInformationActivity.class);
 
                 break;
             case R.id.work_information_relate:
