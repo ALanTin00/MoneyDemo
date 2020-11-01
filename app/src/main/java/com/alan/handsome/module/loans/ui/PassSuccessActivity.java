@@ -54,7 +54,6 @@ public class PassSuccessActivity extends BaseActivity {
 
     @OnClick(R.id.get_money_new_tv)
     public void onViewClicked() {
-
         startToActivity(PayOrderActivity.class);
         finish();
     }

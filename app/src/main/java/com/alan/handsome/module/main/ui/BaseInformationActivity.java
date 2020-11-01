@@ -319,6 +319,7 @@ public class BaseInformationActivity extends BaseActivity<SaveInfoPresenter> imp
     @Override
     public void commitBaseInfoSuc() {
         hideDialog();
+        AccountManager.getInstance().saveAuthenticationType(-1,2);
         showErrorToast("Save successfully");
         finish();
     }

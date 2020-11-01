@@ -8,6 +8,8 @@ import com.alan.handsome.base.BaseActivity;
 import com.alan.handsome.base.BaseContract;
 import com.gyf.barlibrary.ImmersionBar;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -60,5 +62,7 @@ public class PayOrderActivity extends BaseActivity {
 
     @OnClick(R.id.pay_now_tv)
     public void onViewClicked() {
+        EventBus.getDefault().post("success");
+        finish();
     }
 }

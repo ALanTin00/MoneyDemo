@@ -259,6 +259,7 @@ public class WorkInfoActivity extends BaseActivity<SaveInfoPresenter> implements
     @Override
     public void commitWorkInfoSuc() {
         hideDialog();
+        AccountManager.getInstance().saveAuthenticationType(-1,3);
         showErrorToast("Save successfully");
         finish();
     }

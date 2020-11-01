@@ -10,8 +10,13 @@ import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
 import com.alan.handsome.base.BaseContract;
 import com.alan.handsome.manager.FragmentViewPagerAdapter;
+import com.alan.handsome.module.loans.ui.FragmentCallback;
 import com.alan.handsome.widget.NoScrollViewPager;
 import com.gyf.barlibrary.ImmersionBar;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +24,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements FragmentCallback {
     @BindView(R.id.viewPager)
     NoScrollViewPager viewPager;
     @BindView(R.id.home_img)
@@ -39,6 +44,9 @@ public class MainActivity extends BaseActivity {
     private MineFragment mineFragment;
     private List<Fragment> fragments;
 
+    //是否已經付款
+    private boolean isPay = true;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -51,8 +59,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-
-        homeFragment = new HomeFragment();
+        EventBus.getDefault().register(this);
+        homeFragment = HomeFragment.newInstance(this);
         mineFragment = new MineFragment();
         fragments = new ArrayList<>();
         fragments.add(homeFragment);
@@ -94,15 +102,26 @@ public class MainActivity extends BaseActivity {
             homeImg.setSelected(true);
             homeTxt.setSelected(true);
 
+            changBarColor(isPay ? 0 : 1);
+
+        } else if (page == 1) {
+            mineImg.setSelected(true);
+            mineTxt.setSelected(true);
+
+            changBarColor(page);
+        }
+    }
+
+    public void changBarColor(int type) {
+        if (type == 0) {
+
             mImmersionBar = ImmersionBar.with(this)
                     .fitsSystemWindows(true)
                     .statusBarDarkFont(true, 0.2f)
                     .statusBarColor(R.color.white);
             mImmersionBar.init();
 
-        } else if (page == 1) {
-            mineImg.setSelected(true);
-            mineTxt.setSelected(true);
+        } else if (type == 1) {
 
             mImmersionBar = ImmersionBar.with(this)
                     .fitsSystemWindows(true)
@@ -112,9 +131,32 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    //付款成功回調這裏
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(String type) {
+        if ("success".equals(type)) {
+            if (homeFragment != null) {
+                homeFragment.refreshInfo();
+            }
+        }
+    }
+
+    @Override
+    public void changBar(boolean isPay) {
+        this.isPay = isPay;
+        changBarColor(isPay ? 0 : 1);
+    }
+
     //监听返回键
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

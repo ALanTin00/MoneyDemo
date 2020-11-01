@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
+import com.alan.handsome.manager.AccountManager;
 import com.alan.handsome.module.loans.bean.ReqBank;
 import com.alan.handsome.module.main.bean.UserInfoBean;
 import com.alan.handsome.module.main.constant.SaveInfoConstant;
@@ -129,6 +130,7 @@ public class BankInformationActivity extends BaseActivity<SaveInfoPresenter> imp
     @Override
     public void commitBankSuc() {
         hideDialog();
+        AccountManager.getInstance().saveAuthenticationType(1,-1);
         showErrorToast("Save successfully");
         finish();
     }

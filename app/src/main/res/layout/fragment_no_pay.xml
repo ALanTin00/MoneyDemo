@@ -52,7 +52,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_60"
             android:layout_marginTop="@dimen/dp_400">
-            
+
             <ImageView
                 android:id="@+id/iv"
                 android:layout_width="@dimen/dp_17"
@@ -87,7 +87,7 @@
             android:layout_marginTop="@dimen/dp_30"
             android:layout_centerHorizontal="true"
             android:orientation="horizontal">
-            
+
             <ImageView
                 android:layout_width="@dimen/dp_145"
                 android:layout_height="@dimen/dp_145"

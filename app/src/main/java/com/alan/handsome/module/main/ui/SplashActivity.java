@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
 import com.alan.handsome.manager.AccountManager;
-import com.alan.handsome.module.loans.ui.LoansPrepareActivity;
 import com.alan.handsome.module.loans.ui.LoginActivity;
 import com.alan.handsome.module.main.constant.SConstant;
 import com.alan.handsome.module.main.presenter.SPresenter;
@@ -54,13 +53,8 @@ public class SplashActivity extends BaseActivity<SPresenter> implements SConstan
     public void getSysInfoSuc(SystemInfo systemInfo) {
         AccountManager.getInstance().saveSysInfo(systemInfo);
         if (AccountManager.getInstance().isUserLogin()) {
-            if (AccountManager.getInstance().getUserInformation().getPhase() == 3) {
-                //已付款
-                startToActivity(MainActivity.class);
-            } else {
-                //跳转认证页面
-                startToActivity(LoansPrepareActivity.class);
-            }
+
+            startToActivity(MainActivity.class);
 
         } else {
             startToActivity(LoginActivity.class);

@@ -1,5 +1,6 @@
 package com.alan.handsome.module.loans.ui;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -11,7 +12,6 @@ import com.alan.handsome.module.loans.bean.LoansBean;
 import com.alan.handsome.module.loans.constant.LoginConstant;
 import com.alan.handsome.module.loans.presenter.LoginPresenter;
 import com.alan.handsome.module.main.ui.MainActivity;
-import com.alan.handsome.user.SystemInfo;
 import com.alan.handsome.user.UserInformation;
 import com.alan.handsome.widget.CodeCountDownTextView;
 
@@ -100,17 +100,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void loginSuccess(UserInformation userInformation) {
 
         AccountManager.getInstance().saveUserInfo(userInformation);
+        startToActivity(MainActivity.class);
 
-        if (userInformation.getAuthorized()==0){
-            //已认证(请求另外一个接口看是否付费)
-            mPresenter.getProduct();
-        }else {
-            //跳转认证页面
-            hideDialog();
-            startToActivity(LoansPrepareActivity.class);
-            finish();
-        }
+    }
 
+    public void goToActivity(boolean isPay){
+        Intent intent=new Intent(this,MainActivity.class);
+        intent.putExtra("isPay",isPay);
+        startActivity(intent);
     }
 
     @Override
@@ -129,7 +126,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             startToActivity(MainActivity.class);
         }else {
             //未付费
-            startToActivity(LoansPrepareActivity.class);
+            goToActivity(false);
         }
         finish();
     }
