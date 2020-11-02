@@ -81,8 +81,8 @@ public class MineFragment extends BaseFragment {
             public void onClick(View v) {
                 dialog.dismiss();
                 AccountManager.getInstance().logout();
-                getActivity2().finish();
                 startToActivity(LoginActivity.class);
+                getActivity2().finish();
             }
         });
 

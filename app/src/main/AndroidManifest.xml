@@ -49,9 +49,6 @@
             android:name=".module.main.ui.BankInformationActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".module.loans.ui.LoansPrepareActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".module.loans.ui.CheckActivity"
             android:screenOrientation="portrait" />
         <activity
@@ -71,7 +68,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".module.loans.ui.LoginActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
     </application>
 

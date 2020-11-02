@@ -10,8 +10,8 @@ import com.alan.handsome.R;
 import com.alan.handsome.base.BaseActivity;
 import com.alan.handsome.manager.AccountManager;
 import com.alan.handsome.module.loans.bean.LoansBean;
-import com.alan.handsome.module.loans.constant.LoansPrepareConstant;
-import com.alan.handsome.module.loans.presenter.LoansPreparePresenter;
+import com.alan.handsome.module.main.constant.LoansPrepareConstant;
+import com.alan.handsome.module.main.presenter.LoansPreparePresenter;
 
 import java.util.Timer;
 import java.util.TimerTask;

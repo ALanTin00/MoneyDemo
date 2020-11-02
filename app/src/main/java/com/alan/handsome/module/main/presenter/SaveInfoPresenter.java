@@ -4,7 +4,6 @@ import com.alan.handsome.base.BasePresenter;
 import com.alan.handsome.module.loans.bean.ReqBank;
 import com.alan.handsome.module.loans.bean.ReqBase;
 import com.alan.handsome.module.loans.bean.ReqWork;
-import com.alan.handsome.module.loans.constant.LoansPrepareConstant;
 import com.alan.handsome.module.main.constant.SaveInfoConstant;
 import com.alan.handsome.net.RetrofitManger;
 import com.alan.handsome.utils.RxSchedulers;

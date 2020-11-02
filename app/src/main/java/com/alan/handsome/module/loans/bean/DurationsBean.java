@@ -12,6 +12,15 @@ public class DurationsBean {
     private long member_ori_fee; //	会员价（原价）
     private long member_fee;//会员价（折后价）
     private int is_default;//是否默认
+    private boolean isSelect;//是否选择(自己添加)
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
 
     public String getId() {
         return id;

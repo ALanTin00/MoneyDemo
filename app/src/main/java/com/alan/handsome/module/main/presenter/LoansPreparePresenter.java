@@ -1,7 +1,7 @@
-package com.alan.handsome.module.loans.presenter;
+package com.alan.handsome.module.main.presenter;
 
 import com.alan.handsome.base.BasePresenter;
-import com.alan.handsome.module.loans.constant.LoansPrepareConstant;
+import com.alan.handsome.module.main.constant.LoansPrepareConstant;
 import com.alan.handsome.net.RetrofitManger;
 import com.alan.handsome.utils.RxSchedulers;
 

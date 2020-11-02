@@ -14,8 +14,8 @@ import com.alan.handsome.manager.AccountManager;
 import com.alan.handsome.module.loans.bean.LimitsBean;
 import com.alan.handsome.module.loans.bean.LoansBean;
 import com.alan.handsome.module.loans.bean.VipListBean;
-import com.alan.handsome.module.loans.constant.LoansPrepareConstant;
-import com.alan.handsome.module.loans.presenter.LoansPreparePresenter;
+import com.alan.handsome.module.main.constant.LoansPrepareConstant;
+import com.alan.handsome.module.main.presenter.LoansPreparePresenter;
 import com.alan.handsome.module.loans.ui.AuthenticationBankActivity;
 import com.alan.handsome.module.loans.ui.AuthenticationBaseActivity;
 import com.alan.handsome.module.loans.ui.AuthenticationWorkActivity;
@@ -52,7 +52,7 @@ public class HomeFragment extends BaseFragment<LoansPreparePresenter> implements
 
     //未支付的数据
     private List<LimitsBean> noPayList;
-    private com.alan.handsome.module.loans.ui.LoansAdapter noPayAdapter;
+    private LoanAmountAdapter noPayAdapter;
 
     public int selectPosition = 0;//选择的额度
     private UserInformation userInfo;
@@ -93,7 +93,7 @@ public class HomeFragment extends BaseFragment<LoansPreparePresenter> implements
 
         //初始化(未支付)
         noPayList = new ArrayList<>();
-        noPayAdapter = new com.alan.handsome.module.loans.ui.LoansAdapter();
+        noPayAdapter = new LoanAmountAdapter();
         noPayAdapter.setNewData(noPayList);
         moneyRecycler.setAdapter(noPayAdapter);
         moneyRecycler.setLayoutManager(new GridLayoutManager(getActivity(), 4));
@@ -176,7 +176,9 @@ public class HomeFragment extends BaseFragment<LoansPreparePresenter> implements
                 //审核通过(只展示一次审核通过页面后面都调支付页面)
                 if (AccountManager.getInstance().getUserInformation().isSeePassType()) {
                     //跳转支付页面
-                    startToActivity(PayOrderActivity.class);
+                    Intent intent=new Intent(getActivity(),PayOrderActivity.class);
+                    intent.putExtra("selectLoanPosition",selectPosition);
+                    startActivity(intent);
                 } else {
                     //跳转审核通过页面
                     startToActivity(PassSuccessActivity.class);
@@ -206,12 +208,18 @@ public class HomeFragment extends BaseFragment<LoansPreparePresenter> implements
 
                 AccountManager.getInstance().saveAuthenticationType(loansBean.getPhase(), loansBean.getCertification());
                 if (loansBean.getLimits().size() > 0) {
-                    //第一个默认选中
                     if (isFirst) {
                         isFirst = false;
-                        loansBean.getLimits().get(0).setSelect(true);
-                        moneyTv.setText("₹" + loansBean.getLimits().get(0).getAmount());
-                        noPayList.addAll(loansBean.getLimits());
+                        //循环出默认选项
+                        for (int i = 0; i < loansBean.getLimits().size(); i++) {
+                            if (loansBean.getLimits().get(i).getIs_default() == 1) {
+                                selectPosition = i;
+                                loansBean.getLimits().get(i).setSelect(true);
+                                moneyTv.setText("₹" + loansBean.getLimits().get(i).getAmount());
+                                noPayList.addAll(loansBean.getLimits());
+                            }
+                        }
+
                     }
                 }
                 noPayAdapter.notifyDataSetChanged();

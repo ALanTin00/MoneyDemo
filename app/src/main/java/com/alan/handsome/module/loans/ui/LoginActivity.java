@@ -104,12 +104,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     }
 
-    public void goToActivity(boolean isPay){
-        Intent intent=new Intent(this,MainActivity.class);
-        intent.putExtra("isPay",isPay);
-        startActivity(intent);
-    }
-
     @Override
     public void loginFail(String msg) {
         hideDialog();
@@ -120,14 +114,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     @Override
     public void getProductSuc(LoansBean loansBean) {
         hideDialog();
-        AccountManager.getInstance().saveAuthenticationType(loansBean.getPhase(),loansBean.getCertification());
-        if (loansBean.getPhase()==3){
-            //已付费
-            startToActivity(MainActivity.class);
-        }else {
-            //未付费
-            goToActivity(false);
-        }
+        AccountManager.getInstance().saveAuthenticationType(loansBean.getPhase(), loansBean.getCertification());
+        startToActivity(MainActivity.class);
         finish();
     }
 

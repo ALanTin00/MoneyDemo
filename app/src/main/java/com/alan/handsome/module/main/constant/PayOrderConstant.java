@@ -1,12 +1,9 @@
-package com.alan.handsome.module.loans.constant;
+package com.alan.handsome.module.main.constant;
 
 import com.alan.handsome.base.BaseContract;
 import com.alan.handsome.module.loans.bean.LoansBean;
-import com.alan.handsome.user.UserInformation;
 
-import java.util.Map;
-
-public class LoansPrepareConstant {
+public class PayOrderConstant {
 
     public interface View extends BaseContract.BaseView {
 
@@ -16,7 +13,7 @@ public class LoansPrepareConstant {
     }
 
     public interface Presenter {
-        //获取首页信息
+        //获取产品信息
         void getProduct();
 
     }
