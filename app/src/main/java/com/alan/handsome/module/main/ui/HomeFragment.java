@@ -89,8 +89,6 @@ public class HomeFragment extends BaseFragment<LoansPreparePresenter> implements
 
     @Override
     protected void initView(View view) {
-        showDialog();
-
         //初始化(未支付)
         noPayList = new ArrayList<>();
         noPayAdapter = new LoanAmountAdapter();
@@ -144,6 +142,7 @@ public class HomeFragment extends BaseFragment<LoansPreparePresenter> implements
     }
 
     public void refreshInfo() {
+        showDialog();
         //请求产品列表
         mPresenter.getProduct();
     }
