@@ -1,6 +1,7 @@
 package com.alan.handsome.module.loans.ui;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -52,7 +53,7 @@ public class AuthenticationBaseActivity extends BaseActivity<CommitInfoPresenter
     TextView maritalTv;
     @BindView(R.id.education_tv)
     TextView educationTv;
-
+    private int selectLoanPosition;//首页进来传过来的
     //时间选择器
     private DialogDatePickerSelect datePickerSelect;
     //列表选择
@@ -104,6 +105,7 @@ public class AuthenticationBaseActivity extends BaseActivity<CommitInfoPresenter
 
     @Override
     protected void initData() {
+        selectLoanPosition = getIntent().getIntExtra("selectLoanPosition", -1);
         genderAdapter = new InfoAdapter();
         maritalAdapter = new InfoAdapter();
         educationAdapter = new InfoAdapter();
@@ -289,7 +291,9 @@ public class AuthenticationBaseActivity extends BaseActivity<CommitInfoPresenter
     public void commitBaseInfoSuc() {
         hideDialog();
         AccountManager.getInstance().saveAuthenticationType(-1,2);
-        startToActivity(AuthenticationWorkActivity.class);
+        Intent intent=new Intent(this,AuthenticationWorkActivity.class);
+        intent.putExtra("selectLoanPosition",selectLoanPosition);
+        startActivity(intent);
         finish();
     }
 

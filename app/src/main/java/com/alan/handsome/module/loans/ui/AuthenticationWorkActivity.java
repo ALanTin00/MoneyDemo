@@ -1,6 +1,7 @@
 package com.alan.handsome.module.loans.ui;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -41,6 +42,8 @@ public class AuthenticationWorkActivity extends BaseActivity<CommitInfoPresenter
     @BindView(R.id.monthly_family_income_tv)
     TextView monthlyFamilyIncomeTv;
 
+    private int selectLoanPosition;//首页进来传过来的
+
     //列表选择
     private AlertDialog dialog;
     private InfoAdapter employmentAdapter,  monthlyAdapter, familyAdapter;
@@ -76,7 +79,7 @@ public class AuthenticationWorkActivity extends BaseActivity<CommitInfoPresenter
 
     @Override
     protected void initData() {
-
+        selectLoanPosition = getIntent().getIntExtra("selectLoanPosition", -1);
         employmentAdapter = new InfoAdapter();
         monthlyAdapter = new InfoAdapter();
         familyAdapter = new InfoAdapter();
@@ -254,7 +257,9 @@ public class AuthenticationWorkActivity extends BaseActivity<CommitInfoPresenter
     public void commitWorkInfoSuc() {
         hideDialog();
         AccountManager.getInstance().saveAuthenticationType(-1,3);
-        startToActivity(AuthenticationBankActivity.class);
+        Intent intent=new Intent(this,AuthenticationBankActivity.class);
+        intent.putExtra("selectLoanPosition",selectLoanPosition);
+        startActivity(intent);
         finish();
     }
 

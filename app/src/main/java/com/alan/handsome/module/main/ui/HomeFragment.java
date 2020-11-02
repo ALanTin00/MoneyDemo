@@ -152,37 +152,46 @@ public class HomeFragment extends BaseFragment<LoansPreparePresenter> implements
     @OnClick(R.id.get_money_new_tv)
     public void onViewClicked() {
         userInfo = AccountManager.getInstance().getUserInformation();
+        Intent intent;
         //跳转
         switch (userInfo.getPhase()) {
             case 0:
                 // 用户未认证
                 if (userInfo.getCertification() == 1) {
                     //基础信息
-                    startToActivity(AuthenticationBaseActivity.class);
+                    intent=new Intent(getActivity(),AuthenticationBaseActivity.class);
+                    intent.putExtra("selectLoanPosition",selectPosition);
+                    startActivity(intent);
                 } else if (userInfo.getCertification() == 2) {
                     //工作信息
-                    startToActivity(AuthenticationWorkActivity.class);
+                    intent=new Intent(getActivity(),AuthenticationWorkActivity.class);
+                    intent.putExtra("selectLoanPosition",selectPosition);
+                    startActivity(intent);
                 } else if (userInfo.getCertification() == 3) {
                     //银行信息
-                    startToActivity(AuthenticationBankActivity.class);
+                    intent=new Intent(getActivity(),AuthenticationBankActivity.class);
+                    intent.putExtra("selectLoanPosition",selectPosition);
+                    startActivity(intent);
                 }
 
                 break;
             case 1:
                 //审核中
-                startToActivity(CheckActivity.class);
+                intent=new Intent(getActivity(),CheckActivity.class);
+                intent.putExtra("selectLoanPosition",selectPosition);
+                startActivity(intent);
                 break;
             case 2:
                 //审核通过(只展示一次审核通过页面后面都调支付页面)
                 if (AccountManager.getInstance().getUserInformation().isSeePassType()) {
                     //跳转支付页面
-                    Intent intent=new Intent(getActivity(),PayOrderActivity.class);
-                    intent.putExtra("selectLoanPosition",selectPosition);
-                    startActivity(intent);
+                    intent=new Intent(getActivity(),PayOrderActivity.class);
                 } else {
                     //跳转审核通过页面
-                    startToActivity(PassSuccessActivity.class);
+                    intent=new Intent(getActivity(),PassSuccessActivity.class);
                 }
+                intent.putExtra("selectLoanPosition",selectPosition);
+                startActivity(intent);
                 break;
             case 3:
                 //已付款

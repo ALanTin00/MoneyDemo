@@ -15,7 +15,12 @@ public class TermAdapter extends BaseQuickAdapter<DurationsBean, BaseViewHolder>
     @Override
     protected void convert(BaseViewHolder helper, DurationsBean item) {
         helper.getView(R.id.term_tv).setSelected(item.isSelect());
-        helper.setText(R.id.term_tv,item.getDuration().substring(0,1));
+
+        String[] str = item.getDuration().split("m");
+        if (str.length > 0) {
+            helper.setText(R.id.term_tv, str[0]);
+        }
+
 
     }
 }

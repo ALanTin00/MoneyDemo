@@ -1,5 +1,6 @@
 package com.alan.handsome.module.loans.ui;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.widget.TextView;
 
@@ -22,6 +23,8 @@ public class PassSuccessActivity extends BaseActivity {
     @BindView(R.id.tip_four_tv)
     TextView tipFourTv;
 
+    private int selectLoanPosition;//首页进来传过来的
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_pass;
@@ -37,6 +40,7 @@ public class PassSuccessActivity extends BaseActivity {
 
     @Override
     protected void initData() {
+        selectLoanPosition = getIntent().getIntExtra("selectLoanPosition", -1);
         phoneTv.setText(AccountManager.getInstance().getUserInformation().getMobile());
 
         tipFourTv.setText("Your opplication has been approved and you are eligible to borrow");
@@ -54,7 +58,9 @@ public class PassSuccessActivity extends BaseActivity {
 
     @OnClick(R.id.get_money_new_tv)
     public void onViewClicked() {
-        startToActivity(PayOrderActivity.class);
+        Intent intent=new Intent(this,PayOrderActivity.class);
+        intent.putExtra("selectLoanPosition",selectLoanPosition);
+        startActivity(intent);
         finish();
     }
 }

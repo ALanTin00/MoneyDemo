@@ -1,5 +1,6 @@
 package com.alan.handsome.module.loans.ui;
 
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
@@ -37,6 +38,7 @@ public class CheckActivity extends BaseActivity<LoansPreparePresenter> implement
     private TimerTask mTimerTask;
     private static final int REQUEST_TYPE = 102;
 
+    private int selectLoanPosition;//首页进来传过来的
     @Override
     protected int getLayoutId() {
         return R.layout.activity_check;
@@ -53,6 +55,7 @@ public class CheckActivity extends BaseActivity<LoansPreparePresenter> implement
 
     @Override
     protected void initData() {
+        selectLoanPosition = getIntent().getIntExtra("selectLoanPosition", -1);
         initTimer();
         // 参数：0，延时0秒后执行;3000，每隔3秒执行1次task。
         mTimer.schedule(mTimerTask, 0, 3 * 1000);
@@ -120,8 +123,9 @@ public class CheckActivity extends BaseActivity<LoansPreparePresenter> implement
             if (loansBean.getPhase() == 2) {
                 //审核通过
                 AccountManager.getInstance().saveAuthenticationType(2,-1);
-                startToActivity(PassSuccessActivity.class);
-                destroyTimer();
+                Intent intent=new Intent(this,PassSuccessActivity.class);
+                intent.putExtra("selectLoanPosition",selectLoanPosition);
+                startActivity(intent);
                 finish();
             }
         }

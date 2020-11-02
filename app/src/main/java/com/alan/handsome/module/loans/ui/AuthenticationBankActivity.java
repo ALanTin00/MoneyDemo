@@ -1,5 +1,6 @@
 package com.alan.handsome.module.loans.ui;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -34,6 +35,8 @@ public class AuthenticationBankActivity extends BaseActivity<CommitInfoPresenter
     @BindView(R.id.bank_num_edit)
     EditText bankNumEdit;
 
+    private int selectLoanPosition;//首页进来传过来的
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_authentication_bank;
@@ -61,7 +64,7 @@ public class AuthenticationBankActivity extends BaseActivity<CommitInfoPresenter
 
     @Override
     protected void initData() {
-
+        selectLoanPosition = getIntent().getIntExtra("selectLoanPosition", -1);
     }
 
     @Override
@@ -121,7 +124,9 @@ public class AuthenticationBankActivity extends BaseActivity<CommitInfoPresenter
     public void commitBankSuc() {
         hideDialog();
         AccountManager.getInstance().saveAuthenticationType(1,-1);
-        startToActivity(CheckActivity.class);
+        Intent intent=new Intent(this,CheckActivity.class);
+        intent.putExtra("selectLoanPosition",selectLoanPosition);
+        startActivity(intent);
         finish();
     }
 
