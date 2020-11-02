@@ -54,6 +54,7 @@ public class PayOrderActivity extends BaseActivity<PayOrderPresenter> implements
 
     private int selectLoanPosition;//看是否是首页进来的（首页进来会带值，没有就选默认）
     private int selectTermPosition = -1;//选择的周期
+    private boolean hasDefault = false;//是否有默认值
 
 
     @Override
@@ -108,6 +109,7 @@ public class PayOrderActivity extends BaseActivity<PayOrderPresenter> implements
                 }
                 loanAdapter.notifyDataSetChanged();
                 termList.clear();
+                selectTermPosition = -1;
                 termList.addAll(loanList.get(selectLoanPosition).getDurations());
                 //周期
                 for (int i = 0; i < termList.size(); i++) {
@@ -115,10 +117,13 @@ public class PayOrderActivity extends BaseActivity<PayOrderPresenter> implements
                     if (termList.get(i).getIs_default() == 1) {
                         selectTermPosition = i;
                         termList.get(i).setSelect(true);
-                    } else {
-                        selectTermPosition = -1;
+                    }else {
                         termList.get(i).setSelect(false);
                     }
+                }
+                if (selectTermPosition == -1) {
+                    selectTermPosition = termList.size() - 1;
+                    termList.get(selectTermPosition).setSelect(true);
                 }
                 setTermUI();
                 termAdapter.notifyDataSetChanged();
@@ -180,10 +185,6 @@ public class PayOrderActivity extends BaseActivity<PayOrderPresenter> implements
     @OnClick(R.id.pay_now_tv)
     public void onViewClicked() {
 
-        if (selectTermPosition == -1) {
-            showErrorToast("Please select term");
-            return;
-        }
         showErrorToast("支付待接入");
         //todo 接了支付记得放开这个代码(支付成功调用)
 //        EventBus.getDefault().post("success");
@@ -218,6 +219,10 @@ public class PayOrderActivity extends BaseActivity<PayOrderPresenter> implements
                     selectTermPosition = i;
                     termList.get(selectTermPosition).setSelect(true);
                 }
+            }
+            if (selectTermPosition == -1) {
+                selectTermPosition = termList.size() - 1;
+                termList.get(selectTermPosition).setSelect(true);
             }
             setTermUI();
             termAdapter.notifyDataSetChanged();
