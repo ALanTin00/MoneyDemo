@@ -22,53 +22,13 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
 
-        <activity android:name=".module.main.ui.SplashActivity"
+        <activity android:name=".SplashActivity"
             android:theme="@style/Theme.Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".module.main.ui.MainActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.main.ui.FeedBackActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.main.ui.MyProfileActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.main.ui.BaseInformationActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.main.ui.WorkInfoActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.main.ui.BankInformationActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.loans.ui.CheckActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.loans.ui.PassSuccessActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.loans.ui.AuthenticationBaseActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.loans.ui.AuthenticationWorkActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.loans.ui.AuthenticationBankActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.loans.ui.PayOrderActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".module.loans.ui.LoginActivity"
-            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

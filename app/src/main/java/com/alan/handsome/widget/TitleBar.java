@@ -49,8 +49,8 @@ public class TitleBar extends LinearLayout {
         TypedArray typedArray = getResources().obtainAttributes(attrs, R.styleable.TitleBar);
         back = typedArray.getBoolean(R.styleable.TitleBar_have_back, true);
         title = typedArray.getString(R.styleable.TitleBar_title);
-        textRightColor = typedArray.getColor(R.styleable.TitleBar_right_text_color, ContextCompat.getColor(context, R.color.color_121624));
-        titleColor = typedArray.getColor(R.styleable.TitleBar_title_color, ContextCompat.getColor(context, R.color.color_121624));
+        textRightColor = typedArray.getColor(R.styleable.TitleBar_right_text_color, ContextCompat.getColor(context, R.color.color_black));
+        titleColor = typedArray.getColor(R.styleable.TitleBar_title_color, ContextCompat.getColor(context, R.color.color_black));
         bgColor = typedArray.getColor(R.styleable.TitleBar_bg_color, ContextCompat.getColor(context, R.color.white));
         rightTextStr = typedArray.getString(R.styleable.TitleBar_right_text);
         rightIconSrc = typedArray.getResourceId(R.styleable.TitleBar_right_icon_src, R.mipmap.back );

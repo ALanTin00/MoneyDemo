@@ -2,7 +2,6 @@ package com.alan.handsome.manager;
 
 import android.text.TextUtils;
 
-import com.alan.handsome.user.SystemInfo;
 import com.alan.handsome.user.UserInformation;
 import com.alan.handsome.utils.GsonUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -15,7 +14,6 @@ public class AccountManager {
     public static AccountManager instance;
     private String accessToken;
     private UserInformation userInformation;//账户主账号用户信息
-    private SystemInfo systemInfo;
     public synchronized static AccountManager getInstance() {
         if (instance == null) {
             instance = new AccountManager();
@@ -70,29 +68,6 @@ public class AccountManager {
         if (!TextUtils.isEmpty(userStr)) {
             userInformation = GsonUtils.convertObj(userStr, UserInformation.class);
             return userInformation;
-        }
-        return null;
-    }
-
-    /**
-     * 存储系统信息
-     * @param result
-     */
-    public void saveSysInfo(SystemInfo result) {
-        if (result != null) {
-            systemInfo = result;
-            SPUtils.getInstance().put("key_sys_info", GsonUtils.toJson(result));
-        }
-    }
-
-    public SystemInfo getSysInfo() {
-        if (systemInfo != null) {
-            return systemInfo;
-        }
-        String userStr = SPUtils.getInstance().getString("key_sys_info");
-        if (!TextUtils.isEmpty(userStr)) {
-            systemInfo = GsonUtils.convertObj(userStr, SystemInfo.class);
-            return systemInfo;
         }
         return null;
     }
